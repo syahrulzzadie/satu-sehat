@@ -1,0 +1,23 @@
+{
+    "name": "syahrulzzadie/satu-sehat",
+    "description": "Syahrul JS RSUI Harapan Anda - Satu Sehat",
+    "type": "library",
+    "license": "MIT",
+    "version": "1.0",
+    "authors": [
+        {
+            "name": "Syahrul Adiguna Kurniawan",
+            "email": "syahrulzzadie@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "syahrulzzadie\\SatuSehat\\" : "src/"
+        }
+    },
+    "require": {
+        "php": "^7.3|^8.0",
+        "laravel/framework": "^8.12"
+    }
+}
