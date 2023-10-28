@@ -14,7 +14,7 @@ class SatuSehat
         if ($getToken['status']) {
             $url = _baseUrl_.'/Patient?identifier=https://fhir.kemkes.go.id/id/nik|'.$nik;
             $response = Http::asForm()
-                ->withToken($getToken['data']['token'])
+                ->withToken($getToken['token'])
                 ->get($url);
             if ($response->successful()) {
                 if ($response->status() == 200) {
