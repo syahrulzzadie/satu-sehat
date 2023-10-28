@@ -83,9 +83,7 @@ class Auth
                     $generateData = $generate['data'];
                     return [
                         'status' => true,
-                        'data' => [
-                            'token' => $generateData['token']
-                        ]
+                        'token' => $generateData['token']
                     ];
                 } else {
                     return [
