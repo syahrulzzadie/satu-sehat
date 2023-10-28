@@ -4,13 +4,14 @@ namespace syahrulzzadie\SatuSehat\JsonResponse;
 
 class Patient
 {
-    public static function convert($response)
+    public static function convert($response): array
     {
         $data = json_decode($response->body(),true);
+        $resource = $data['entry'][0]['resource'];
         return [
-            'nik' => $data['entry'][0]['resource']['identifier'][1]['value'],
-            'ihs_number' => $data['entry'][0]['resource']['id'],
-            'nama' => $data['entry'][0]['resource']['name'][0]['text']
+            'nik' => $resource['identifier'][1]['value'],
+            'ihs_number' => $resource['id'],
+            'nama' => $resource['name'][0]['text']
         ];
     }
 }

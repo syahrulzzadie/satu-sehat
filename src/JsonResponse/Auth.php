@@ -2,22 +2,18 @@
 
 namespace syahrulzzadie\SatuSehat\JsonResponse;
 
+use syahrulzzadie\SatuSehat\Utilitys\Constant;
+use syahrulzzadie\SatuSehat\Utilitys\Url;
 use Illuminate\Support\Facades\Http;
 use Carbon\Carbon;
-
-define('_authUrl_','https://api-satusehat-dev.dto.kemkes.go.id/oauth2/v1');
-define('_baseUrl_','https://api-satusehat-dev.dto.kemkes.go.id/fhir-r4/v1');
-define('_clientId_','GNcAwDI0rtlyAtKT2Jl1NfnJELosLrGAWsSIaaglYttqVT0i');
-define('_clientSecret_','004GXxQtTOQSEAcJe32pBPDnpxOWf4gevgOAIHdCEXOoLpKwZhYeFC4H9UGLBmHe');
-define('_organizationId_','b89d3141-07d2-4c00-8f00-7b0f9965cb02');
 
 class Auth
 {
     private static function requestToken() : array
     {
-        $url = _authUrl_.'/accesstoken?grant_type=client_credentials';
-        $data['client_id'] = _clientId_;
-        $data['client_secret'] = _clientSecret_;
+        $url = Url::authUrl();
+        $data['client_id'] = Constant::$clientId;
+        $data['client_secret'] = Constant::$clientSecret;
         $response = Http::asForm()->post($url,$data);
         if ($response->successful()) {
             if ($response->status() == 200) {
