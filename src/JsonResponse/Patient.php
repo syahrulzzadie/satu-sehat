@@ -11,7 +11,7 @@ class Patient
         return [
             'nik' => $resource['identifier'][1]['value'],
             'ihs_number' => $resource['id'],
-            'nama' => $resource['name'][0]['text']
+            'name' => $resource['name'][0]['text']
         ];
     }
 }
