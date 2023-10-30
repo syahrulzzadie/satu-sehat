@@ -25,6 +25,7 @@ class SatuSehat
                         'data' => $data
                     ];
                 }
+                return jsonResponse\Error::response($response);
             }
             return [
                 'status' => false,
@@ -54,6 +55,7 @@ class SatuSehat
                         'data' => $data
                     ];
                 }
+                return jsonResponse\Error::response($response);
             }
             return [
                 'status' => false,
@@ -80,6 +82,7 @@ class SatuSehat
                     $data = jsonResponse\Organization::convert($response);
                     dd($data);
                 }
+                return jsonResponse\Error::response($response);
             }
             return [
                 'status' => false,
@@ -106,6 +109,7 @@ class SatuSehat
                     $data = jsonResponse\Organization::convert($response);
                     dd($data);
                 }
+                return jsonResponse\Error::response($response);
             }
             return [
                 'status' => false,
