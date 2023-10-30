@@ -112,4 +112,56 @@ class SatuSehat
             ];
         }
     }
+
+    public static function createLocation($name)
+    {
+        $getToken = jsonResponse\Auth::getToken();
+        if ($getToken['status']) {
+            $url = Url::createLocationUrl();
+            $formData = jsonData\Location::formCreateData($name);
+            $response = Http::withToken($getToken['token'])
+                ->post($url, $formData);
+            if ($response->successful()) {
+                if ($response->status() == 201) {
+                    $data = jsonResponse\Location::convert($response);
+                    return [
+                        'status' => true,
+                        'data' => $data
+                    ];
+                }
+            }
+            return jsonResponse\Error::response($response);
+        } else {
+            return [
+                'status' => false,
+                'message' => $getToken['message']
+            ];
+        }
+    }
+
+    public static function updateLocation($ihsNumber, $name)
+    {
+        $getToken = jsonResponse\Auth::getToken();
+        if ($getToken['status']) {
+            $url = Url::updateLocationUrl($ihsNumber);
+            $formData = jsonData\Location::formUpdateData($ihsNumber,$name);
+            $response = Http::withToken($getToken['token'])
+                ->put($url, $formData);
+            if ($response->successful()) {
+                if ($response->status() == 200) {
+                    $data = jsonResponse\Location::convert($response);
+                    return [
+                        'status' => true,
+                        'data' => $data
+                    ];
+                }
+            }
+            return jsonResponse\Error::response($response);
+        } else {
+            return [
+                'status' => false,
+                'message' => $getToken['message']
+            ];
+        }
+    }
 }

@@ -52,7 +52,7 @@ class Organization
                 [
                     "use"=> "work",
                     "type"=> "both",
-                    "line"=> [ "Jalan Ababil 42" ],
+                    "line"=> [ "Jl. Ababil No.42, Randugunting, Kec. Tegal Selatan, Kota Tegal, Jawa Tengah" ],
                     "city"=> "Kota Tegal",
                     "postalCode"=> "52131",
                     "country"=> "ID",

@@ -38,4 +38,14 @@ class Url
     {
         return self::baseUrl('Organization/'.$ihsNumber);
     }
+
+    public static function createLocationUrl()
+    {
+        return self::baseUrl('Location');
+    }
+
+    public static function updateLocationUrl($ihsNumber)
+    {
+        return self::baseUrl('Location/'.$ihsNumber);
+    }
 }
