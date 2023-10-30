@@ -74,7 +74,7 @@ class SatuSehat
                     $data = jsonResponse\Organization::convert($response);
                     return [
                         'status' => true,
-                        'message' => $data
+                        'data' => $data
                     ];
                 }
             }
@@ -100,7 +100,7 @@ class SatuSehat
                     $data = jsonResponse\Organization::convert($response);
                     return [
                         'status' => true,
-                        'message' => $data
+                        'data' => $data
                     ];
                 }
             }
