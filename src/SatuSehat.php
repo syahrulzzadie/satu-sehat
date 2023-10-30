@@ -66,7 +66,7 @@ class SatuSehat
         $getToken = jsonResponse\Auth::getToken();
         if ($getToken['status']) {
             $url = Url::createOrganizationUrl();
-            $formData = jsonData\Organization::formData($name);
+            $formData = jsonData\Organization::formCreateData($name);
             $response = Http::withToken($getToken['token'])
                 ->post($url, $formData);
             if ($response->successful()) {
@@ -89,7 +89,7 @@ class SatuSehat
         $getToken = jsonResponse\Auth::getToken();
         if ($getToken['status']) {
             $url = Url::updateOrganizationUrl($ihsNumber);
-            $formData = jsonData\Organization::formData($name);
+            $formData = jsonData\Organization::formUpdateData($ihsNumber,$name);
             $response = Http::withToken($getToken['token'])
                 ->put($url, $formData);
             if ($response->successful()) {
