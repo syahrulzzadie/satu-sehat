@@ -28,4 +28,14 @@ class Url
     {
         return self::baseUrl('Practitioner?identifier=https://fhir.kemkes.go.id/id/nik|'.$nik);
     }
+
+    public static function createOrganizationUrl()
+    {
+        return self::baseUrl('Organization');
+    }
+
+    public static function updateOrganizationUrl($ihsNumber)
+    {
+        return self::baseUrl('Organization/'.$ihsNumber);
+    }
 }

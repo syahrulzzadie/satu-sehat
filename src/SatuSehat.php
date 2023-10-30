@@ -66,4 +66,56 @@ class SatuSehat
             ];
         }
     }
+
+    public static function createOrganization($name)
+    {
+        $getToken = jsonResponse\Auth::getToken();
+        if ($getToken['status']) {
+            $url = Url::createOrganizationUrl();
+            $formData = jsonData\Organization::formData($name);
+            $response = Http::withToken($getToken['token'])
+                ->post($url, $formData);
+            if ($response->successful()) {
+                if ($response->status() == 200) {
+                    $data = jsonResponse\Organization::convert($response);
+                    dd($data);
+                }
+            }
+            return [
+                'status' => false,
+                'message' => 'Internal server error'
+            ];
+        } else {
+            return [
+                'status' => false,
+                'message' => $getToken['message']
+            ];
+        }
+    }
+
+    public static function updateOrganization($ihsNumber, $name)
+    {
+        $getToken = jsonResponse\Auth::getToken();
+        if ($getToken['status']) {
+            $url = Url::updateOrganizationUrl($ihsNumber);
+            $formData = jsonData\Organization::formData($name);
+            $response = Http::withToken($getToken['token'])
+                ->put($url, $formData);
+            if ($response->successful()) {
+                if ($response->status() == 200) {
+                    $data = jsonResponse\Organization::convert($response);
+                    dd($data);
+                }
+            }
+            return [
+                'status' => false,
+                'message' => 'Internal server error'
+            ];
+        } else {
+            return [
+                'status' => false,
+                'message' => $getToken['message']
+            ];
+        }
+    }
 }
