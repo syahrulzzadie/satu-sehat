@@ -72,7 +72,10 @@ class SatuSehat
             if ($response->successful()) {
                 if ($response->status() == 201) {
                     $data = jsonResponse\Organization::convert($response);
-                    dd($data);
+                    return [
+                        'status' => true,
+                        'message' => $data
+                    ];
                 }
             }
             return jsonResponse\Error::response($response);
@@ -95,7 +98,10 @@ class SatuSehat
             if ($response->successful()) {
                 if ($response->status() == 200) {
                     $data = jsonResponse\Organization::convert($response);
-                    dd($data);
+                    return [
+                        'status' => true,
+                        'message' => $data
+                    ];
                 }
             }
             return jsonResponse\Error::response($response);
