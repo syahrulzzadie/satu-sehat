@@ -25,12 +25,8 @@ class SatuSehat
                         'data' => $data
                     ];
                 }
-                return jsonResponse\Error::response($response);
             }
-            return [
-                'status' => false,
-                'message' => 'Internal server error'
-            ];
+            return jsonResponse\Error::response($response);
         } else {
             return [
                 'status' => false,
@@ -55,12 +51,8 @@ class SatuSehat
                         'data' => $data
                     ];
                 }
-                return jsonResponse\Error::response($response);
             }
-            return [
-                'status' => false,
-                'message' => 'Internal server error'
-            ];
+            return jsonResponse\Error::response($response);
         } else {
             return [
                 'status' => false,
@@ -78,16 +70,12 @@ class SatuSehat
             $response = Http::withToken($getToken['token'])
                 ->post($url, $formData);
             if ($response->successful()) {
-                if ($response->status() == 200) {
+                if ($response->status() == 201) {
                     $data = jsonResponse\Organization::convert($response);
                     dd($data);
                 }
-                return jsonResponse\Error::response($response);
             }
-            return [
-                'status' => false,
-                'message' => 'Internal server error'
-            ];
+            return jsonResponse\Error::response($response);
         } else {
             return [
                 'status' => false,
@@ -109,12 +97,8 @@ class SatuSehat
                     $data = jsonResponse\Organization::convert($response);
                     dd($data);
                 }
-                return jsonResponse\Error::response($response);
             }
-            return [
-                'status' => false,
-                'message' => 'Internal server error'
-            ];
+            return jsonResponse\Error::response($response);
         } else {
             return [
                 'status' => false,
