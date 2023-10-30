@@ -8,7 +8,7 @@ class Error
     {
         $message = json_encode($response->body());
         return [
-            'status' => 'false',
+            'status' => false,
             'message' => $message
         ];
     }
