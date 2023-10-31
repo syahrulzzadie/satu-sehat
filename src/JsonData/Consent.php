@@ -6,7 +6,7 @@ class Consent
 {
     public static function formData($ihsNumber,$nm_petugas,$status)
     {
-        $action = $status ? 'OPTIN' : 'OPOUT';
+        $action = $status ? 'OPTIN' : 'OPTOUT';
         return [
             'patient_id' => $ihsNumber,
             'action' => $action,
