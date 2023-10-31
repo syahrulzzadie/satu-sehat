@@ -27,12 +27,8 @@ class SatuSehat
                 }
             }
             return jsonResponse\Error::response($response);
-        } else {
-            return [
-                'status' => false,
-                'message' => $getToken['message']
-            ];
         }
+        return jsonResponse\Error::getToken($getToken);
     }
 
     public static function getPractitionerByNik($nik)
@@ -53,12 +49,8 @@ class SatuSehat
                 }
             }
             return jsonResponse\Error::response($response);
-        } else {
-            return [
-                'status' => false,
-                'message' => $getToken['message']
-            ];
         }
+        return jsonResponse\Error::getToken($getToken);
     }
 
     public static function createOrganization($name)
@@ -79,12 +71,8 @@ class SatuSehat
                 }
             }
             return jsonResponse\Error::response($response);
-        } else {
-            return [
-                'status' => false,
-                'message' => $getToken['message']
-            ];
         }
+        return jsonResponse\Error::getToken($getToken);
     }
 
     public static function updateOrganization($ihsNumber, $name)
@@ -105,12 +93,8 @@ class SatuSehat
                 }
             }
             return jsonResponse\Error::response($response);
-        } else {
-            return [
-                'status' => false,
-                'message' => $getToken['message']
-            ];
         }
+        return jsonResponse\Error::getToken($getToken);
     }
 
     public static function createLocation($name)
@@ -131,12 +115,8 @@ class SatuSehat
                 }
             }
             return jsonResponse\Error::response($response);
-        } else {
-            return [
-                'status' => false,
-                'message' => $getToken['message']
-            ];
         }
+        return jsonResponse\Error::getToken($getToken);
     }
 
     public static function updateLocation($ihsNumber, $name)
@@ -157,11 +137,50 @@ class SatuSehat
                 }
             }
             return jsonResponse\Error::response($response);
-        } else {
-            return [
-                'status' => false,
-                'message' => $getToken['message']
-            ];
         }
+        return jsonResponse\Error::getToken($getToken);
+    }
+
+    public static function getConsent($ihsNumber)
+    {
+        $getToken = jsonResponse\Auth::getToken();
+        if ($getToken['status']) {
+            $url = Url::getConsentPatientUrl($ihsNumber);
+            $response = Http::withToken($getToken['token'])
+                ->get($url);
+            if ($response->successful()) {
+                if ($response->status() == 200) {
+                    $data = jsonResponse\Consent::convert($response);
+                    return [
+                        'status' => true,
+                        'data' => $data
+                    ];
+                }
+            }
+            return jsonResponse\Error::response($response);
+        }
+        return jsonResponse\Error::getToken($getToken);
+    }
+
+    public static function updateConsent($ihsNumber,$nm_petugas,$status)
+    {
+        $getToken = jsonResponse\Auth::getToken();
+        if ($getToken['status']) {
+            $url = Url::updateConsentPatientUrl();
+            $formData = jsonData\Consent::formData($ihsNumber,$nm_petugas,$status);
+            $response = Http::withToken($getToken['token'])
+                ->post($url, $formData);
+            if ($response->successful()) {
+                if ($response->status() == 200) {
+                    $data = jsonResponse\Consent::convert($response);
+                    return [
+                        'status' => true,
+                        'data' => $data
+                    ];
+                }
+            }
+            return jsonResponse\Error::response($response);
+        }
+        return jsonResponse\Error::getToken($getToken);
     }
 }

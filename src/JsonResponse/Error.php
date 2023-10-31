@@ -12,4 +12,12 @@ class Error
             'message' => $message
         ];
     }
+
+    public static function getToken($getToken)
+    {
+        return [
+            'status' => false,
+            'message' => $getToken['message']
+        ];
+    }
 }

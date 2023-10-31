@@ -14,6 +14,11 @@ class Url
         return Constant::$baseUrl.'/'.$subUrl;
     }
 
+    private static function hostUrl($subUrl)
+    {
+        return Constant::$host.'/'.$subUrl;
+    }
+
     public static function authUrl()
     {
         return self::authHost('accesstoken?grant_type=client_credentials');
@@ -47,5 +52,15 @@ class Url
     public static function updateLocationUrl($ihsNumber)
     {
         return self::baseUrl('Location/'.$ihsNumber);
+    }
+
+    public static function getConsentPatientUrl($ihsNumber)
+    {
+        return self::hostUrl('consent/v1/Consent?patient_id='.$ihsNumber);
+    }
+
+    public static function updateConsentPatientUrl()
+    {
+        return self::hostUrl('consent/v1/Consent');
     }
 }
