@@ -146,7 +146,8 @@ class SatuSehat
         $getToken = jsonResponse\Auth::getToken();
         if ($getToken['status']) {
             $url = Url::getConsentPatientUrl($ihsNumber);
-            $response = Http::withToken($getToken['token'])
+            $response = Http::asForm()
+                ->withToken($getToken['token'])
                 ->get($url);
             if ($response->successful()) {
                 if ($response->status() == 200) {
