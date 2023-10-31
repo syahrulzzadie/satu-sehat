@@ -184,4 +184,48 @@ class SatuSehat
         }
         return jsonResponse\Error::getToken($getToken);
     }
+
+    public static function createEcounter($organization,$patient,$practitioner,$location)
+    {
+        $getToken = jsonResponse\Auth::getToken();
+        if ($getToken['status']) {
+            $url = Url::createEcounterUrl();
+            $formData = jsonData\Ecounter::formCreateData($organization,$patient,$practitioner,$location);
+            $response = Http::withToken($getToken['token'])
+                ->post($url, $formData);
+            if ($response->successful()) {
+                if ($response->status() == 201) {
+                    $data = jsonResponse\Ecounter::convert($response);
+                    return [
+                        'status' => true,
+                        'data' => $data
+                    ];
+                }
+            }
+            return jsonResponse\Error::response($response);
+        }
+        return jsonResponse\Error::getToken($getToken);
+    }
+
+    public static function updateEcounter($ihsNumber,$organization,$patient,$practitioner,$location)
+    {
+        $getToken = jsonResponse\Auth::getToken();
+        if ($getToken['status']) {
+            $url = Url::createEcounterUrl();
+            $formData = jsonData\Ecounter::formUpdateData($ihsNumber,$organization,$patient,$practitioner,$location);
+            $response = Http::withToken($getToken['token'])
+                ->put($url, $formData);
+            if ($response->successful()) {
+                if ($response->status() == 201) {
+                    $data = jsonResponse\Ecounter::convert($response);
+                    return [
+                        'status' => true,
+                        'data' => $data
+                    ];
+                }
+            }
+            return jsonResponse\Error::response($response);
+        }
+        return jsonResponse\Error::getToken($getToken);
+    }
 }

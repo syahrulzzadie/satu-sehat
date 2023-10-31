@@ -2,15 +2,13 @@
 
 namespace syahrulzzadie\SatuSehat\JsonResponse;
 
-class Consent
+class Ecounter
 {
     public static function convert($response)
     {
         $data = json_decode($response->body(),true);
-        $status = $data['policyRule']['coding'][0]['code'];
         return [
-            'ihs_number' => $data['id'],
-            'status' => $status
+            'ihs_number' => $data['id']
         ];
     }
 }

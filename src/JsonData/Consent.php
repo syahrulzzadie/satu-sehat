@@ -4,9 +4,8 @@ namespace syahrulzzadie\SatuSehat\JsonData;
 
 class Consent
 {
-    public static function formData($ihsNumber,$nm_petugas,$status)
+    public static function formData($ihsNumber,$nm_petugas,$action)
     {
-        $action = $status ? 'OPTIN' : 'OPTOUT';
         return [
             'patient_id' => $ihsNumber,
             'action' => $action,

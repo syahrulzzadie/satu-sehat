@@ -63,4 +63,14 @@ class Url
     {
         return self::hostUrl('consent/v1/Consent');
     }
+
+    public static function createEcounterUrl()
+    {
+        return self::baseUrl('Ecounter');
+    }
+
+    public static function updateEcounterUrl($ihsNumber)
+    {
+        return self::baseUrl('Ecounter/'.$ihsNumber);
+    }
 }
