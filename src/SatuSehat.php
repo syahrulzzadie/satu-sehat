@@ -211,7 +211,7 @@ class SatuSehat
     {
         $getToken = jsonResponse\Auth::getToken();
         if ($getToken['status']) {
-            $url = Url::createEcounterUrl();
+            $url = Url::updateEcounterUrl($ihsNumber);
             $formData = jsonData\Ecounter::formUpdateData($ihsNumber,$organization,$patient,$practitioner,$location);
             $response = Http::withToken($getToken['token'])
                 ->put($url, $formData);
