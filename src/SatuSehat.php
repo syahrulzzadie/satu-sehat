@@ -97,12 +97,12 @@ class SatuSehat
         return jsonResponse\Error::getToken($getToken);
     }
 
-    public static function createLocation($name)
+    public static function createLocation($organization,$name)
     {
         $getToken = jsonResponse\Auth::getToken();
         if ($getToken['status']) {
             $url = Url::createLocationUrl();
-            $formData = jsonData\Location::formCreateData($name);
+            $formData = jsonData\Location::formCreateData($organization,$name);
             $response = Http::withToken($getToken['token'])
                 ->post($url, $formData);
             if ($response->successful()) {
@@ -119,12 +119,12 @@ class SatuSehat
         return jsonResponse\Error::getToken($getToken);
     }
 
-    public static function updateLocation($ihsNumber, $name)
+    public static function updateLocation($ihsNumber,$organization,$name)
     {
         $getToken = jsonResponse\Auth::getToken();
         if ($getToken['status']) {
             $url = Url::updateLocationUrl($ihsNumber);
-            $formData = jsonData\Location::formUpdateData($ihsNumber,$name);
+            $formData = jsonData\Location::formUpdateData($ihsNumber,$organization,$name);
             $response = Http::withToken($getToken['token'])
                 ->put($url, $formData);
             if ($response->successful()) {

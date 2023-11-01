@@ -2,18 +2,15 @@
 
 namespace syahrulzzadie\SatuSehat\JsonData;
 
-use syahrulzzadie\SatuSehat\Utilitys\Constant;
-
 class Location
 {
-    public static function formCreateData($name)
+    public static function formCreateData($organization,$name)
     {
-        $organizationId = Constant::$organizationId;
         return [
             "resourceType"=> "Location",
             "identifier"=> [
                 [
-                    "system"=> "http://sys-ids.kemkes.go.id/location/".$organizationId,
+                    "system"=> "http://sys-ids.kemkes.go.id/location/".$organization->ihs_number,
                     "value"=> $name
                 ]
             ],
@@ -90,20 +87,20 @@ class Location
                 "altitude"=> 0
             ],
             "managingOrganization"=> [
-                "reference"=> "Organization/".$organizationId
+                "reference"=> "Organization/".$organization->ihs_number,
+                "display"=> $organization->name
             ]
         ];
     }
 
-    public static function formUpdateData($ihsNumber, $name)
+    public static function formUpdateData($ihsNumber,$organization,$name)
     {
-        $organizationId = Constant::$organizationId;
         return [
             "resourceType"=> "Location",
             "id" => $ihsNumber,
             "identifier"=> [
                 [
-                    "system"=> "http://sys-ids.kemkes.go.id/location/".$organizationId,
+                    "system"=> "http://sys-ids.kemkes.go.id/location/".$organization->ihs_number,
                     "value"=> $name
                 ]
             ],
@@ -180,7 +177,8 @@ class Location
                 "altitude"=> 0
             ],
             "managingOrganization"=> [
-                "reference"=> "Organization/".$organizationId
+                "reference"=> "Organization/".$organization->ihs_number,
+                "display"=> $organization->name
             ]
         ];
     }
