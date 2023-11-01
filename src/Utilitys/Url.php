@@ -73,4 +73,9 @@ class Url
     {
         return self::baseUrl('Ecounter/'.$ihsNumber);
     }
+
+    public static function historyEcounterUrl($ihsNumberPatient)
+    {
+        return self::baseUrl('Ecounter?subject='.$ihsNumberPatient);
+    }
 }

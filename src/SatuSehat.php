@@ -228,4 +228,25 @@ class SatuSehat
         }
         return jsonResponse\Error::getToken($getToken);
     }
+
+    public static function historyEcounter($ihsNumberPatient)
+    {
+        $getToken = jsonResponse\Auth::getToken();
+        if ($getToken['status']) {
+            $url = Url::historyEcounterUrl($ihsNumberPatient);
+            $response = Http::withToken($getToken['token'])
+                ->get($url);
+            if ($response->successful()) {
+                if ($response->status() == 200) {
+                    $data = jsonResponse\Ecounter::history($response);
+                    return [
+                        'status' => true,
+                        'data' => $data
+                    ];
+                }
+            }
+            return jsonResponse\Error::response($response);
+        }
+        return jsonResponse\Error::getToken($getToken);
+    }
 }
