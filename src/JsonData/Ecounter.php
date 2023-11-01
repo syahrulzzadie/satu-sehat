@@ -70,12 +70,12 @@ class Ecounter
         ];
     }
 
-    public static function formUpdateData($ihsNumber,$ecounter,$organization,$patient,$practitioner,$location)
+    public static function formUpdateData($ihsNumber,$status,$createdAt,$organization,$patient,$practitioner,$location)
     {
         return [
             "resourceType"=> "Encounter",
             "id"=> $ihsNumber,
-            "status"=> $ecounter->status,
+            "status"=> $status,
             "class"=> [
                 "system"=> "http://terminology.hl7.org/CodeSystem/v3-ActCode",
                 "code"=> "AMB",
@@ -105,7 +105,7 @@ class Ecounter
                 ]
             ],
             "period"=> [
-                "start"=> DateTimeFormat::parse($ecounter->created_at)
+                "start"=> DateTimeFormat::parse($createdAt)
             ],
             "location"=> [
                 [
@@ -117,9 +117,9 @@ class Ecounter
             ],
             "statusHistory"=> [
                 [
-                    "status"=> $ecounter->status,
+                    "status"=> $status,
                     "period"=> [
-                        "start"=> DateTimeFormat::parse($ecounter->created_at)
+                        "start"=> DateTimeFormat::parse($createdAt)
                     ]
                 ]
             ],

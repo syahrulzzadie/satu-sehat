@@ -207,12 +207,12 @@ class SatuSehat
         return jsonResponse\Error::getToken($getToken);
     }
 
-    public static function updateEcounter($ihsNumber,$ecounter,$organization,$patient,$practitioner,$location)
+    public static function updateEcounter($ihsNumber,$status,$createdAt,$organization,$patient,$practitioner,$location)
     {
         $getToken = jsonResponse\Auth::getToken();
         if ($getToken['status']) {
             $url = Url::updateEcounterUrl($ihsNumber);
-            $formData = jsonData\Ecounter::formUpdateData($ihsNumber,$ecounter,$organization,$patient,$practitioner,$location);
+            $formData = jsonData\Ecounter::formUpdateData($ihsNumber,$status,$createdAt,$organization,$patient,$practitioner,$location);
             $response = Http::withToken($getToken['token'])
                 ->put($url, $formData);
             if ($response->successful()) {
