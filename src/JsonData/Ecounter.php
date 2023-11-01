@@ -4,11 +4,11 @@ namespace syahrulzzadie\SatuSehat\JsonData;
 
 class Ecounter
 {
-    public static function formCreateData($organization,$patient,$practitioner,$location)
+    public static function formCreateData($status,$organization,$patient,$practitioner,$location)
     {
         return [
             "resourceType"=> "Encounter",
-            "status"=> "arrived",
+            "status"=> $status,
             "class"=> [
                 "system"=> "http://terminology.hl7.org/CodeSystem/v3-ActCode",
                 "code"=> "AMB",
@@ -68,12 +68,12 @@ class Ecounter
         ];
     }
 
-    public static function formUpdateData($ihsNumber,$organization,$patient,$practitioner,$location)
+    public static function formUpdateData($ihsNumber,$status,$organization,$patient,$practitioner,$location)
     {
         return [
             "resourceType"=> "Encounter",
             "id"=> $ihsNumber,
-            "status"=> "arrived",
+            "status"=> $status,
             "class"=> [
                 "system"=> "http://terminology.hl7.org/CodeSystem/v3-ActCode",
                 "code"=> "AMB",
