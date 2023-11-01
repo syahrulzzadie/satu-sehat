@@ -2,6 +2,8 @@
 
 namespace syahrulzzadie\SatuSehat\JsonData;
 
+use syahrulzzadie\SatuSehat\Utilitys\DateTimeFormat;
+
 class Ecounter
 {
     public static function formCreateData($status,$organization,$patient,$practitioner,$location)
@@ -38,7 +40,7 @@ class Ecounter
                 ]
             ],
             "period"=> [
-                "start"=> date('Y-m-dTH:i:s+07:00')
+                "start"=> DateTimeFormat::now()
             ],
             "location"=> [
                 [
@@ -50,9 +52,9 @@ class Ecounter
             ],
             "statusHistory"=> [
                 [
-                    "status"=> "arrived",
+                    "status"=> $status,
                     "period"=> [
-                        "start"=> date('Y-m-dTH:i:s+07:00')
+                        "start"=> DateTimeFormat::now()
                     ]
                 ]
             ],
@@ -68,12 +70,12 @@ class Ecounter
         ];
     }
 
-    public static function formUpdateData($ihsNumber,$status,$organization,$patient,$practitioner,$location)
+    public static function formUpdateData($ihsNumber,$ecounter,$organization,$patient,$practitioner,$location)
     {
         return [
             "resourceType"=> "Encounter",
             "id"=> $ihsNumber,
-            "status"=> $status,
+            "status"=> $ecounter->status,
             "class"=> [
                 "system"=> "http://terminology.hl7.org/CodeSystem/v3-ActCode",
                 "code"=> "AMB",
@@ -103,7 +105,7 @@ class Ecounter
                 ]
             ],
             "period"=> [
-                "start"=> date('Y-m-dTH:i:s+07:00')
+                "start"=> DateTimeFormat::parse($ecounter->created_at)
             ],
             "location"=> [
                 [
@@ -115,9 +117,9 @@ class Ecounter
             ],
             "statusHistory"=> [
                 [
-                    "status"=> "arrived",
+                    "status"=> $ecounter->status,
                     "period"=> [
-                        "start"=> date('Y-m-dTH:i:s+07:00')
+                        "start"=> DateTimeFormat::parse($ecounter->created_at)
                     ]
                 ]
             ],
