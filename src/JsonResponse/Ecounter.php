@@ -36,14 +36,21 @@ class Ecounter
         $entry = $data['entry'];
         foreach ($entry as $item) {
             $res = $item['resource'];
-            $dt['ihs_number'] = $res['id'];
-            $dt['ihs_number_location'] = StrHelper::getIhsNumber($res['location'][0]['location']['reference']);
-            $dt['location_name'] = $res['location'][0]['location']['display'];
-            $dt['ihs_number_practitioner'] = StrHelper::getIhsNumber($res['participant'][0]['individual']['reference']);
-            $dt['practitioner_name'] = $res['participant'][0]['individual']['display'];
-            $dt['ihs_number_patient'] = StrHelper::getIhsNumber($res['subject']['display']['reference']);
-            $dt['patient_name'] = $res['subject']['display']['display'];
-            $dt['diagnosis'] = self::getDiagnosis($res);
+            $resType = $res['resourceType'];
+            if ($resType == 'Ecounter') {
+                $dt['consent'] = 'OPTIN';
+                $dt['ihs_number'] = $res['id'];
+                $dt['ihs_number_location'] = StrHelper::getIhsNumber($res['location'][0]['location']['reference']);
+                $dt['location_name'] = $res['location'][0]['location']['display'];
+                $dt['ihs_number_practitioner'] = StrHelper::getIhsNumber($res['participant'][0]['individual']['reference']);
+                $dt['practitioner_name'] = $res['participant'][0]['individual']['display'];
+                $dt['ihs_number_patient'] = StrHelper::getIhsNumber($res['subject']['display']['reference']);
+                $dt['patient_name'] = $res['subject']['display']['display'];
+                $dt['diagnosis'] = self::getDiagnosis($res);
+            } else {
+                $dt['consent'] = 'OPTOUT';
+                $dt['message'] = 'The operation did not return any information due to consent or privacy rules.';
+            }
             $history[] = $dt;
         }
         return $history;
