@@ -4,7 +4,7 @@ namespace syahrulzzadie\SatuSehat\JsonData;
 
 use syahrulzzadie\SatuSehat\Utilitys\DateTimeFormat;
 
-class Ecounter
+class Encounter
 {
     public static function formCreateData($status,$organization,$patient,$practitioner,$location)
     {

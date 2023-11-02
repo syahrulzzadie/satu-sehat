@@ -4,7 +4,7 @@ namespace syahrulzzadie\SatuSehat\JsonResponse;
 
 use syahrulzzadie\SatuSehat\Utilitys\StrHelper;
 
-class Ecounter
+class Encounter
 {
     public static function convert($response)
     {
@@ -37,7 +37,7 @@ class Ecounter
         foreach ($entry as $item) {
             $res = $item['resource'];
             $resType = $res['resourceType'];
-            if ($resType == 'Ecounter') {
+            if ($resType == 'Encounter') {
                 $dt['consent'] = 'OPTIN';
                 $dt['ihs_number'] = $res['id'];
                 $dt['ihs_number_location'] = StrHelper::getIhsNumber($res['location'][0]['location']['reference']);

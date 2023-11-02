@@ -64,18 +64,18 @@ class Url
         return self::consentUrl('Consent');
     }
 
-    public static function createEcounterUrl()
+    public static function createEncounterUrl()
     {
-        return self::baseUrl('Ecounter');
+        return self::baseUrl('Encounter');
     }
 
-    public static function updateEcounterUrl($ihsNumber)
+    public static function updateEncounterUrl($ihsNumber)
     {
-        return self::baseUrl('Ecounter/'.$ihsNumber);
+        return self::baseUrl('Encounter/'.$ihsNumber);
     }
 
-    public static function historyEcounterUrl($ihsNumberPatient)
+    public static function historyEncounterUrl($ihsNumberPatient)
     {
-        return self::baseUrl('Ecounter?subject='.$ihsNumberPatient);
+        return self::baseUrl('Encounter?subject='.$ihsNumberPatient);
     }
 }

@@ -185,17 +185,17 @@ class SatuSehat
         return jsonResponse\Error::getToken($getToken);
     }
 
-    public static function createEcounter($status,$organization,$patient,$practitioner,$location)
+    public static function createEncounter($status,$organization,$patient,$practitioner,$location)
     {
         $getToken = jsonResponse\Auth::getToken();
         if ($getToken['status']) {
-            $url = Url::createEcounterUrl();
-            $formData = jsonData\Ecounter::formCreateData($status,$organization,$patient,$practitioner,$location);
+            $url = Url::createEncounterUrl();
+            $formData = jsonData\Encounter::formCreateData($status,$organization,$patient,$practitioner,$location);
             $response = Http::withToken($getToken['token'])
                 ->post($url, $formData);
             if ($response->successful()) {
                 if ($response->status() == 201) {
-                    $data = jsonResponse\Ecounter::convert($response);
+                    $data = jsonResponse\Encounter::convert($response);
                     return [
                         'status' => true,
                         'data' => $data
@@ -207,17 +207,17 @@ class SatuSehat
         return jsonResponse\Error::getToken($getToken);
     }
 
-    public static function updateEcounter($ihsNumber,$status,$createdAt,$organization,$patient,$practitioner,$location)
+    public static function updateEncounter($ihsNumber,$status,$createdAt,$organization,$patient,$practitioner,$location)
     {
         $getToken = jsonResponse\Auth::getToken();
         if ($getToken['status']) {
-            $url = Url::updateEcounterUrl($ihsNumber);
-            $formData = jsonData\Ecounter::formUpdateData($ihsNumber,$status,$createdAt,$organization,$patient,$practitioner,$location);
+            $url = Url::updateEncounterUrl($ihsNumber);
+            $formData = jsonData\Encounter::formUpdateData($ihsNumber,$status,$createdAt,$organization,$patient,$practitioner,$location);
             $response = Http::withToken($getToken['token'])
                 ->put($url, $formData);
             if ($response->successful()) {
                 if ($response->status() == 200) {
-                    $data = jsonResponse\Ecounter::convert($response);
+                    $data = jsonResponse\Encounter::convert($response);
                     return [
                         'status' => true,
                         'data' => $data
@@ -229,17 +229,17 @@ class SatuSehat
         return jsonResponse\Error::getToken($getToken);
     }
 
-    public static function historyEcounter($ihsNumberPatient)
+    public static function historyEncounter($ihsNumberPatient)
     {
         $getToken = jsonResponse\Auth::getToken();
         if ($getToken['status']) {
-            $url = Url::historyEcounterUrl($ihsNumberPatient);
+            $url = Url::historyEncounterUrl($ihsNumberPatient);
             $response = Http::asForm()
                 ->withToken($getToken['token'])
                 ->get($url);
             if ($response->successful()) {
                 if ($response->status() == 200) {
-                    $data = jsonResponse\Ecounter::history($response);
+                    $data = jsonResponse\Encounter::history($response);
                     return [
                         'status' => true,
                         'data' => $data
