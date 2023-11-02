@@ -14,9 +14,9 @@ class Url
         return Constant::$baseUrl.'/'.$subUrl;
     }
 
-    private static function hostUrl($subUrl)
+    private static function consentUrl($subUrl)
     {
-        return Constant::$host.'/'.$subUrl;
+        return Constant::$consentUrl.'/'.$subUrl;
     }
 
     public static function authUrl()
@@ -56,12 +56,12 @@ class Url
 
     public static function getConsentPatientUrl($ihsNumber)
     {
-        return self::hostUrl('consent/v1/Consent?patient_id='.$ihsNumber);
+        return self::consentUrl('Consent?patient_id='.$ihsNumber);
     }
 
     public static function updateConsentPatientUrl()
     {
-        return self::hostUrl('consent/v1/Consent');
+        return self::consentUrl('Consent');
     }
 
     public static function createEcounterUrl()
