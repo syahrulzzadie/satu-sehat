@@ -2,7 +2,7 @@
 
 namespace syahrulzzadie\SatuSehat\Utilitys;
 
-define('_urlHost_','https://api-satusehat-stg.dto.kemkes.go.id');
+define('_urlHost_','https://api-satusehat-dev.dto.kemkes.go.id');
 
 class Constant
 {
