@@ -6,11 +6,11 @@ use syahrulzzadie\SatuSehat\Utilitys\DateTimeFormat;
 
 class Encounter
 {
-    public static function formCreateData($status,$organization,$patient,$practitioner,$location)
+    public static function formCreateData($organization,$patient,$practitioner,$location)
     {
         return [
             "resourceType"=> "Encounter",
-            "status"=> $status,
+            "status"=> "arrived",
             "class"=> [
                 "system"=> "http://terminology.hl7.org/CodeSystem/v3-ActCode",
                 "code"=> "AMB",
@@ -52,7 +52,7 @@ class Encounter
             ],
             "statusHistory"=> [
                 [
-                    "status"=> $status,
+                    "status"=> "arrived",
                     "period"=> [
                         "start"=> DateTimeFormat::now()
                     ]

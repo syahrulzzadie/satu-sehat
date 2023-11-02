@@ -78,4 +78,19 @@ class Url
     {
         return self::baseUrl('Encounter?subject='.$ihsNumberPatient);
     }
+
+    public static function createConditionUrl()
+    {
+        return self::baseUrl('Condition');
+    }
+
+    public static function updateConditionUrl($ihsNumber)
+    {
+        return self::baseUrl('Condition/'.$ihsNumber);
+    }
+
+    public static function historyConditionUrl($ihsNumberPatient)
+    {
+        return self::baseUrl('Condition?subject='.$ihsNumberPatient);
+    }
 }

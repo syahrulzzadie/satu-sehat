@@ -185,12 +185,12 @@ class SatuSehat
         return jsonResponse\Error::getToken($getToken);
     }
 
-    public static function createEncounter($status,$organization,$patient,$practitioner,$location)
+    public static function createEncounter($organization,$patient,$practitioner,$location)
     {
         $getToken = jsonResponse\Auth::getToken();
         if ($getToken['status']) {
             $url = Url::createEncounterUrl();
-            $formData = jsonData\Encounter::formCreateData($status,$organization,$patient,$practitioner,$location);
+            $formData = jsonData\Encounter::formCreateData($organization,$patient,$practitioner,$location);
             $response = Http::withToken($getToken['token'])
                 ->post($url, $formData);
             if ($response->successful()) {
@@ -240,6 +240,72 @@ class SatuSehat
             if ($response->successful()) {
                 if ($response->status() == 200) {
                     $data = jsonResponse\Encounter::history($response);
+                    return [
+                        'status' => true,
+                        'data' => $data
+                    ];
+                }
+            }
+            return jsonResponse\Error::response($response);
+        }
+        return jsonResponse\Error::getToken($getToken);
+    }
+
+    public static function createCondition($encounter,$patient,$diagnosis)
+    {
+        $getToken = jsonResponse\Auth::getToken();
+        if ($getToken['status']) {
+            $url = Url::createConditionUrl();
+            $formData = jsonData\Condition::formCreateData($encounter,$patient,$diagnosis);
+            $response = Http::withToken($getToken['token'])
+                ->post($url, $formData);
+            if ($response->successful()) {
+                if ($response->status() == 201) {
+                    $data = jsonResponse\Condition::convert($response);
+                    return [
+                        'status' => true,
+                        'data' => $data
+                    ];
+                }
+            }
+            return jsonResponse\Error::response($response);
+        }
+        return jsonResponse\Error::getToken($getToken);
+    }
+
+    public static function updateCondition($ihsNumber,$encounter,$patient,$diagnosis)
+    {
+        $getToken = jsonResponse\Auth::getToken();
+        if ($getToken['status']) {
+            $url = Url::updateConditionUrl($ihsNumber);
+            $formData = jsonData\Condition::formUpdateData($ihsNumber,$encounter,$patient,$diagnosis);
+            $response = Http::withToken($getToken['token'])
+                ->put($url, $formData);
+            if ($response->successful()) {
+                if ($response->status() == 201) {
+                    $data = jsonResponse\Condition::convert($response);
+                    return [
+                        'status' => true,
+                        'data' => $data
+                    ];
+                }
+            }
+            return jsonResponse\Error::response($response);
+        }
+        return jsonResponse\Error::getToken($getToken);
+    }
+
+    public static function historyCondition($ihsNumberPatient)
+    {
+        $getToken = jsonResponse\Auth::getToken();
+        if ($getToken['status']) {
+            $url = Url::historyConditionUrl($ihsNumberPatient);
+            $response = Http::asForm()
+                ->withToken($getToken['token'])
+                ->get($url);
+            if ($response->successful()) {
+                if ($response->status() == 200) {
+                    $data = jsonResponse\Condition::history($response);
                     return [
                         'status' => true,
                         'data' => $data
