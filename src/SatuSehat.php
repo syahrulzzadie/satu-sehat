@@ -216,7 +216,7 @@ class SatuSehat
             $response = Http::withToken($getToken['token'])
                 ->put($url, $formData);
             if ($response->successful()) {
-                if ($response->status() == 201) {
+                if ($response->status() == 200) {
                     $data = jsonResponse\Ecounter::convert($response);
                     return [
                         'status' => true,
