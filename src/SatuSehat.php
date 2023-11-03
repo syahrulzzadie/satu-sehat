@@ -251,12 +251,12 @@ class SatuSehat
         return jsonResponse\Error::getToken($getToken);
     }
 
-    public static function createCondition($encounter,$patient,$diagnosis)
+    public static function createCondition($encounter,$patient,$code,$name)
     {
         $getToken = jsonResponse\Auth::getToken();
         if ($getToken['status']) {
             $url = Url::createConditionUrl();
-            $formData = jsonData\Condition::formCreateData($encounter,$patient,$diagnosis);
+            $formData = jsonData\Condition::formCreateData($encounter,$patient,$code,$name);
             $response = Http::withToken($getToken['token'])
                 ->post($url, $formData);
             if ($response->successful()) {
@@ -273,16 +273,16 @@ class SatuSehat
         return jsonResponse\Error::getToken($getToken);
     }
 
-    public static function updateCondition($ihsNumber,$encounter,$patient,$diagnosis)
+    public static function updateCondition($ihsNumber,$encounter,$patient,$code,$name)
     {
         $getToken = jsonResponse\Auth::getToken();
         if ($getToken['status']) {
             $url = Url::updateConditionUrl($ihsNumber);
-            $formData = jsonData\Condition::formUpdateData($ihsNumber,$encounter,$patient,$diagnosis);
+            $formData = jsonData\Condition::formUpdateData($ihsNumber,$encounter,$patient,$code,$name);
             $response = Http::withToken($getToken['token'])
                 ->put($url, $formData);
             if ($response->successful()) {
-                if ($response->status() == 201) {
+                if ($response->status() == 200) {
                     $data = jsonResponse\Condition::convert($response);
                     return [
                         'status' => true,

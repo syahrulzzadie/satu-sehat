@@ -2,20 +2,10 @@
 
 namespace syahrulzzadie\SatuSehat\JsonData;
 
-use syahrulzzadie\SatuSehat\Utilitys\DateTimeFormat;
-
 class Condition
 {
-    public static function formCreateData($encounter,$patient,$diagnosis)
+    public static function formCreateData($encounter,$patient,$code,$name)
     {
-        $dataDiagnosis = [];
-        foreach ($diagnosis as $code => $name) {
-            $dataDiagnosis[] = [
-                "system"=> "http://hl7.org/fhir/sid/icd-10",
-                "code"=> $code,
-                "display"=> $name
-            ];
-        }
         return [
             "resourceType"=> "Condition",
             "clinicalStatus"=> [
@@ -39,7 +29,13 @@ class Condition
                 ]
             ],
             "code"=> [
-                "coding"=> $dataDiagnosis
+                "coding"=> [
+                    [
+                        "system"=> "http://hl7.org/fhir/sid/icd-10",
+                        "code"=> $code,
+                        "display"=> $name
+                    ]
+                ]
             ],
             "subject"=> [
                 "reference"=> "Patient/".$patient->ihs_number,
@@ -51,16 +47,8 @@ class Condition
         ];
     }
 
-    public static function formUpdateData($ihsNumber,$encounter,$patient,$diagnosis)
+    public static function formUpdateData($ihsNumber,$encounter,$patient,$code,$name)
     {
-        $dataDiagnosis = [];
-        foreach ($diagnosis as $code => $name) {
-            $dataDiagnosis[] = [
-                "system"=> "http://hl7.org/fhir/sid/icd-10",
-                "code"=> $code,
-                "display"=> $name
-            ];
-        }
         return [
             "resourceType"=> "Condition",
             "id"=> $ihsNumber,
@@ -85,7 +73,13 @@ class Condition
                 ]
             ],
             "code"=> [
-                "coding"=> $dataDiagnosis
+                "coding"=> [
+                    [
+                        "system"=> "http://hl7.org/fhir/sid/icd-10",
+                        "code"=> $code,
+                        "display"=> $name
+                    ]
+                ]
             ],
             "subject"=> [
                 "reference"=> "Patient/".$patient->ihs_number,
