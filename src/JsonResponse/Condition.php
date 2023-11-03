@@ -10,7 +10,11 @@ class Condition
     {
         $data = json_decode($response->body(), true);
         return [
-            'ihs_number' => $data['id']
+            'ihs_number' => $data['id'],
+            'ihs_number_patient' => StrHelper::getIhsNumber($data['subject']['reference']),
+            'name_patient' => $data['subject']['display'] ?? '',
+            'ihs_number_enconter' => StrHelper::getIhsNumber($data['encounter']['reference']),
+            'name_enconter' => $data['encounter']['display'] ?? '',
         ];
     }
 

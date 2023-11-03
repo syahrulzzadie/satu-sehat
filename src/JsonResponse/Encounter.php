@@ -10,7 +10,14 @@ class Encounter
     {
         $data = json_decode($response->body(),true);
         return [
-            'ihs_number' => $data['id']
+            'ihs_number' => $data['id'],
+            'ihs_number_patient' => StrHelper::getIhsNumber($data['subject']['reference']),
+            'name_patient' => $data['subject']['display'] ?? '',
+            'ihs_number_location' => StrHelper::getIhsNumber($data['location'][0]['location']['reference']),
+            'name_location' => $data['location'][0]['location']['display'] ?? '',
+            'ihs_number_practitioner' => StrHelper::getIhsNumber($data['participant'][0]['individual']['reference']),
+            'name_practitioner' => $data['participant'][0]['individual']['display'] ?? '',
+            'period_start' => $data['period']['start']
         ];
     }
 
