@@ -417,10 +417,7 @@ class SatuSehat
                     $data['observation'] = jsonResponse\Observation::history($response['observation']);
                 }
             }
-            return [
-                'status' => true,
-                'data' => $data
-            ];
+            return $data;
         }
         return jsonResponse\Error::getToken($getToken);
     }
