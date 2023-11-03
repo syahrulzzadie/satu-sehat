@@ -316,4 +316,70 @@ class SatuSehat
         }
         return jsonResponse\Error::getToken($getToken);
     }
+
+    public static function createObservation($encounter,$patient,$practitioner,$code,$name,$value,$unit)
+    {
+        $getToken = jsonResponse\Auth::getToken();
+        if ($getToken['status']) {
+            $url = Url::createObservationUrl();
+            $formData = jsonData\Observation::formCreateData($encounter,$patient,$practitioner,$code,$name,$value,$unit);
+            $response = Http::withToken($getToken['token'])
+                ->post($url, $formData);
+            if ($response->successful()) {
+                if ($response->status() == 201) {
+                    $data = jsonResponse\Observation::convert($response);
+                    return [
+                        'status' => true,
+                        'data' => $data
+                    ];
+                }
+            }
+            return jsonResponse\Error::response($response);
+        }
+        return jsonResponse\Error::getToken($getToken);
+    }
+
+    public static function updateObservation($ihsNumber,$observation,$encounter,$patient,$practitioner,$code,$name,$value,$unit)
+    {
+        $getToken = jsonResponse\Auth::getToken();
+        if ($getToken['status']) {
+            $url = Url::updateObservationUrl($ihsNumber);
+            $formData = jsonData\Observation::formUpdateData($ihsNumber,$observation,$encounter,$patient,$practitioner,$code,$name,$value,$unit);
+            $response = Http::withToken($getToken['token'])
+                ->put($url, $formData);
+            if ($response->successful()) {
+                if ($response->status() == 200) {
+                    $data = jsonResponse\Observation::convert($response);
+                    return [
+                        'status' => true,
+                        'data' => $data
+                    ];
+                }
+            }
+            return jsonResponse\Error::response($response);
+        }
+        return jsonResponse\Error::getToken($getToken);
+    }
+
+    public static function historyObservation($ihsNumberPatient)
+    {
+        $getToken = jsonResponse\Auth::getToken();
+        if ($getToken['status']) {
+            $url = Url::historyObservationUrl($ihsNumberPatient);
+            $response = Http::asForm()
+                ->withToken($getToken['token'])
+                ->get($url);
+            if ($response->successful()) {
+                if ($response->status() == 200) {
+                    $data = jsonResponse\Observation::history($response);
+                    return [
+                        'status' => true,
+                        'data' => $data
+                    ];
+                }
+            }
+            return jsonResponse\Error::response($response);
+        }
+        return jsonResponse\Error::getToken($getToken);
+    }
 }

@@ -93,4 +93,19 @@ class Url
     {
         return self::baseUrl('Condition?subject='.$ihsNumberPatient);
     }
+
+    public static function createObservationUrl()
+    {
+        return self::baseUrl('Observation');
+    }
+
+    public static function updateObservationUrl($ihsNumber)
+    {
+        return self::baseUrl('Observation/'.$ihsNumber);
+    }
+
+    public static function historyObservationUrl($ihsNumberPatient)
+    {
+        return self::baseUrl('Observation?subject='.$ihsNumberPatient);
+    }
 }
