@@ -49,12 +49,15 @@ class Encounter
             if ($resType == 'Encounter') {
                 $dt['consent'] = 'OPTIN';
                 $dt['ihs_number'] = $res['id'];
+                $dt['ihs_number_patient'] = StrHelper::getIhsNumber($res['subject']['reference']);
+                $dt['name_patient'] = $res['subject']['display'] ?? '';
                 $dt['ihs_number_location'] = StrHelper::getIhsNumber($res['location'][0]['location']['reference']);
-                $dt['location_name'] = $res['location'][0]['location']['display'];
+                $dt['name_location'] = $res['location'][0]['location']['display'] ?? '';
                 $dt['ihs_number_practitioner'] = StrHelper::getIhsNumber($res['participant'][0]['individual']['reference']);
-                $dt['practitioner_name'] = $res['participant'][0]['individual']['display'];
-                $dt['ihs_number_patient'] = StrHelper::getIhsNumber($res['subject']['display']['reference']);
-                $dt['patient_name'] = $res['subject']['display']['display'];
+                $dt['name_practitioner'] = $res['participant'][0]['individual']['display'] ?? '';
+                $dt['ihs_number_organization'] = StrHelper::getIhsNumber($res['serviceProvider']['reference']);
+                $dt['name_organization'] = $res['serviceProvider']['display'] ?? '';
+                $dt['period_start'] = $res['period']['start'];
                 $dt['diagnosis'] = self::getDiagnosis($res);
             } else {
                 $dt['consent'] = 'OPTOUT';

@@ -13,8 +13,8 @@ class Condition
             'ihs_number' => $data['id'],
             'ihs_number_patient' => StrHelper::getIhsNumber($data['subject']['reference']),
             'name_patient' => $data['subject']['display'] ?? '',
-            'ihs_number_enconter' => StrHelper::getIhsNumber($data['encounter']['reference']),
-            'name_enconter' => $data['encounter']['display'] ?? '',
+            'ihs_number_encounter' => StrHelper::getIhsNumber($data['encounter']['reference']),
+            'name_encounter' => $data['encounter']['display'] ?? '',
         ];
     }
 
@@ -41,8 +41,10 @@ class Condition
             if ($resType == 'Condition') {
                 $dt['consent'] = 'OPTIN';
                 $dt['ihs_number'] = $res['id'];
-                $dt['ihs_number_encounter'] = StrHelper::getIhsNumber($res['encounter']['reference']);
                 $dt['ihs_number_patient'] = StrHelper::getIhsNumber($res['subject']['reference']);
+                $dt['name_patient'] = $res['subject']['display'] ?? '';
+                $dt['ihs_number_encounter'] = StrHelper::getIhsNumber($res['encounter']['reference']);
+                $dt['name_encounter'] = $res['encounter']['display'] ?? '';
                 $dt['diagnosis'] = self::getDiagnosis($res);
             } else {
                 $dt['consent'] = 'OPTOUT';
