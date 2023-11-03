@@ -382,4 +382,42 @@ class SatuSehat
         }
         return jsonResponse\Error::getToken($getToken);
     }
+
+    public static function historyPatient($ihsNumber)
+    {
+        $getToken = jsonResponse\Auth::getToken();
+        if ($getToken['status']) {
+            $token = $getToken['token'];
+            $response = Http::pool(function($pool)use($token,$ihsNumber){
+                $urlEncounter = Url::historyEncounterUrl($ihsNumber);
+                $urlCondition = Url::historyConditionUrl($ihsNumber);
+                $urlObservation = Url::historyObservationUrl($ihsNumber);
+                ////////////////////////////////////////////////////////////////////////
+                $pool->as('encounter')->asForm()->withToken($token)->get($urlEncounter);
+                $pool->as('condition')->asForm()->withToken($token)->get($urlCondition);
+                $pool->as('observation')->asForm()->withToken($token)->get($urlObservation);
+            });
+            $data = [];
+            if ($response['encounter']->successful()) {
+                if ($response['encounter']->status() == 200) {
+                    $data[] = jsonResponse\Encounter::history($response['encounter']);
+                }
+            }
+            if ($response['condition']->successful()) {
+                if ($response['condition']->status() == 200) {
+                    $data[] = jsonResponse\Condition::history($response['condition']);
+                }
+            }
+            if ($response['observation']->successful()) {
+                if ($response['observation']->status() == 200) {
+                    $data[] = jsonResponse\Observation::history($response['observation']);
+                }
+            }
+            return [
+                'status' => true,
+                'data' => $data
+            ];
+        }
+        return jsonResponse\Error::getToken($getToken);
+    }
 }
