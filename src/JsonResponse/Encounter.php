@@ -17,6 +17,8 @@ class Encounter
             'name_location' => $data['location'][0]['location']['display'] ?? '',
             'ihs_number_practitioner' => StrHelper::getIhsNumber($data['participant'][0]['individual']['reference']),
             'name_practitioner' => $data['participant'][0]['individual']['display'] ?? '',
+            'ihs_number_organization' => StrHelper::getIhsNumber($data['serviceProvider']['reference']),
+            'name_organization' => $data['serviceProvider']['display'] ?? '',
             'period_start' => $data['period']['start']
         ];
     }
