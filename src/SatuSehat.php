@@ -397,20 +397,24 @@ class SatuSehat
                 $pool->as('condition')->asForm()->withToken($token)->get($urlCondition);
                 $pool->as('observation')->asForm()->withToken($token)->get($urlObservation);
             });
-            $data = [];
+            $data = [
+                'encounter' => [],
+                'condition' => [],
+                'observation' => []
+            ];
             if ($response['encounter']->successful()) {
                 if ($response['encounter']->status() == 200) {
-                    $data[] = jsonResponse\Encounter::history($response['encounter']);
+                    $data['encounter'] = jsonResponse\Encounter::history($response['encounter']);
                 }
             }
             if ($response['condition']->successful()) {
                 if ($response['condition']->status() == 200) {
-                    $data[] = jsonResponse\Condition::history($response['condition']);
+                    $data['condition'] = jsonResponse\Condition::history($response['condition']);
                 }
             }
             if ($response['observation']->successful()) {
                 if ($response['observation']->status() == 200) {
-                    $data[] = jsonResponse\Observation::history($response['observation']);
+                    $data['observation'] = jsonResponse\Observation::history($response['observation']);
                 }
             }
             return [
