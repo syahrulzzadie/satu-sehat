@@ -104,21 +104,6 @@ class SatuSehat
         return jsonResponse\Error::http($http);
     }
 
-    public static function getConsent($ihsNumber)
-    {
-        $url = Url::getConsentPatientUrl($ihsNumber);
-        $http = HttpResponse::get($url);
-        if ($http['status']) {
-            $response = $http['response'];
-            $data = jsonResponse\Consent::convert($response);
-            return [
-                'status' => true,
-                'data' => $data
-            ];
-        }
-        return jsonResponse\Error::http($http);
-    }
-
     public static function updateConsent($ihsNumber,$petugas,$status)
     {
         $url = Url::updateConsentPatientUrl();
