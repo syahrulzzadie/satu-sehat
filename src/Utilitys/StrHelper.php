@@ -9,4 +9,9 @@ class StrHelper
         $reference = explode('/',$reference);
         return $reference[1];
     }
+
+    public static function cleanNoRawat($noRawat)
+    {
+        return str_replace('/','',$noRawat);
+    }
 }

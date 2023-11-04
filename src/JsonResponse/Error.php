@@ -9,7 +9,6 @@ class Error
         $message = json_encode($response->body());
         return [
             'status' => false,
-            'code' => $response->status(),
             'message' => $message
         ];
     }
@@ -19,6 +18,14 @@ class Error
         return [
             'status' => false,
             'message' => $getToken['message']
+        ];
+    }
+
+    public static function http($http)
+    {
+        return [
+            'status' => false,
+            'message' => $http['message']
         ];
     }
 }
