@@ -13,7 +13,7 @@ class HttpResponse
         if ($getToken['status']) {
             $response = Http::asForm()
                 ->timeout(300)
-                ->retry(3,100)
+                ->retry(5,1000)
                 ->withToken($getToken['token'])
                 ->get($url);
             if ($response->successful()) {
@@ -33,9 +33,8 @@ class HttpResponse
     {
         $getToken = jsonResponse\Auth::getToken();
         if ($getToken['status']) {
-            $response = Http::asForm()
-                ->timeout(300)
-                ->retry(3,100)
+            $response = Http::timeout(300)
+                ->retry(5,1000)
                 ->withToken($getToken['token'])
                 ->post($url,$formData);
             if ($response->successful()) {
@@ -55,9 +54,8 @@ class HttpResponse
     {
         $getToken = jsonResponse\Auth::getToken();
         if ($getToken['status']) {
-            $response = Http::asForm()
-                ->timeout(300)
-                ->retry(3,100)
+            $response = Http::timeout(300)
+                ->retry(5,1000)
                 ->withToken($getToken['token'])
                 ->post($url,$formData);
             if ($response->successful()) {
@@ -77,9 +75,8 @@ class HttpResponse
     {
         $getToken = jsonResponse\Auth::getToken();
         if ($getToken['status']) {
-            $response = Http::asForm()
-                ->timeout(300)
-                ->retry(3,100)
+            $response = Http::timeout(300)
+                ->retry(5,1000)
                 ->withToken($getToken['token'])
                 ->put($url,$formData);
             if ($response->successful()) {

@@ -14,7 +14,10 @@ class Auth
         $url = Url::authUrl();
         $data['client_id'] = Constant::$clientId;
         $data['client_secret'] = Constant::$clientSecret;
-        $response = Http::asForm()->post($url,$data);
+        $response = Http::asForm()
+            ->timeout(300)
+            ->retry(5,1000)
+            ->post($url,$data);
         if ($response->successful()) {
             if ($response->status() == 200) {
                 $data = json_decode($response->body(),true);
