@@ -7,6 +7,21 @@ use syahrulzzadie\SatuSehat\JsonResponse as jsonResponse;
 
 class HttpResponse
 {
+    private static function checkResponse($response)
+    {
+        $res = json_decode($response->body(),true);
+        if ($res['resourceType'] == 'OperationOutcome') {
+            return [
+                'status'=> false,
+                'message'=> $response->body()
+            ];
+        }
+        return [
+            'status'=> true,
+            'response' => $response
+        ];
+    }
+
     public static function get($url)
     {
         $getToken = jsonResponse\Auth::getToken();
@@ -18,10 +33,7 @@ class HttpResponse
                 ->get($url);
             if ($response->successful()) {
                 if ($response->status() == 200) {
-                    return [
-                        'status' => true,
-                        'response' => $response
-                    ];
+                    return self::checkResponse($response);
                 }
             }
             return jsonResponse\Error::response($response);
@@ -39,10 +51,7 @@ class HttpResponse
                 ->post($url,$formData);
             if ($response->successful()) {
                 if ($response->status() == 201) {
-                    return [
-                        'status' => true,
-                        'response' => $response
-                    ];
+                    return self::checkResponse($response);
                 }
             }
             return jsonResponse\Error::response($response);
@@ -60,10 +69,7 @@ class HttpResponse
                 ->post($url,$formData);
             if ($response->successful()) {
                 if ($response->status() == 200) {
-                    return [
-                        'status' => true,
-                        'response' => $response
-                    ];
+                    return self::checkResponse($response);
                 }
             }
             return jsonResponse\Error::response($response);
@@ -81,10 +87,7 @@ class HttpResponse
                 ->put($url,$formData);
             if ($response->successful()) {
                 if ($response->status() == 200) {
-                    return [
-                        'status' => true,
-                        'response' => $response
-                    ];
+                    return self::checkResponse($response);
                 }
             }
             return jsonResponse\Error::response($response);
