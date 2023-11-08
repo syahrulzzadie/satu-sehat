@@ -6,19 +6,19 @@ class Enviroment
 {
     public static function clientId()
     {
-        $code = base64_decode(Constant::$clientId);
-        return strrev($code);
+        $code = strrev(Constant::$clientId);
+        return base64_decode($code);
     }
 
     public static function clientSecret()
     {
-        $code = base64_decode(Constant::$clientSecret);
-        return strrev($code);
+        $code = strrev(Constant::$clientSecret);
+        return base64_decode($code);
     }
 
     public static function organizationId()
     {
-        $code = base64_decode(Constant::$organizationId);
-        return strrev($code);
+        $code = strrev(Constant::$organizationId);
+        return base64_decode($code);
     }
 }
