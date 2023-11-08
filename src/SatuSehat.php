@@ -16,11 +16,7 @@ class SatuSehat
         $http = HttpRequest::get($url);
         if ($http['status']) {
             $response = $http['response'];
-            $data = jsonResponse\Patient::convert($response);
-            return [
-                'status' => true,
-                'data' => $data
-            ];
+            return jsonResponse\Patient::convert($response);
         }
         return jsonResponse\Error::http($http);
     }
@@ -31,11 +27,7 @@ class SatuSehat
         $http = HttpRequest::get($url);
         if ($http['status']) {
             $response = $http['response'];
-            $data = jsonResponse\Practitioner::convert($response);
-            return [
-                'status' => true,
-                'data' => $data
-            ];
+            return jsonResponse\Practitioner::convert($response);
         }
         return jsonResponse\Error::http($http);
     }
