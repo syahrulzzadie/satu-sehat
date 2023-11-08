@@ -7,10 +7,15 @@ class Consent
     public static function convert($response)
     {
         $data = json_decode($response->body(),true);
-        $status = $data['policyRule']['coding'][0]['code'];
-        return [
-            'ihs_number' => $data['id'],
-            'status' => $status
-        ];
+        $resType = $data['resourceType'];
+        if ($resType == 'Consent') {
+            $code = $data['policyRule']['coding'][0]['code'];
+            return [
+                'status' => true,
+                'ihs_number' => $data['id'],
+                'code' => $code
+            ];
+        }
+        return Error::checkOperationOutcome($resType,$data);
     }
 }

@@ -7,7 +7,7 @@ use syahrulzzadie\SatuSehat\Utilitys\StrHelper;
 
 class Encounter
 {
-    public static function formCreateData($noRm,$noRawat,$organization,$patient,$practitioner,$location)
+    public static function formCreateData($noRawat,$organization,$patient,$practitioner,$location)
     {
         $noRawat = StrHelper::cleanNoRawat($noRawat);
         return [
@@ -65,16 +65,16 @@ class Encounter
             ],
             "identifier"=> [
                 [
-                    "system"=> "http://sys-ids.kemkes.go.id/encounter/".$noRawat,
-                    "value"=> $noRm
+                    "system"=> "http://sys-ids.kemkes.go.id/encounter/".$organization->ihs_number,
+                    "value"=> $noRawat
                 ]
             ]
         ];
     }
 
-    public static function formUpdateData($ihsNumber,$status,$createdAt,$noRm,$noRawat,$organization,$patient,$practitioner,$location)
+    public static function formUpdateData($ihsNumber,$encounter,$status,$patient,$practitioner,$location)
     {
-        $noRawat = StrHelper::cleanNoRawat($noRawat);
+        $noRawat = StrHelper::cleanNoRawat($encounter->no_rawat);
         return [
             "resourceType"=> "Encounter",
             "id"=> $ihsNumber,
@@ -108,7 +108,7 @@ class Encounter
                 ]
             ],
             "period"=> [
-                "start"=> DateTimeFormat::parse($createdAt)
+                "start"=> DateTimeFormat::parse($encounter->created_at)
             ],
             "location"=> [
                 [
@@ -122,7 +122,7 @@ class Encounter
                 [
                     "status"=> "arrived",
                     "period"=> [
-                        "start"=> DateTimeFormat::parse($createdAt)
+                        "start"=> DateTimeFormat::parse($encounter->created_at)
                     ]
                 ],
                 [
@@ -133,12 +133,12 @@ class Encounter
                 ]
             ],
             "serviceProvider"=> [
-                "reference"=> "Organization/".$organization->ihs_number
+                "reference"=> "Organization/".$encounter->organization->ihs_number
             ],
             "identifier"=> [
                 [
-                    "system"=> "http://sys-ids.kemkes.go.id/encounter/".$noRawat,
-                    "value"=> $noRm
+                    "system"=> "http://sys-ids.kemkes.go.id/encounter/".$encounter->organization->ihs_number,
+                    "value"=> $noRawat
                 ]
             ]
         ];

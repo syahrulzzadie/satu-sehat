@@ -8,10 +8,15 @@ class Practitioner
     {
         $data = json_decode($response->body(),true);
         $resource = $data['entry'][0]['resource'];
-        return [
-            'ihs_number' => $resource['id'],
-            'nik' => $resource['identifier'][1]['value'],
-            'name' => $resource['name'][0]['text']
-        ];
+        $resType = $resource['resourceType'];
+        if ($resType == 'Practitioner') {
+            return [
+                'status' => true,
+                'nik' => $resource['identifier'][1]['value'],
+                'ihs_number' => $resource['id'],
+                'name' => $resource['name'][0]['text']
+            ];
+        }
+        return Error::checkOperationOutcome($resType,$data);
     }
 }

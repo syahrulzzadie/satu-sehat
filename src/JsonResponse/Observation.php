@@ -8,21 +8,26 @@ class Observation
 {
     public static function convert($response)
     {
-        $data = json_decode($response->body(), true);
-        return [
-            'ihs_number' => $data['id'],
-            'issued' => $data['issued'],
-            'code' => $data['code']['coding'][0]['code'],
-            'name' => $data['code']['coding'][0]['display'],
-            'value' => $data['valueQuantity']['value'],
-            'unit' => $data['valueQuantity']['unit'],
-            'ihs_number_patient' => StrHelper::getIhsNumber($data['subject']['reference']),
-            'name_patient' => $data['subject']['display'] ?? '',
-            'ihs_number_practitioner' => StrHelper::getIhsNumber($data['performer'][0]['reference']),
-            'name_practitioner' => $data['performer'][0]['display'] ?? '',
-            'ihs_number_encounter' => StrHelper::getIhsNumber($data['encounter']['reference']),
-            'name_encounter' => $data['encounter']['display'] ?? '',
-        ];
+        $data = json_decode($response->body(),true);
+        $resType = $data['resourceType'];
+        if ($resType == 'Observation') {
+            return [
+                'status' => true,
+                'ihs_number' => $data['id'],
+                'issued' => $data['issued'],
+                'code' => $data['code']['coding'][0]['code'],
+                'name' => $data['code']['coding'][0]['display'],
+                'value' => $data['valueQuantity']['value'],
+                'unit' => $data['valueQuantity']['unit'],
+                'ihs_number_patient' => StrHelper::getIhsNumber($data['subject']['reference']),
+                'name_patient' => $data['subject']['display'] ?? '',
+                'ihs_number_practitioner' => StrHelper::getIhsNumber($data['performer'][0]['reference']),
+                'name_practitioner' => $data['performer'][0]['display'] ?? '',
+                'ihs_number_encounter' => StrHelper::getIhsNumber($data['encounter']['reference']),
+                'name_encounter' => $data['encounter']['display'] ?? '',
+            ];
+        }
+        return Error::checkOperationOutcome($resType,$data);
     }
 
     public static function history($response)

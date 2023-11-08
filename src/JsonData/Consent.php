@@ -4,12 +4,12 @@ namespace syahrulzzadie\SatuSehat\JsonData;
 
 class Consent
 {
-    public static function formData($ihsNumber,$nm_petugas,$action)
+    public static function formData($ihsNumber,$petugas,$action)
     {
         return [
             'patient_id' => $ihsNumber,
             'action' => $action,
-            'agent' => $nm_petugas
+            'agent' => $petugas
         ];
     }
 }

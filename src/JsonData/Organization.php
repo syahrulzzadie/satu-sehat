@@ -3,12 +3,13 @@
 namespace syahrulzzadie\SatuSehat\JsonData;
 
 use syahrulzzadie\SatuSehat\Utilitys\Constant;
+use syahrulzzadie\SatuSehat\Utilitys\Enviroment;
 
 class Organization
 {
     public static function formCreateData($name)
     {
-        $organizationId = Constant::$organizationId;
+        $organizationId = Enviroment::organizationId();
         return [
             "resourceType"=> "Organization",
             "active"=> true,
@@ -90,7 +91,7 @@ class Organization
 
     public static function formUpdateData($ihsNumber, $name)
     {
-        $organizationId = Constant::$organizationId;
+        $organizationId = Enviroment::organizationId();
         return [
             "resourceType"=> "Organization",
             "id" => $ihsNumber,

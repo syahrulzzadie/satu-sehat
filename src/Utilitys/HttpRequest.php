@@ -5,7 +5,7 @@ namespace syahrulzzadie\SatuSehat\Utilitys;
 use Illuminate\Support\Facades\Http;
 use syahrulzzadie\SatuSehat\JsonResponse as jsonResponse;
 
-class HttpResponse
+class HttpRequest
 {
     private static function checkResponse($response)
     {
@@ -39,6 +39,15 @@ class HttpResponse
             return jsonResponse\Error::response($response);
         }
         return jsonResponse\Error::getToken($getToken);
+    }
+
+    public static function poolGet($pool,$token,$as,$url)
+    {
+        return $pool->as($as)->asForm()
+            ->timeout(300)
+            ->retry(5,1000)
+            ->withToken($token)
+            ->get($url);
     }
 
     public static function post($url,$formData)

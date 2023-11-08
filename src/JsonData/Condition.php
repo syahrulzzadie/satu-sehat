@@ -4,8 +4,16 @@ namespace syahrulzzadie\SatuSehat\JsonData;
 
 class Condition
 {
-    public static function formCreateData($encounter,$patient,$code,$name)
+    public static function formCreateData($encounter,$dataDiagnosis)
     {
+        $data = [];
+        foreach ($dataDiagnosis as $item) {
+            $data[] = [
+                "system"=> "http://hl7.org/fhir/sid/icd-10",
+                "code"=> $item['code'],
+                "display"=> $item['name']
+            ];
+        }
         return [
             "resourceType"=> "Condition",
             "clinicalStatus"=> [
@@ -29,17 +37,11 @@ class Condition
                 ]
             ],
             "code"=> [
-                "coding"=> [
-                    [
-                        "system"=> "http://hl7.org/fhir/sid/icd-10",
-                        "code"=> $code,
-                        "display"=> $name
-                    ]
-                ]
+                "coding"=> $data
             ],
             "subject"=> [
-                "reference"=> "Patient/".$patient->ihs_number,
-                "display"=> $patient->name
+                "reference"=> "Patient/".$encounter->patient->ihs_number,
+                "display"=> $encounter->patient->name
             ],
             "encounter"=> [
                 "reference"=> "Encounter/".$encounter->ihs_number
@@ -47,8 +49,16 @@ class Condition
         ];
     }
 
-    public static function formUpdateData($ihsNumber,$encounter,$patient,$code,$name)
+    public static function formUpdateData($ihsNumber,$encounter,$dataDiagnosis)
     {
+        $data = [];
+        foreach ($dataDiagnosis as $item) {
+            $data[] = [
+                "system"=> "http://hl7.org/fhir/sid/icd-10",
+                "code"=> $item['code'],
+                "display"=> $item['name']
+            ];
+        }
         return [
             "resourceType"=> "Condition",
             "id"=> $ihsNumber,
@@ -73,17 +83,11 @@ class Condition
                 ]
             ],
             "code"=> [
-                "coding"=> [
-                    [
-                        "system"=> "http://hl7.org/fhir/sid/icd-10",
-                        "code"=> $code,
-                        "display"=> $name
-                    ]
-                ]
+                "coding"=> $data
             ],
             "subject"=> [
-                "reference"=> "Patient/".$patient->ihs_number,
-                "display"=> $patient->name
+                "reference"=> "Patient/".$encounter->patient->ihs_number,
+                "display"=> $encounter->patient->name
             ],
             "encounter"=> [
                 "reference"=> "Encounter/".$encounter->ihs_number

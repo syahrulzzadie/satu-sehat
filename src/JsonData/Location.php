@@ -4,19 +4,19 @@ namespace syahrulzzadie\SatuSehat\JsonData;
 
 class Location
 {
-    public static function formCreateData($organization,$name)
+    public static function formCreateData($organization,$kodeLokasi,$namaLokasi)
     {
         return [
             "resourceType"=> "Location",
             "identifier"=> [
                 [
                     "system"=> "http://sys-ids.kemkes.go.id/location/".$organization->ihs_number,
-                    "value"=> $name
+                    "value"=> $kodeLokasi
                 ]
             ],
             "status"=> "active",
-            "name"=> $name,
-            "description"=> $name,
+            "name"=> $namaLokasi,
+            "description"=> $namaLokasi,
             "mode"=> "instance",
             "telecom"=> [
                 [
@@ -93,7 +93,7 @@ class Location
         ];
     }
 
-    public static function formUpdateData($ihsNumber,$organization,$name)
+    public static function formUpdateData($ihsNumber,$organization,$kodeLokasi,$namaLokasi)
     {
         return [
             "resourceType"=> "Location",
@@ -101,12 +101,12 @@ class Location
             "identifier"=> [
                 [
                     "system"=> "http://sys-ids.kemkes.go.id/location/".$organization->ihs_number,
-                    "value"=> $name
+                    "value"=> $kodeLokasi
                 ]
             ],
             "status"=> "active",
-            "name"=> $name,
-            "description"=> $name,
+            "name"=> $namaLokasi,
+            "description"=> $namaLokasi,
             "mode"=> "instance",
             "telecom"=> [
                 [

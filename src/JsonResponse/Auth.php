@@ -2,7 +2,7 @@
 
 namespace syahrulzzadie\SatuSehat\JsonResponse;
 
-use syahrulzzadie\SatuSehat\Utilitys\Constant;
+use syahrulzzadie\SatuSehat\Utilitys\Enviroment;
 use syahrulzzadie\SatuSehat\Utilitys\Url;
 use Illuminate\Support\Facades\Http;
 use Carbon\Carbon;
@@ -12,8 +12,8 @@ class Auth
     private static function requestToken() : array
     {
         $url = Url::authUrl();
-        $data['client_id'] = Constant::$clientId;
-        $data['client_secret'] = Constant::$clientSecret;
+        $data['client_id'] = Enviroment::clientId();
+        $data['client_secret'] = Enviroment::clientSecret();
         $response = Http::asForm()
             ->timeout(300)
             ->retry(5,1000)

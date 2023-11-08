@@ -28,4 +28,18 @@ class Error
             'message' => $http['message']
         ];
     }
+
+    public static function checkOperationOutcome($resType,$data)
+    {
+        if ($resType == 'OperationOutcome') {
+            return [
+                'status' => false,
+                'message' => $data['issue'][0]['details']['text'] ?? 'Unknown error!'
+            ];
+        }
+        return [
+            'status' => false,
+            'message' => 'Unknown error!'
+        ];
+    }
 }

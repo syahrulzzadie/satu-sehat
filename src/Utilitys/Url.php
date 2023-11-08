@@ -19,6 +19,11 @@ class Url
         return Constant::$consentUrl.'/'.$subUrl;
     }
 
+    private static function kfaUrl($subUrl)
+    {
+        return Constant::$kfaUrl.'/'.$subUrl;
+    }
+
     public static function authUrl()
     {
         return self::authHost('accesstoken?grant_type=client_credentials');
@@ -107,5 +112,70 @@ class Url
     public static function historyObservationUrl($ihsNumberPatient)
     {
         return self::baseUrl('Observation?subject='.$ihsNumberPatient);
+    }
+
+    public static function createCompositionUrl()
+    {
+        return self::baseUrl('Composition');
+    }
+
+    public static function updateCompositionUrl($ihsNumber)
+    {
+        return self::baseUrl('Composition/'.$ihsNumber);
+    }
+
+    public static function historyCompositionUrl($ihsNumberPatient)
+    {
+        return self::baseUrl('Composition?subject='.$ihsNumberPatient);
+    }
+
+    public static function createProcedureUrl()
+    {
+        return self::baseUrl('Procedure');
+    }
+
+    public static function updateProcedureUrl($ihsNumber)
+    {
+        return self::baseUrl('Procedure/'.$ihsNumber);
+    }
+
+    public static function historyProcedureUrl($ihsNumberPatient)
+    {
+        return self::baseUrl('Procedure?subject='.$ihsNumberPatient);
+    }
+
+    public static function createMedicationUrl()
+    {
+        return self::baseUrl('Medication');
+    }
+
+    public static function updateMedicationUrl($ihsNumber)
+    {
+        return self::baseUrl('Medication/'.$ihsNumber);
+    }
+
+    public static function createMedicationRequestUrl()
+    {
+        return self::baseUrl('MedicationRequest');
+    }
+
+    public static function updateMedicationRequestUrl($ihsNumber)
+    {
+        return self::baseUrl('MedicationRequest/'.$ihsNumber);
+    }
+
+    public static function historyMedicationRequestUrl($ihsNumberPatient)
+    {
+        return self::baseUrl('MedicationRequest?subject='.$ihsNumberPatient);
+    }
+
+    public static function searchProductsByCode($code)
+    {
+        return self::kfaUrl('products?identifier=kfa&code='.$code);
+    }
+
+    public static function searchProductsByType($type,$start = 1,$limit = 10)
+    {
+        return self::kfaUrl('products/all?page='.$start.'&size='.$limit.'&product_type=farmasi'.$type);
     }
 }

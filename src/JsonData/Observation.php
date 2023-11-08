@@ -6,7 +6,7 @@ use syahrulzzadie\SatuSehat\Utilitys\DateTimeFormat;
 
 class Observation
 {
-    public static function formCreateData($encounter,$patient,$practitioner,$code,$name,$value,$unit)
+    public static function formCreateData($encounter,$code,$name,$value,$unit)
     {
         return [
             "resourceType"=> "Observation",
@@ -32,11 +32,13 @@ class Observation
                 ]
             ],
             "subject"=> [
-                "reference"=> "Patient/".$patient->ihs_number
+                "reference"=> "Patient/".$encounter->patient->ihs_number,
+                "display"=> $encounter->patient->name
             ],
             "performer"=> [
                 [
-                    "reference"=> "Practitioner/".$practitioner->ihs_number
+                    "reference"=> "Practitioner/".$encounter->practitioner->ihs_number,
+                    "display"=> $encounter->practitioner->name
                 ]
             ],
             "encounter"=> [
@@ -53,7 +55,7 @@ class Observation
         ];
     }
 
-    public static function formUpdateData($ihsNumber,$observation,$encounter,$patient,$practitioner,$code,$name,$value,$unit)
+    public static function formUpdateData($ihsNumber,$encounter,$code,$name,$value,$unit)
     {
         return [
             "resourceType"=> "Observation",
@@ -80,18 +82,18 @@ class Observation
                 ]
             ],
             "subject"=> [
-                "reference"=> "Patient/".$patient->ihs_number
+                "reference"=> "Patient/".$encounter->patient->ihs_number
             ],
             "performer"=> [
                 [
-                    "reference"=> "Practitioner/".$practitioner->ihs_number
+                    "reference"=> "Practitioner/".$encounter->practitioner->ihs_number
                 ]
             ],
             "encounter"=> [
                 "reference"=> "Encounter/".$encounter->ihs_number
             ],
-            "effectiveDateTime"=> $observation->effective,
-            "issued"=> $observation->issued,
+            "effectiveDateTime"=> $encounter->observation->effective,
+            "issued"=> $encounter->observation->issued,
             "valueQuantity"=> [
                 "system"=> "http://unitsofmeasure.org",
                 "value"=> $value,
