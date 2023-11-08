@@ -7,16 +7,29 @@ class Patient
     public static function convert($response): array
     {
         $data = json_decode($response->body(),true);
-        $resource = $data['entry'][0]['resource'];
-        $resType = $resource['resourceType'];
-        if ($resType == 'Patient') {
+        $entry = $data['entry'] ?? false;
+        if ($entry) {
+            if (count($entry) > 0) {
+                $resource = $entry[0]['resource'];
+                $resType = $resource['resourceType'];
+                if ($resType == 'Patient') {
+                    return [
+                        'status' => true,
+                        'nik' => $resource['identifier'][1]['value'],
+                        'ihs_number' => $resource['id'],
+                        'name' => $resource['name'][0]['text']
+                    ];
+                }
+                return Error::checkOperationOutcome($resType,$data);
+            }
             return [
-                'status' => true,
-                'nik' => $resource['identifier'][1]['value'],
-                'ihs_number' => $resource['id'],
-                'name' => $resource['name'][0]['text']
+                'status' => false,
+                'message' => 'Data tidak ditemukan!'
             ];
         }
-        return Error::checkOperationOutcome($resType,$data);
+        return [
+            'status' => false,
+            'message' => $response->body()
+        ];
     }
 }
