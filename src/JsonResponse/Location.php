@@ -11,8 +11,10 @@ class Location
         if ($resType == 'Location') {
             return [
                 'status' => true,
-                'ihs_number' => $data['id'],
-                'name' => $data['name']
+                'data' => [
+                    'ihs_number' => $data['id'],
+                    'name' => $data['name']
+                ]
             ];
         }
         return Error::checkOperationOutcome($resType,$data);

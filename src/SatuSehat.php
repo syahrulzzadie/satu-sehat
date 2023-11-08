@@ -39,11 +39,7 @@ class SatuSehat
         $http = HttpRequest::post($url,$formData);
         if ($http['status']) {
             $response = $http['response'];
-            $data = jsonResponse\Organization::convert($response);
-            return [
-                'status' => true,
-                'data' => $data
-            ];
+            return jsonResponse\Organization::convert($response);
         }
         return jsonResponse\Error::http($http);
     }
@@ -55,11 +51,7 @@ class SatuSehat
         $http = HttpRequest::put($url,$formData);
         if ($http['status']) {
             $response = $http['response'];
-            $data = jsonResponse\Organization::convert($response);
-            return [
-                'status' => true,
-                'data' => $data
-            ];
+            return jsonResponse\Organization::convert($response);
         }
         return jsonResponse\Error::http($http);
     }
@@ -71,11 +63,7 @@ class SatuSehat
         $http = HttpRequest::post($url,$formData);
         if ($http['status']) {
             $response = $http['response'];
-            $data = jsonResponse\Location::convert($response);
-            return [
-                'status' => true,
-                'data' => $data
-            ];
+            return jsonResponse\Location::convert($response);
         }
         return jsonResponse\Error::http($http);
     }
@@ -87,11 +75,7 @@ class SatuSehat
         $http = HttpRequest::put($url,$formData);
         if ($http['status']) {
             $response = $http['response'];
-            $data = jsonResponse\Location::convert($response);
-            return [
-                'status' => true,
-                'data' => $data
-            ];
+            return jsonResponse\Location::convert($response);
         }
         return jsonResponse\Error::http($http);
     }
@@ -103,11 +87,7 @@ class SatuSehat
         $http = HttpRequest::postConsent($url,$formData);
         if ($http['status']) {
             $response = $http['response'];
-            $data = jsonResponse\Consent::convert($response);
-            return [
-                'status' => true,
-                'data' => $data
-            ];
+            return jsonResponse\Consent::convert($response);
         }
         return jsonResponse\Error::http($http);
     }
@@ -119,11 +99,7 @@ class SatuSehat
         $http = HttpRequest::post($url,$formData);
         if ($http['status']) {
             $response = $http['response'];
-            $data = jsonResponse\Encounter::convert($response);
-            return [
-                'status' => true,
-                'data' => $data
-            ];
+            return jsonResponse\Encounter::convert($response);
         }
         return jsonResponse\Error::http($http);
     }
@@ -135,11 +111,7 @@ class SatuSehat
         $http = HttpRequest::put($url,$formData);
         if ($http['status']) {
             $response = $http['response'];
-            $data = jsonResponse\Encounter::convert($response);
-            return [
-                'status' => true,
-                'data' => $data
-            ];
+            return jsonResponse\Encounter::convert($response);
         }
         return jsonResponse\Error::http($http);
     }
@@ -150,11 +122,7 @@ class SatuSehat
         $http = HttpRequest::get($url);
         if ($http['status']) {
             $response = $http['response'];
-            $data = jsonResponse\Encounter::history($response);
-            return [
-                'status' => true,
-                'data' => $data
-            ];
+            return jsonResponse\Encounter::history($response);
         }
         return jsonResponse\Error::http($http);
     }
@@ -166,11 +134,7 @@ class SatuSehat
         $http = HttpRequest::post($url,$formData);
         if ($http['status']) {
             $response = $http['response'];
-            $data = jsonResponse\Condition::convert($response);
-            return [
-                'status' => true,
-                'data' => $data
-            ];
+            return jsonResponse\Condition::convert($response);
         }
         return jsonResponse\Error::http($http);
     }
@@ -182,11 +146,7 @@ class SatuSehat
         $http = HttpRequest::put($url,$formData);
         if ($http['status']) {
             $response = $http['response'];
-            $data = jsonResponse\Condition::convert($response);
-            return [
-                'status' => true,
-                'data' => $data
-            ];
+            return jsonResponse\Condition::convert($response);
         }
         return jsonResponse\Error::http($http);
     }
@@ -197,11 +157,7 @@ class SatuSehat
         $http = HttpRequest::get($url);
         if ($http['status']) {
             $response = $http['response'];
-            $data = jsonResponse\Condition::history($response);
-            return [
-                'status' => true,
-                'data' => $data
-            ];
+            return jsonResponse\Condition::history($response);
         }
         return jsonResponse\Error::http($http);
     }
@@ -213,11 +169,7 @@ class SatuSehat
         $http = HttpRequest::post($url,$formData);
         if ($http['status']) {
             $response = $http['response'];
-            $data = jsonResponse\Observation::convert($response);
-            return [
-                'status' => true,
-                'data' => $data
-            ];
+            return jsonResponse\Observation::convert($response);
         }
         return jsonResponse\Error::http($http);
     }
@@ -229,11 +181,7 @@ class SatuSehat
         $http = HttpRequest::put($url,$formData);
         if ($http['status']) {
             $response = $http['response'];
-            $data = jsonResponse\Observation::convert($response);
-            return [
-                'status' => true,
-                'data' => $data
-            ];
+            return jsonResponse\Observation::convert($response);
         }
         return jsonResponse\Error::http($http);
     }
@@ -244,11 +192,7 @@ class SatuSehat
         $http = HttpRequest::get($url);
         if ($http['status']) {
             $response = $http['response'];
-            $data = jsonResponse\Observation::history($response);
-            return [
-                'status' => true,
-                'data' => $data
-            ];
+            return jsonResponse\Observation::history($response);
         }
         return jsonResponse\Error::http($http);
     }
@@ -260,11 +204,7 @@ class SatuSehat
         $http = HttpRequest::post($url,$formData);
         if ($http['status']) {
             $response = $http['response'];
-            $data = jsonResponse\Composition::convert($response);
-            return [
-                'status' => true,
-                'data' => $data
-            ];
+            return jsonResponse\Composition::convert($response);
         }
         return jsonResponse\Error::http($http);
     }
@@ -276,11 +216,7 @@ class SatuSehat
         $http = HttpRequest::put($url,$formData);
         if ($http['status']) {
             $response = $http['response'];
-            $data = jsonResponse\Composition::convert($response);
-            return [
-                'status' => true,
-                'data' => $data
-            ];
+            return jsonResponse\Composition::convert($response);
         }
         return jsonResponse\Error::http($http);
     }
@@ -291,11 +227,7 @@ class SatuSehat
         $http = HttpRequest::get($url);
         if ($http['status']) {
             $response = $http['response'];
-            $data = jsonResponse\Composition::history($response);
-            return [
-                'status' => true,
-                'data' => $data
-            ];
+            return jsonResponse\Composition::history($response);
         }
         return jsonResponse\Error::http($http);
     }
@@ -307,11 +239,7 @@ class SatuSehat
         $http = HttpRequest::post($url,$formData);
         if ($http['status']) {
             $response = $http['response'];
-            $data = jsonResponse\Procedure::convert($response);
-            return [
-                'status' => true,
-                'data' => $data
-            ];
+            return jsonResponse\Procedure::convert($response);
         }
         return jsonResponse\Error::http($http);
     }
@@ -323,11 +251,7 @@ class SatuSehat
         $http = HttpRequest::put($url,$formData);
         if ($http['status']) {
             $response = $http['response'];
-            $data = jsonResponse\Procedure::convert($response);
-            return [
-                'status' => true,
-                'data' => $data
-            ];
+            return jsonResponse\Procedure::convert($response);
         }
         return jsonResponse\Error::http($http);
     }
@@ -338,11 +262,7 @@ class SatuSehat
         $http = HttpRequest::get($url);
         if ($http['status']) {
             $response = $http['response'];
-            $data = jsonResponse\Procedure::history($response);
-            return [
-                'status' => true,
-                'data' => $data
-            ];
+            return jsonResponse\Procedure::history($response);
         }
         return jsonResponse\Error::http($http);
     }
@@ -354,11 +274,7 @@ class SatuSehat
         $http = HttpRequest::post($url,$formData);
         if ($http['status']) {
             $response = $http['response'];
-            $data = jsonResponse\Medication::convert($response);
-            return [
-                'status' => true,
-                'data' => $data
-            ];
+            return jsonResponse\Medication::convert($response);
         }
         return jsonResponse\Error::http($http);
     }
@@ -370,11 +286,7 @@ class SatuSehat
         $http = HttpRequest::put($url,$formData);
         if ($http['status']) {
             $response = $http['response'];
-            $data = jsonResponse\Medication::convert($response);
-            return [
-                'status' => true,
-                'data' => $data
-            ];
+            return jsonResponse\Medication::convert($response);
         }
         return jsonResponse\Error::http($http);
     }
@@ -386,11 +298,7 @@ class SatuSehat
         $http = HttpRequest::post($url,$formData);
         if ($http['status']) {
             $response = $http['response'];
-            $data = jsonResponse\MedicationRequest::convert($response);
-            return [
-                'status' => true,
-                'data' => $data
-            ];
+            return jsonResponse\MedicationRequest::convert($response);
         }
         return jsonResponse\Error::http($http);
     }
@@ -402,11 +310,7 @@ class SatuSehat
         $http = HttpRequest::put($url,$formData);
         if ($http['status']) {
             $response = $http['response'];
-            $data = jsonResponse\MedicationRequest::convert($response);
-            return [
-                'status' => true,
-                'data' => $data
-            ];
+            return jsonResponse\MedicationRequest::convert($response);
         }
         return jsonResponse\Error::http($http);
     }
@@ -417,11 +321,7 @@ class SatuSehat
         $http = HttpRequest::get($url);
         if ($http['status']) {
             $response = $http['response'];
-            $data = jsonResponse\MedicationRequest::history($response);
-            return [
-                'status' => true,
-                'data' => $data
-            ];
+            return jsonResponse\MedicationRequest::history($response);
         }
         return jsonResponse\Error::http($http);
     }
@@ -432,11 +332,7 @@ class SatuSehat
         $http = HttpRequest::get($url);
         if ($http['status']) {
             $response = $http['response'];
-            $data = jsonResponse\Kfa::convertByCode($response);
-            return [
-                'status' => true,
-                'data' => $data
-            ];
+            return jsonResponse\Kfa::convertByCode($response);
         }
         return jsonResponse\Error::http($http);
     }
@@ -447,11 +343,7 @@ class SatuSehat
         $http = HttpRequest::get($url);
         if ($http['status']) {
             $response = $http['response'];
-            $data = jsonResponse\Kfa::convertByType($response);
-            return [
-                'status' => true,
-                'data' => $data
-            ];
+            return jsonResponse\Kfa::convertByType($response);
         }
         return jsonResponse\Error::http($http);
     }
@@ -513,7 +405,10 @@ class SatuSehat
                     $data['medicationRequest'] = jsonResponse\MedicationRequest::history($response['medicationRequest']);
                 }
             }
-            return $data;
+            return [
+                'status' => true,
+                'data' => $data
+            ];
         }
         return jsonResponse\Error::getToken($getToken);
     }

@@ -15,9 +15,11 @@ class Practitioner
                 if ($resType == 'Practitioner') {
                     return [
                         'status' => true,
-                        'nik' => $resource['identifier'][1]['value'],
-                        'ihs_number' => $resource['id'],
-                        'name' => $resource['name'][0]['text']
+                        'data' => [
+                            'nik' => $resource['identifier'][1]['value'],
+                            'ihs_number' => $resource['id'],
+                            'name' => $resource['name'][0]['text']
+                        ]
                     ];
                 }
                 return Error::checkOperationOutcome($resType,$data);

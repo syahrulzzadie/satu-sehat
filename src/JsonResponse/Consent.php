@@ -12,8 +12,10 @@ class Consent
             $code = $data['policyRule']['coding'][0]['code'];
             return [
                 'status' => true,
-                'ihs_number' => $data['id'],
-                'code' => $code
+                'data' => [
+                    'ihs_number' => $data['id'],
+                    'code' => $code
+                ]
             ];
         }
         return Error::checkOperationOutcome($resType,$data);

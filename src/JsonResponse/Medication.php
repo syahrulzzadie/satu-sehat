@@ -26,10 +26,12 @@ class Medication
         if ($resType == 'Medication') {
             return [
                 'status' => true,
-                'ihs_number' => $data['id'],
-                'code' => $data['code']['coding'][0]['code'],
-                'name' => $data['code']['coding'][0]['display'],
-                'ingredient' => self::parseIngredient($data['ingredient'])
+                'data' => [
+                    'ihs_number' => $data['id'],
+                    'code' => $data['code']['coding'][0]['code'],
+                    'name' => $data['code']['coding'][0]['display'],
+                    'ingredient' => self::parseIngredient($data['ingredient'])
+                ]
             ];
         }
         return Error::checkOperationOutcome($resType,$data);
