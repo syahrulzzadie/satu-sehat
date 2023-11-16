@@ -7,7 +7,7 @@ use syahrulzzadie\SatuSehat\Utilitys\StrHelper;
 
 class Encounter
 {
-    public static function formCreateData($noRawat,$organization,$patient,$practitioner,$location)
+    public static function formCreateData($noRawat,$patient,$practitioner,$location)
     {
         $noRawat = StrHelper::cleanNoRawat($noRawat);
         return [
@@ -61,11 +61,11 @@ class Encounter
                 ]
             ],
             "serviceProvider"=> [
-                "reference"=> "Organization/".$organization->ihs_number
+                "reference"=> "Organization/".$location->organization->ihs_number
             ],
             "identifier"=> [
                 [
-                    "system"=> "http://sys-ids.kemkes.go.id/encounter/".$organization->ihs_number,
+                    "system"=> "http://sys-ids.kemkes.go.id/encounter/".$location->organization->ihs_number,
                     "value"=> $noRawat
                 ]
             ]

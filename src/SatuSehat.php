@@ -92,10 +92,10 @@ class SatuSehat
         return jsonResponse\Error::http($http);
     }
 
-    public static function createEncounter($noRawat,$organization,$patient,$practitioner,$location)
+    public static function createEncounter($noRawat,$patient,$practitioner,$location)
     {
         $url = Url::createEncounterUrl();
-        $formData = jsonData\Encounter::formCreateData($noRawat,$organization,$patient,$practitioner,$location);
+        $formData = jsonData\Encounter::formCreateData($noRawat,$patient,$practitioner,$location);
         $http = HttpRequest::post($url,$formData);
         if ($http['status']) {
             $response = $http['response'];
