@@ -6,10 +6,10 @@ class Practitioner
 {
     public static function convert($response): array
     {
-        $data = json_decode($response->body(),true);
-        $entry = $data['entry'] ?? false;
-        if ($entry) {
-            if (count($entry) > 0) {
+        if (!Error::searchIsEmpty($response)) {
+            $data = json_decode($response->body(),true);
+            $entry = $data['entry'] ?? false;
+            if ($entry) {
                 $resource = $entry[0]['resource'];
                 $resType = $resource['resourceType'];
                 if ($resType == 'Practitioner') {
@@ -26,12 +26,12 @@ class Practitioner
             }
             return [
                 'status' => false,
-                'message' => 'Data tidak ditemukan!'
+                'message' => $response->body()
             ];
         }
         return [
             'status' => false,
-            'message' => $response->body()
+            'message' => 'Data tidak ditemukan!'
         ];
     }
 }

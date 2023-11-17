@@ -42,4 +42,13 @@ class Error
             'message' => 'Unknown error!'
         ];
     }
+
+    public static function searchIsEmpty($response)
+    {
+        $message = json_encode($response->body());
+        if (strpos($message,'"total":0') !== false) {
+            return true;
+        }
+        return false;
+    }
 }
