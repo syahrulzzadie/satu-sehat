@@ -26,19 +26,22 @@ class Organization
             $data = json_decode($response->body(),true);
             $entry = $data['entry'] ?? false;
             if ($entry) {
-                $resource = $entry[0]['resource'];
-                $resType = $resource['resourceType'];
-                if ($resType == 'Organization') {
-                    return [
-                        'status' => true,
-                        'data' => [
+                $dataEntry = [];
+                foreach ($entry as $item) {
+                    $resource = $item['resource'];
+                    $resType = $resource['resourceType'];
+                    if ($resType == 'Organization') {
+                        $dataEntry[] = [
                             'ihs_number' => $resource['id'],
                             'name' => $resource['name'],
                             'kode' => $resource['identifier'][0]['value']
-                        ]
-                    ];
+                        ];
+                    }
                 }
-                return Error::checkOperationOutcome($resType,$data);
+                return [
+                    'status' => true,
+                    'data' => $dataEntry
+                ];
             }
             return [
                 'status' => false,
