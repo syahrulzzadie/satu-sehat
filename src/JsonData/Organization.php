@@ -2,12 +2,11 @@
 
 namespace syahrulzzadie\SatuSehat\JsonData;
 
-use syahrulzzadie\SatuSehat\Utilitys\Constant;
 use syahrulzzadie\SatuSehat\Utilitys\Enviroment;
 
 class Organization
 {
-    public static function formCreateData($name)
+    public static function formCreateData($kode, $name)
     {
         $organizationId = Enviroment::organizationId();
         return [
@@ -17,7 +16,7 @@ class Organization
                 [
                     "use"=> "official",
                     "system"=> "http://sys-ids.kemkes.go.id/organization/".$organizationId,
-                    "value"=> $name
+                    "value"=> $kode
                 ]
             ],
             "type"=> [
@@ -89,7 +88,7 @@ class Organization
         ];
     }
 
-    public static function formUpdateData($ihsNumber, $name)
+    public static function formUpdateData($ihsNumber, $kode, $name)
     {
         $organizationId = Enviroment::organizationId();
         return [
@@ -100,7 +99,7 @@ class Organization
                 [
                     "use"=> "official",
                     "system"=> "http://sys-ids.kemkes.go.id/organization/".$organizationId,
-                    "value"=> $name
+                    "value"=> $kode
                 ]
             ],
             "type"=> [

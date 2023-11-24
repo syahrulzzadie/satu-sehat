@@ -43,10 +43,10 @@ class SatuSehat
         return jsonResponse\Error::http($http);
     }
 
-    public static function createOrganization($name)
+    public static function createOrganization($kode, $name)
     {
         $url = Url::createOrganizationUrl();
-        $formData = jsonData\Organization::formCreateData($name);
+        $formData = jsonData\Organization::formCreateData($kode,$name);
         $http = HttpRequest::post($url,$formData);
         if ($http['status']) {
             $response = $http['response'];
@@ -55,10 +55,10 @@ class SatuSehat
         return jsonResponse\Error::http($http);
     }
 
-    public static function updateOrganization($ihsNumber, $name)
+    public static function updateOrganization($ihsNumber, $kode, $name)
     {
         $url = Url::updateOrganizationUrl($ihsNumber);
-        $formData = jsonData\Organization::formUpdateData($ihsNumber,$name);
+        $formData = jsonData\Organization::formUpdateData($ihsNumber,$kode,$name);
         $http = HttpRequest::put($url,$formData);
         if ($http['status']) {
             $response = $http['response'];
