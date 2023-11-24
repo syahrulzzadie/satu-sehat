@@ -55,10 +55,9 @@ class Url
         return self::baseUrl('Organization/'.$ihsNumber);
     }
 
-    public static function showLocationUrl()
+    public static function showLocationUrl($ihsNumberOrganization)
     {
-        $organizationId = Enviroment::organizationId();
-        return self::baseUrl('Location?organization='.$organizationId);
+        return self::baseUrl('Location?organization='.$ihsNumberOrganization);
     }
 
     public static function createLocationUrl()

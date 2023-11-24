@@ -67,9 +67,9 @@ class SatuSehat
         return jsonResponse\Error::http($http);
     }
 
-    public static function showLocation()
+    public static function showLocation($ihsNumberOrganization)
     {
-        $url = Url::showLocationUrl();
+        $url = Url::showLocationUrl($ihsNumberOrganization);
         $http = HttpRequest::get($url);
         if ($http['status']) {
             $response = $http['response'];
