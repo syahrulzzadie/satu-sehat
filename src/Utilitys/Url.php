@@ -39,6 +39,12 @@ class Url
         return self::baseUrl('Practitioner?identifier=https://fhir.kemkes.go.id/id/nik|'.$nik);
     }
 
+    public static function showOrganizationUrl()
+    {
+        $organizationId = Enviroment::organizationId();
+        return self::baseUrl('Organization?partof='.$organizationId);
+    }
+
     public static function createOrganizationUrl()
     {
         return self::baseUrl('Organization');

@@ -32,6 +32,17 @@ class SatuSehat
         return jsonResponse\Error::http($http);
     }
 
+    public static function showOrganization()
+    {
+        $url = Url::showOrganizationUrl();
+        $http = HttpRequest::get($url);
+        if ($http['status']) {
+            $response = $http['response'];
+            return jsonResponse\Organization::show($response);
+        }
+        return jsonResponse\Error::http($http);
+    }
+
     public static function createOrganization($name)
     {
         $url = Url::createOrganizationUrl();
