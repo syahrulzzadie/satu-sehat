@@ -13,7 +13,8 @@ class Organization
                 'status' => true,
                 'data' => [
                     'ihs_number' => $data['id'],
-                    'name' => $data['name']
+                    'name' => $data['name'],
+                    'kode' => $data['identifier'][0]['value']
                 ]
             ];
         }
