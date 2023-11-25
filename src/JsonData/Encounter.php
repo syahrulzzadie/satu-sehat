@@ -7,12 +7,12 @@ use syahrulzzadie\SatuSehat\Utilitys\StrHelper;
 
 class Encounter
 {
-    public static function formCreateData($noRawat,$patient,$practitioner,$location)
+    public static function formCreateData($noRawat,$date,$time,$patient,$practitioner,$location)
     {
         $noRawat = StrHelper::cleanNoRawat($noRawat);
         return [
             "resourceType"=> "Encounter",
-            "status"=> "arrived",
+            "status"=> "finished",
             "class"=> [
                 "system"=> "http://terminology.hl7.org/CodeSystem/v3-ActCode",
                 "code"=> "AMB",
@@ -42,7 +42,8 @@ class Encounter
                 ]
             ],
             "period"=> [
-                "start"=> DateTimeFormat::now()
+                "start"=> DateTimeFormat::parseDateAndTime($date,$time),
+                "end"=> DateTimeFormat::parseDateAndTime($date,$time)
             ],
             "location"=> [
                 [
@@ -54,9 +55,10 @@ class Encounter
             ],
             "statusHistory"=> [
                 [
-                    "status"=> "arrived",
+                    "status"=> "finished",
                     "period"=> [
-                        "start"=> DateTimeFormat::now()
+                        "start"=> DateTimeFormat::parseDateAndTime($date,$time),
+                        "end"=> DateTimeFormat::parseDateAndTime($date,$time)
                     ]
                 ]
             ],
@@ -72,13 +74,13 @@ class Encounter
         ];
     }
 
-    public static function formUpdateData($ihsNumber,$encounter,$status,$patient,$practitioner,$location)
+    public static function formUpdateData($ihsNumber,$encounter,$patient,$practitioner,$location)
     {
         $noRawat = StrHelper::cleanNoRawat($encounter->no_rawat);
         return [
             "resourceType"=> "Encounter",
             "id"=> $ihsNumber,
-            "status"=> $status,
+            "status"=> 'finished',
             "class"=> [
                 "system"=> "http://terminology.hl7.org/CodeSystem/v3-ActCode",
                 "code"=> "AMB",
@@ -108,7 +110,8 @@ class Encounter
                 ]
             ],
             "period"=> [
-                "start"=> DateTimeFormat::parse($encounter->created_at)
+                "start"=> DateTimeFormat::parse($encounter->period_start),
+                "end"=> DateTimeFormat::parse($encounter->period_end)
             ],
             "location"=> [
                 [
@@ -120,15 +123,10 @@ class Encounter
             ],
             "statusHistory"=> [
                 [
-                    "status"=> "arrived",
+                    "status"=> 'finished',
                     "period"=> [
-                        "start"=> DateTimeFormat::parse($encounter->created_at)
-                    ]
-                ],
-                [
-                    "status"=> $status,
-                    "period"=> [
-                        "start"=> DateTimeFormat::now()
+                        "start"=> DateTimeFormat::parse($encounter->period_start),
+                        "end"=> DateTimeFormat::parse($encounter->period_end)
                     ]
                 ]
             ],

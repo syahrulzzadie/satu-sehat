@@ -24,7 +24,8 @@ class Encounter
                     'name_practitioner' => $data['participant'][0]['individual']['display'] ?? '',
                     'ihs_number_organization' => StrHelper::getIhsNumber($data['serviceProvider']['reference']),
                     'name_organization' => $data['serviceProvider']['display'] ?? '',
-                    'period_start' => $data['period']['start']
+                    'period_start' => $data['period']['start'] ?? '',
+                    'period_end' => $data['period']['end'] ?? ''
                 ]
             ];
         }
@@ -67,7 +68,8 @@ class Encounter
                     $dt['name_practitioner'] = $res['participant'][0]['individual']['display'] ?? '';
                     $dt['ihs_number_organization'] = StrHelper::getIhsNumber($res['serviceProvider']['reference']);
                     $dt['name_organization'] = $res['serviceProvider']['display'] ?? '';
-                    $dt['period_start'] = $res['period']['start'];
+                    $dt['period_start'] = $res['period']['start'] ?? '';
+                    $dt['period_end'] = $res['period']['end'] ?? '';
                     $dt['diagnosis'] = self::getDiagnosis($res);
                 } else {
                     $dt['consent'] = 'OPTOUT';
