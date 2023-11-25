@@ -14,6 +14,7 @@ class Encounter
             return [
                 'status' => true,
                 'data' => [
+                    'status' => $data['status'],
                     'ihs_number' => $data['id'],
                     'ihs_number_patient' => StrHelper::getIhsNumber($data['subject']['reference']),
                     'name_patient' => $data['subject']['display'] ?? '',
@@ -56,6 +57,7 @@ class Encounter
                 $resType = $res['resourceType'];
                 if ($resType == 'Encounter') {
                     $dt['consent'] = 'OPTIN';
+                    $dt['status'] = $res['status'];
                     $dt['ihs_number'] = $res['id'];
                     $dt['ihs_number_patient'] = StrHelper::getIhsNumber($res['subject']['reference']);
                     $dt['name_patient'] = $res['subject']['display'] ?? '';
