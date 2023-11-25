@@ -67,7 +67,7 @@ class Encounter
             ],
             "identifier"=> [
                 [
-                    "system"=> "http://sys-ids.kemkes.go.id/encounter/".$noRawat,
+                    "system"=> "http://sys-ids.kemkes.go.id/encounter/".$location->organization->ihs_number,
                     "value"=> $noRawat
                 ]
             ]
@@ -135,7 +135,7 @@ class Encounter
             ],
             "identifier"=> [
                 [
-                    "system"=> "http://sys-ids.kemkes.go.id/encounter/".$noRawat,
+                    "system"=> "http://sys-ids.kemkes.go.id/encounter/".$encounter->organization->ihs_number,
                     "value"=> $noRawat
                 ]
             ]
