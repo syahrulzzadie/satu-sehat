@@ -3,12 +3,14 @@
 namespace syahrulzzadie\SatuSehat\JsonData;
 
 use syahrulzzadie\SatuSehat\Utilitys\DateTimeFormat;
+use syahrulzzadie\SatuSehat\Utilitys\Enviroment;
 use syahrulzzadie\SatuSehat\Utilitys\StrHelper;
 
 class Encounter
 {
     public static function formCreateData($noRawat,$date,$time,$patient,$practitioner,$location)
     {
+        $organizationId = Enviroment::organizationId();
         $noRawat = StrHelper::cleanNoRawat($noRawat);
         return [
             "resourceType"=> "Encounter",
@@ -63,11 +65,11 @@ class Encounter
                 ]
             ],
             "serviceProvider"=> [
-                "reference"=> "Organization/".$location->organization->ihs_number
+                "reference"=> "Organization/".$organizationId
             ],
             "identifier"=> [
                 [
-                    "system"=> "http://sys-ids.kemkes.go.id/encounter/".$location->organization->ihs_number,
+                    "system"=> "http://sys-ids.kemkes.go.id/encounter/".$organizationId,
                     "value"=> $noRawat
                 ]
             ]
@@ -76,6 +78,7 @@ class Encounter
 
     public static function formUpdateData($ihsNumber,$encounter,$patient,$practitioner,$location)
     {
+        $organizationId = Enviroment::organizationId();
         $noRawat = StrHelper::cleanNoRawat($encounter->no_rawat);
         return [
             "resourceType"=> "Encounter",
@@ -131,11 +134,11 @@ class Encounter
                 ]
             ],
             "serviceProvider"=> [
-                "reference"=> "Organization/".$encounter->organization->ihs_number
+                "reference"=> "Organization/".$organizationId
             ],
             "identifier"=> [
                 [
-                    "system"=> "http://sys-ids.kemkes.go.id/encounter/".$encounter->organization->ihs_number,
+                    "system"=> "http://sys-ids.kemkes.go.id/encounter/".$organizationId,
                     "value"=> $noRawat
                 ]
             ]
