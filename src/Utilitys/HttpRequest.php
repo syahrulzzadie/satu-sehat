@@ -10,7 +10,7 @@ class HttpRequest
     private static function handleResponse($response)
     {
         if ($response->successful()) {
-            return ['status' => true, 'response' => $response->body()];
+            return ['status' => true, 'response' => $response];
         }
         if ($response->failed()) {
             return ['status' => false, 'message' => 'Failed get request!'];
