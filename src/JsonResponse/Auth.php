@@ -11,15 +11,15 @@ class Auth
 {
     private static function requestToken() : array
     {
-        $url = Url::authUrl();
-        $data['client_id'] = Enviroment::clientId();
-        $data['client_secret'] = Enviroment::clientSecret();
-        $response = Http::asForm()
-            ->timeout(300)
-            ->retry(5,1000)
-            ->post($url,$data);
-        if ($response->successful()) {
-            if ($response->status() == 200) {
+        try {
+            $url = Url::authUrl();
+            $data['client_id'] = Enviroment::clientId();
+            $data['client_secret'] = Enviroment::clientSecret();
+            $response = Http::asForm()
+                ->timeout(300)
+                ->retry(5,1000)
+                ->post($url,$data);
+            if ($response->successful()) {
                 $data = json_decode($response->body(),true);
                 return [
                     'status' => true,
@@ -30,11 +30,19 @@ class Auth
                     ]
                 ];
             }
+            if ($response->failed()) {
+                return ['status' => false, 'message' => 'Error generate token!'];
+            }
+            if ($response->clientError()) {
+                return ['status' => false, 'message' => 'Error client!'];
+            }
+            if ($response->serverError()) {
+                return ['status' => false, 'message' => 'Error server!'];
+            }
+            return ['status' => false, 'message' => 'Unknown error!'];
+        } catch (\Exception $e) {
+            return ['status' => false, 'message' => 'Unknown error!'];
         }
-        return [
-            'status' => false,
-            'message' => 'Error generate token!'
-        ];
     }
 
     private static function generateToken() : array

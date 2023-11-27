@@ -7,63 +7,55 @@ use syahrulzzadie\SatuSehat\JsonResponse as jsonResponse;
 
 class HttpRequest
 {
-    private static function checkResponse($response)
+    private static function handleResponse($response)
     {
-        $res = json_decode($response->body(),true);
-        if ($res['resourceType'] == 'OperationOutcome') {
-            return [
-                'status'=> false,
-                'message'=> $response->body()
-            ];
+        if ($response->successful()) {
+            $responseBody = json_decode($response->body(),true);
+            return ['status' => true, 'response' => $responseBody];
         }
-        return [
-            'status'=> true,
-            'response' => $response
-        ];
+        if ($response->failed()) {
+            return ['status' => false, 'message' => 'Failed get request!'];
+        }
+        if ($response->clientError()) {
+            return ['status' => false, 'message' => 'Client error!'];
+        }
+        if ($response->serverError()) {
+            return ['status' => false, 'message' => 'Server error!'];
+        }
+        return jsonResponse\Error::response($response);
     }
 
     public static function get($url)
     {
         $getToken = jsonResponse\Auth::getToken();
         if ($getToken['status']) {
-            $response = Http::asForm()
-                ->timeout(300)
-                ->retry(5,1000)
-                ->withToken($getToken['token'])
-                ->get($url);
-            if ($response->successful()) {
-                if ($response->status() == 200) {
-                    return self::checkResponse($response);
-                }
+            try {
+                $response = Http::asForm()
+                    ->timeout(300)
+                    ->retry(5,1000)
+                    ->withToken($getToken['token'])
+                    ->get($url);
+                return self::handleResponse($response);
+            } catch (\Exception $e) {
+                return ['status' => false, 'message' => 'Unknown error!'];
             }
-            return jsonResponse\Error::response($response);
         }
         return jsonResponse\Error::getToken($getToken);
-    }
-
-    public static function poolGet($pool,$token,$as,$url)
-    {
-        return $pool->as($as)->asForm()
-            ->timeout(300)
-            ->retry(5,1000)
-            ->withToken($token)
-            ->get($url);
     }
 
     public static function post($url,$formData)
     {
         $getToken = jsonResponse\Auth::getToken();
         if ($getToken['status']) {
-            $response = Http::timeout(300)
-                ->retry(5,1000)
-                ->withToken($getToken['token'])
-                ->post($url,$formData);
-            if ($response->successful()) {
-                if ($response->status() == 201) {
-                    return self::checkResponse($response);
-                }
+            try {
+                $response = Http::timeout(300)
+                    ->retry(5,1000)
+                    ->withToken($getToken['token'])
+                    ->post($url,$formData);
+                return self::handleResponse($response);
+            } catch (\Exception $e) {
+                return ['status' => false, 'message' => 'Unknown error!'];
             }
-            return jsonResponse\Error::response($response);
         }
         return jsonResponse\Error::getToken($getToken);
     }
@@ -72,16 +64,15 @@ class HttpRequest
     {
         $getToken = jsonResponse\Auth::getToken();
         if ($getToken['status']) {
-            $response = Http::timeout(300)
-                ->retry(5,1000)
-                ->withToken($getToken['token'])
-                ->post($url,$formData);
-            if ($response->successful()) {
-                if ($response->status() == 200) {
-                    return self::checkResponse($response);
-                }
+            try {
+                $response = Http::timeout(300)
+                    ->retry(5,1000)
+                    ->withToken($getToken['token'])
+                    ->post($url,$formData);
+                return self::handleResponse($response);
+            } catch (\Exception $e) {
+                return ['status' => false, 'message' => 'Unknown error!'];
             }
-            return jsonResponse\Error::response($response);
         }
         return jsonResponse\Error::getToken($getToken);
     }
@@ -90,17 +81,26 @@ class HttpRequest
     {
         $getToken = jsonResponse\Auth::getToken();
         if ($getToken['status']) {
-            $response = Http::timeout(300)
-                ->retry(5,1000)
-                ->withToken($getToken['token'])
-                ->put($url,$formData);
-            if ($response->successful()) {
-                if ($response->status() == 200) {
-                    return self::checkResponse($response);
-                }
+            try {
+                $response = Http::timeout(300)
+                    ->retry(5,1000)
+                    ->withToken($getToken['token'])
+                    ->put($url,$formData);
+                return self::handleResponse($response);
+            } catch (\Exception $e) {
+                return ['status' => false, 'message' => 'Unknown error!'];
             }
-            return jsonResponse\Error::response($response);
         }
         return jsonResponse\Error::getToken($getToken);
+    }
+
+    public static function poolGet($pool,$token,$as,$url)
+    {
+        return $pool->as($as)
+            ->asForm()
+            ->timeout(300)
+            ->retry(5,1000)
+            ->withToken($token)
+            ->get($url);
     }
 }
