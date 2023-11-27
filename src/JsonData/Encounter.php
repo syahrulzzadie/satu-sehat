@@ -76,13 +76,13 @@ class Encounter
         ];
     }
 
-    public static function formUpdateData($ihsNumber,$encounter,$patient,$practitioner,$location)
+    public static function formUpdateData($encounter,$patient,$practitioner,$location)
     {
         $organizationId = Enviroment::organizationId();
         $noRawat = StrHelper::cleanNoRawat($encounter->no_rawat);
         return [
             "resourceType"=> "Encounter",
-            "id"=> $ihsNumber,
+            "id"=> $encounter->ihs_number,
             "status"=> 'finished',
             "class"=> [
                 "system"=> "http://terminology.hl7.org/CodeSystem/v3-ActCode",
