@@ -10,8 +10,7 @@ class HttpRequest
     private static function handleResponse($response)
     {
         if ($response->successful()) {
-            $responseBody = json_decode($response->body(),true);
-            return ['status' => true, 'response' => $responseBody];
+            return ['status' => true, 'response' => $response->body()];
         }
         if ($response->failed()) {
             return ['status' => false, 'message' => 'Failed get request!'];
