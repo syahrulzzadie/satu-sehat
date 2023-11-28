@@ -427,10 +427,7 @@ class SatuSehat
                     $data['medicationRequest'] = jsonResponse\MedicationRequest::history($response['medicationRequest']);
                 }
             }
-            return [
-                'status' => true,
-                'data' => $data
-            ];
+            return $data;
         }
         return jsonResponse\Error::getToken($getToken);
     }
