@@ -2,15 +2,18 @@
 
 namespace syahrulzzadie\SatuSehat\JsonData;
 
+use syahrulzzadie\SatuSehat\Utilitys\Enviroment;
+
 class Location
 {
-    public static function formCreateData($organization,$kode,$nama)
+    public static function formCreateData($kode, $nama)
     {
+        $organizationId = Enviroment::organizationId();
         return [
             "resourceType"=> "Location",
             "identifier"=> [
                 [
-                    "system"=> "http://sys-ids.kemkes.go.id/location/".$organization->ihs_number,
+                    "system"=> "http://sys-ids.kemkes.go.id/location/".$organizationId,
                     "value"=> $kode
                 ]
             ],
@@ -36,7 +39,7 @@ class Location
             ],
             "address"=> [
                 "use"=> "work",
-                "line"=> [ "Jl. Ababil No.42, Randugunting, Kec. Tegal Selatan, Kota Tegal, Jawa Tengah" ],
+                "line"=> ["Jl. Ababil No.42, Randugunting, Kec. Tegal Selatan, Kota Tegal, Jawa Tengah"],
                 "city"=> "Kota Tegal",
                 "postalCode"=> "52131",
                 "country"=> "ID",
@@ -87,20 +90,21 @@ class Location
                 "altitude"=> 0
             ],
             "managingOrganization"=> [
-                "reference"=> "Organization/".$organization->ihs_number,
-                "display"=> $organization->name
+                "reference"=> "Organization/".$organizationId,
+                "display"=> "RS Umum Islam Harapan Anda Kota Tegal"
             ]
         ];
     }
 
-    public static function formUpdateData($ihsNumber,$organization,$kode,$nama)
+    public static function formUpdateData($ihsNumber, $kode, $nama)
     {
+        $organizationId = Enviroment::organizationId();
         return [
             "resourceType"=> "Location",
             "id" => $ihsNumber,
             "identifier"=> [
                 [
-                    "system"=> "http://sys-ids.kemkes.go.id/location/".$organization->ihs_number,
+                    "system"=> "http://sys-ids.kemkes.go.id/location/".$organizationId,
                     "value"=> $kode
                 ]
             ],
@@ -126,7 +130,7 @@ class Location
             ],
             "address"=> [
                 "use"=> "work",
-                "line"=> [ "Jl. Ababil No.42, Randugunting, Kec. Tegal Selatan, Kota Tegal, Jawa Tengah" ],
+                "line"=> ["Jl. Ababil No.42, Randugunting, Kec. Tegal Selatan, Kota Tegal, Jawa Tengah"],
                 "city"=> "Kota Tegal",
                 "postalCode"=> "52131",
                 "country"=> "ID",
@@ -177,8 +181,8 @@ class Location
                 "altitude"=> 0
             ],
             "managingOrganization"=> [
-                "reference"=> "Organization/".$organization->ihs_number,
-                "display"=> $organization->name
+                "reference"=> "Organization/".$organizationId,
+                "display"=> "RS Umum Islam Harapan Anda Kota Tegal"
             ]
         ];
     }

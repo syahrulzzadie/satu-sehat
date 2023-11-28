@@ -78,10 +78,10 @@ class SatuSehat
         return jsonResponse\Error::http($http);
     }
 
-    public static function createLocation($organization,$kode,$name)
+    public static function createLocation($kode,$name)
     {
         $url = Url::createLocationUrl();
-        $formData = jsonData\Location::formCreateData($organization,$kode,$name);
+        $formData = jsonData\Location::formCreateData($kode,$name);
         $http = HttpRequest::post($url,$formData);
         if ($http['status']) {
             $response = $http['response'];
@@ -90,10 +90,10 @@ class SatuSehat
         return jsonResponse\Error::http($http);
     }
 
-    public static function updateLocation($ihsNumber,$organization,$kode,$name)
+    public static function updateLocation($ihsNumber,$kode,$name)
     {
         $url = Url::updateLocationUrl($ihsNumber);
-        $formData = jsonData\Location::formUpdateData($ihsNumber,$organization,$kode,$name);
+        $formData = jsonData\Location::formUpdateData($ihsNumber,$kode,$name);
         $http = HttpRequest::put($url,$formData);
         if ($http['status']) {
             $response = $http['response'];
