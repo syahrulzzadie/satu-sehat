@@ -83,7 +83,7 @@ class Organization
             ],
             "partOf"=> [
                 "reference"=> "Organization/".$organizationId,
-                "display"=> "RSUI Harapan Anda Kota Tegal"
+                "display"=> "RS Umum Islam Harapan Anda Kota Tegal"
             ]
         ];
     }
@@ -166,7 +166,7 @@ class Organization
             ],
             "partOf"=> [
                 "reference"=> "Organization/".$organizationId,
-                "display"=> "RSUI Harapan Anda Kota Tegal"
+                "display"=> "RS Umum Islam Harapan Anda Kota Tegal"
             ]
         ];
     }
