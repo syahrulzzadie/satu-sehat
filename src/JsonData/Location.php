@@ -6,7 +6,7 @@ use syahrulzzadie\SatuSehat\Utilitys\Enviroment;
 
 class Location
 {
-    public static function formCreateData($kode, $nama)
+    public static function formCreateData($organization, $kode, $nama)
     {
         $organizationId = Enviroment::organizationId();
         return [
@@ -90,13 +90,13 @@ class Location
                 "altitude"=> 0
             ],
             "managingOrganization"=> [
-                "reference"=> "Organization/".$organizationId,
-                "display"=> "RS Umum Islam Harapan Anda Kota Tegal"
+                "reference"=> "Organization/".$organization->ihs_number,
+                "display"=> $organization->name." - RS Umum Islam Harapan Anda Kota Tegal"
             ]
         ];
     }
 
-    public static function formUpdateData($ihsNumber, $kode, $nama)
+    public static function formUpdateData($ihsNumber, $organization, $kode, $nama)
     {
         $organizationId = Enviroment::organizationId();
         return [
@@ -181,8 +181,8 @@ class Location
                 "altitude"=> 0
             ],
             "managingOrganization"=> [
-                "reference"=> "Organization/".$organizationId,
-                "display"=> "RS Umum Islam Harapan Anda Kota Tegal"
+                "reference"=> "Organization/".$organization->ihs_number,
+                "display"=> $organization->name." - RS Umum Islam Harapan Anda Kota Tegal"
             ]
         ];
     }
