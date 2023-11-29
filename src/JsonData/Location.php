@@ -18,8 +18,8 @@ class Location
                 ]
             ],
             "status"=> "active",
-            "name"=> $nama,
-            "description"=> $nama,
+            "name"=> $nama." - RS Umum Islam Harapan Anda Kota Tegal",
+            "description"=> $nama." - RS Umum Islam Harapan Anda Kota Tegal",
             "mode"=> "instance",
             "telecom"=> [
                 [
@@ -109,8 +109,8 @@ class Location
                 ]
             ],
             "status"=> "active",
-            "name"=> $nama,
-            "description"=> $nama,
+            "name"=> $nama." - RS Umum Islam Harapan Anda Kota Tegal",
+            "description"=> $nama." - RS Umum Islam Harapan Anda Kota Tegal",
             "mode"=> "instance",
             "telecom"=> [
                 [
