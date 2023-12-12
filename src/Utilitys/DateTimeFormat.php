@@ -25,7 +25,7 @@ class DateTimeFormat
 
     public static function dateParse($dateTime)
     {
-        return date('Y-m-d');
+        return date('Y-m-d',strtotime($dateTime));
     }
 
     public static function parseDateAndTime($date,$time)
@@ -33,5 +33,11 @@ class DateTimeFormat
         $date = date('Y-m-d',strtotime($date));
         $time = date('H:i:s',strtotime($time));
         return $date.'T'.$time.'+07:00';
+    }
+
+    public static function dateParseDateAndTime($date,$time)
+    {
+        $dateTime = $date." ".$time;
+        return date('Y-m-d',strtotime($dateTime));
     }
 }

@@ -370,6 +370,97 @@ class SatuSehat
         return jsonResponse\Error::http($http);
     }
 
+    public static function bundleCreateEncounter($noRawat,$date,$time,$patient,$practitioner,$location,$conditions = [],$observations = [],$practitioneroObservation = null,$compositions = [],$practitionerComposition = null,$procedures = [],$practitionerProcedure = null,$medications = [],$practitionerMedication = null)
+    {
+        $url = Url::createEncounterUrl();
+        $formData = jsonData\Encounter::formCreateData($noRawat,$date,$time,$patient,$practitioner,$location);
+        $http = HttpRequest::post($url,$formData);
+        if ($http['status']) {
+            $messages = [];
+            $response = $http['response'];
+            $data = $response['data'];
+            $ihsNumberEncounter = $data['ihs_number'];
+            if (count($conditions) > 0) {
+                $url2 = Url::createConditionUrl();
+                $formData2 = jsonData\Condition::bundleFormCreateData($ihsNumberEncounter,$patient,$conditions);
+                $http2 = HttpRequest::post($url2,$formData2);
+                if ($http2['status']) {
+                    $messages[] = "Conditions success!";
+                } else {
+                    $messages[] = "Conditions failed!";
+                }
+            }
+            if (count($observations) > 0) {
+                foreach ($observations as $observation) {
+                    $url3 = Url::createObservationUrl();
+                    $formData3 = jsonData\Observation::bundleFormCreateData($ihsNumberEncounter,$date,$time,$patient,$practitioneroObservation,$observation);
+                    $http3 = HttpRequest::post($url3,$formData3);
+                    if ($http3['status']) {
+                        $messages[] = "Observation success!";
+                    } else {
+                        $messages[] = "Observation failed!";
+                    }
+                    sleep(1);
+                }
+            }
+            if (count($compositions) > 0) {
+                foreach ($compositions as $composition) {
+                    $url4 = Url::createCompositionUrl();
+                    $formData4 = jsonData\Composition::bundleFormCreateData($ihsNumberEncounter,$noRawat,$date,$patient,$practitionerComposition,$composition);
+                    $http4 = HttpRequest::post($url4,$formData4);
+                    if ($http4['status']) {
+                        $messages[] = "Composition success!";
+                    } else {
+                        $messages[] = "Composition failed!";
+                    }
+                    sleep(1);
+                }
+            }
+            if (count($procedures) > 0) {
+                foreach ($procedures as $procedure) {
+                    $url5 = Url::createProcedureUrl();
+                    $formData5 = jsonData\Procedure::bundleFormCreateData($ihsNumberEncounter,$date,$time,$patient,$practitionerProcedure,$procedure);
+                    $http5 = HttpRequest::post($url5,$formData5);
+                    if ($http5['status']) {
+                        $messages[] = "Procedure success!";
+                    } else {
+                        $messages[] = "Procedure failed!";
+                    }
+                    sleep(1);
+                }
+            }
+            if (count($medications) > 0) {
+                foreach ($medications as $medication) {
+                    $url6 = Url::createMedicationUrl();
+                    $formData6 = jsonData\Medication::bundleFormCreateData($noRawat,$medication);
+                    $http6 = HttpRequest::post($url6,$formData6);
+                    if ($http6['status']) {
+                        $response6 = $http6['response'];
+                        $data6 = $response6['data'];
+                        $ihsNumberMedication = $data6['ihs_number'];
+                        $url7 = Url::createMedicationRequestUrl();
+                        $formData7 = jsonData\MedicationRequest::bundleFormCreateData($noRawat,$ihsNumberEncounter,$ihsNumberMedication,$date,$patient,$practitionerMedication,$medication);
+                        $http7 = HttpRequest::post($url7,$formData7);
+                        if ($http7['status']) {
+                            $messages[] = "Medication & Medication Request success!";
+                        } else {
+                            $messages[] = "Medication Request failed!";
+                        }
+                    } else {
+                        $messages[] = "Medication failed!";
+                    }
+                    sleep(1);
+                }
+            }
+            return [
+                'status' => true,
+                'message' => 'Bundle create encounter success!',
+                'messages' => $messages
+            ];
+        }
+        return jsonResponse\Error::http($http);
+    }
+
     public static function historyPatient($ihsNumber)
     {
         $getToken = jsonResponse\Auth::getToken();
