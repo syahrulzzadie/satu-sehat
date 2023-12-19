@@ -59,6 +59,24 @@ class HttpRequest
         return jsonResponse\Error::getToken($getToken);
     }
 
+    public static function postTextPlain($url,$textPlain)
+    {
+        $getToken = jsonResponse\Auth::getToken();
+        if ($getToken['status']) {
+            try {
+                $response = Http::timeout(300)
+                    ->retry(5,1000)
+                    ->withToken($getToken['token'])
+                    ->contentType("text/plain")
+                    ->send('POST',$textPlain);
+                return self::handleResponse($response);
+            } catch (\Exception $e) {
+                return ['status' => false, 'message' => 'Unknown error!'];
+            }
+        }
+        return jsonResponse\Error::getToken($getToken);
+    }
+
     public static function postConsent($url,$formData)
     {
         $getToken = jsonResponse\Auth::getToken();
