@@ -2,6 +2,7 @@
 
 namespace syahrulzzadie\SatuSehat\JsonResponse;
 
+use DateTime;
 use syahrulzzadie\SatuSehat\Utilitys\Enviroment;
 use syahrulzzadie\SatuSehat\Utilitys\Url;
 
