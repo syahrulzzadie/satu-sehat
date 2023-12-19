@@ -24,6 +24,6 @@ class Enviroment
 
     public static function publicKey()
     {
-        return '';
+        return base64_encode('satu-sehat');
     }
 }
