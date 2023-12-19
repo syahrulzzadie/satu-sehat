@@ -8,7 +8,7 @@ use syahrulzzadie\SatuSehat\JsonResponse as jsonResponse;
 use syahrulzzadie\SatuSehat\Utilitys\HttpRequest;
 use syahrulzzadie\SatuSehat\Utilitys\Url;
 
-class SatuSehat
+class SatuSehatCore
 {
     public static function getPatientByNik($nik)
     {
