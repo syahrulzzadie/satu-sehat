@@ -2,7 +2,6 @@
 
 namespace syahrulzzadie\SatuSehat\Utilitys;
 
-use Illuminate\Support\Facades\Http;
 use syahrulzzadie\SatuSehat\JsonResponse as jsonResponse;
 
 class HttpRequest
@@ -49,9 +48,10 @@ class HttpRequest
                 curl_setopt($ch, CURLOPT_TIMEOUT, 30);
                 curl_setopt($ch, CURLOPT_POST, true);
                 curl_setopt($ch, CURLOPT_HTTPHEADER, [
+                    'Content-Type: application/json',
                     'Authorization: Bearer ' . $getToken['token']
                 ]);
-                curl_setopt($ch, CURLOPT_POSTFIELDS,$formData);
+                curl_setopt($ch, CURLOPT_POSTFIELDS,json_encode($formData));
                 $response = curl_exec($ch);
                 if (curl_errno($ch)) {
                     return [
@@ -114,9 +114,10 @@ class HttpRequest
                 curl_setopt($ch, CURLOPT_TIMEOUT, 30);
                 curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
                 curl_setopt($ch, CURLOPT_HTTPHEADER, [
+                    'Content-Type: application/json',
                     'Authorization: Bearer ' . $getToken['token']
                 ]);
-                curl_setopt($ch, CURLOPT_POSTFIELDS,$formData);
+                curl_setopt($ch, CURLOPT_POSTFIELDS,json_encode($formData));
                 $response = curl_exec($ch);
                 if (curl_errno($ch)) {
                     return [
