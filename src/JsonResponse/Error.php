@@ -6,7 +6,7 @@ class Error
 {
     public static function response($response)
     {
-        $message = json_encode($response->body());
+        $message = json_encode($response);
         return [
             'status' => false,
             'message' => $message
@@ -45,7 +45,7 @@ class Error
 
     public static function searchIsEmpty($response)
     {
-        $message = json_encode($response->body());
+        $message = json_encode($response);
         if (strpos($message,'\"total\":0') !== false) {
             return true;
         }

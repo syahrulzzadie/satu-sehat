@@ -7,7 +7,7 @@ class Practitioner
     public static function convert($response): array
     {
         if (!Error::searchIsEmpty($response)) {
-            $data = json_decode($response$response,true);
+            $data = json_decode($response,true);
             $entry = $data['entry'] ?? false;
             if ($entry) {
                 $resource = $entry[0]['resource'];
@@ -26,7 +26,7 @@ class Practitioner
             }
             return [
                 'status' => false,
-                'message' => $response$response
+                'message' => $response
             ];
         }
         return [
