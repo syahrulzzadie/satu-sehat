@@ -189,4 +189,14 @@ class Url
     {
         return self::kfaUrl('products/all?page='.$start.'&size='.$limit.'&product_type=farmasi'.$type);
     }
+
+    public static function kycGenerateUrl()
+    {
+        return self::baseUrl('generate-url');
+    }
+
+    public static function kycChallengeCode()
+    {
+        return self::baseUrl('challenge-code');
+    }
 }

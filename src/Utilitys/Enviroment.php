@@ -21,4 +21,9 @@ class Enviroment
         $code = strrev(Constant::$organizationId);
         return base64_decode($code);
     }
+
+    public static function publicKey()
+    {
+        return '';
+    }
 }

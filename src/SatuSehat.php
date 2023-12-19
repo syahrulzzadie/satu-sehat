@@ -461,6 +461,30 @@ class SatuSehat
         return jsonResponse\Error::http($http);
     }
 
+    public static function KycGenerateUrl($nik,$name)
+    {
+        $url = Url::kycGenerateUrl();
+        $formData = jsonData\Kyc::formDataGenerateUrl($nik,$name);
+        $http = HttpRequest::post($url,$formData);
+        if ($http['status']) {
+            $response = $http['response'];
+            return jsonResponse\Kyc::convertGenerateUrl($response);
+        }
+        return jsonResponse\Error::http($http);
+    }
+
+    public static function KycChallengeCode($nik,$name)
+    {
+        $url = Url::kycChallengeCode();
+        $formData = jsonData\Kyc::formDataChallengeCode($nik,$name);
+        $http = HttpRequest::post($url,$formData);
+        if ($http['status']) {
+            $response = $http['response'];
+            return jsonResponse\Kyc::convertChallengeCode($response);
+        }
+        return jsonResponse\Error::http($http);
+    }
+
     public static function historyPatient($ihsNumber)
     {
         $getToken = jsonResponse\Auth::getToken();
