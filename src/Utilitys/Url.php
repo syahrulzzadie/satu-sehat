@@ -24,6 +24,11 @@ class Url
         return Constant::$kfaUrl.'/'.$subUrl;
     }
 
+    private static function kycUrl($subUrl)
+    {
+        return Constant::$kycUrl.'/'.$subUrl;
+    }
+
     public static function authUrl()
     {
         return self::authHost('accesstoken?grant_type=client_credentials');
@@ -192,11 +197,11 @@ class Url
 
     public static function kycGenerateUrl()
     {
-        return self::baseUrl('generate-url');
+        return self::kycUrl('generate-url');
     }
 
     public static function kycChallengeCode()
     {
-        return self::baseUrl('challenge-code');
+        return self::kycUrl('challenge-code');
     }
 }

@@ -6,7 +6,6 @@ use syahrulzzadie\SatuSehat\Utilitys\Enviroment;
 
 class Kyc
 {
-
     public static function formDataGenerateUrl($nik,$name)
     {
         $publicKey = Enviroment::publicKey();
