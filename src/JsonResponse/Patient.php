@@ -7,7 +7,7 @@ class Patient
     public static function convert($response): array
     {
         if (!Error::searchIsEmpty($response)) {
-            $data = json_decode($response->body(),true);
+            $data = json_decode($response,true);
             $entry = $data['entry'] ?? false;
             if ($entry) {
                 $resource = $entry[0]['resource'];
@@ -26,7 +26,7 @@ class Patient
             }
             return [
                 'status' => false,
-                'message' => $response->body()
+                'message' => $response
             ];
         }
         return [

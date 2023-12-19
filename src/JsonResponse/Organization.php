@@ -6,7 +6,7 @@ class Organization
 {
     public static function convert($response) : array
     {
-        $data = json_decode($response->body(),true);
+        $data = json_decode($response,true);
         $resType = $data['resourceType'];
         if ($resType == 'Organization') {
             return [
@@ -24,7 +24,7 @@ class Organization
     public static function show($response) : array
     {
         if (!Error::searchIsEmpty($response)) {
-            $data = json_decode($response->body(),true);
+            $data = json_decode($response,true);
             $entry = $data['entry'] ?? false;
             if ($entry) {
                 $dataEntry = [];
@@ -46,7 +46,7 @@ class Organization
             }
             return [
                 'status' => false,
-                'message' => $response->body()
+                'message' => $response
             ];
         }
         return [
