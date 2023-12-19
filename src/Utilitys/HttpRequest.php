@@ -7,36 +7,33 @@ use syahrulzzadie\SatuSehat\JsonResponse as jsonResponse;
 
 class HttpRequest
 {
-    private static function handleResponse($response)
-    {
-        if ($response->successful()) {
-            return ['status' => true, 'response' => $response];
-        }
-        if ($response->failed()) {
-            return ['status' => false, 'message' => 'Failed get request!'];
-        }
-        if ($response->clientError()) {
-            return ['status' => false, 'message' => 'Client error!'];
-        }
-        if ($response->serverError()) {
-            return ['status' => false, 'message' => 'Server error!'];
-        }
-        return jsonResponse\Error::response($response);
-    }
-
     public static function get($url)
     {
         $getToken = jsonResponse\Auth::getToken();
         if ($getToken['status']) {
             try {
-                $response = Http::asForm()
-                    ->timeout(300)
-                    ->retry(5,1000)
-                    ->withToken($getToken['token'])
-                    ->get($url);
-                return self::handleResponse($response);
+                $ch = curl_init($url);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+                curl_setopt($ch, CURLOPT_HTTPGET, true);
+                curl_setopt($ch, CURLOPT_HTTPHEADER, [
+                    'Content-Type: application/x-www-form-urlencoded',
+                    'Authorization: Bearer ' . $getToken['token']
+                ]);
+                $response = curl_exec($ch);
+                if (curl_errno($ch)) {
+                    return [
+                        'status' => false,
+                        'message' => curl_error($ch)
+                    ];
+                }
+                curl_close($ch);
+                return [
+                    'status' => true,
+                    'response' => $response
+                ];
             } catch (\Exception $e) {
-                return ['status' => false, 'message' => 'Unknown error!'];
+                return ['status' => false, 'message' => $e->getMessage()];
             }
         }
         return jsonResponse\Error::getToken($getToken);
@@ -47,13 +44,28 @@ class HttpRequest
         $getToken = jsonResponse\Auth::getToken();
         if ($getToken['status']) {
             try {
-                $response = Http::timeout(300)
-                    ->retry(5,1000)
-                    ->withToken($getToken['token'])
-                    ->post($url,$formData);
-                return self::handleResponse($response);
+                $ch = curl_init($url);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+                curl_setopt($ch, CURLOPT_POST, true);
+                curl_setopt($ch, CURLOPT_HTTPHEADER, [
+                    'Authorization: Bearer ' . $getToken['token']
+                ]);
+                curl_setopt($ch, CURLOPT_POSTFIELDS,http_build_query($formData));
+                $response = curl_exec($ch);
+                if (curl_errno($ch)) {
+                    return [
+                        'status' => false,
+                        'message' => curl_error($ch)
+                    ];
+                }
+                curl_close($ch);
+                return [
+                    'status' => true,
+                    'response' => $response
+                ];
             } catch (\Exception $e) {
-                return ['status' => false, 'message' => 'Unknown error!'];
+                return ['status' => false, 'message' => $e->getMessage()];
             }
         }
         return jsonResponse\Error::getToken($getToken);
@@ -64,31 +76,29 @@ class HttpRequest
         $getToken = jsonResponse\Auth::getToken();
         if ($getToken['status']) {
             try {
-                $response = Http::timeout(300)
-                    ->retry(5,1000)
-                    ->withToken($getToken['token'])
-                    ->contentType("text/plain")
-                    ->send('POST',$textPlain);
-                return self::handleResponse($response);
+                $ch = curl_init($url);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+                curl_setopt($ch, CURLOPT_POST, true);
+                curl_setopt($ch, CURLOPT_HTTPHEADER, [
+                    'Content-Type: text/plain',
+                    'Authorization: Bearer ' . $getToken['token']
+                ]);
+                curl_setopt($ch, CURLOPT_POSTFIELDS,$textPlain);
+                $response = curl_exec($ch);
+                if (curl_errno($ch)) {
+                    return [
+                        'status' => false,
+                        'message' => curl_error($ch)
+                    ];
+                }
+                curl_close($ch);
+                return [
+                    'status' => true,
+                    'response' => $response
+                ];
             } catch (\Exception $e) {
-                return ['status' => false, 'message' => 'Unknown error!'];
-            }
-        }
-        return jsonResponse\Error::getToken($getToken);
-    }
-
-    public static function postConsent($url,$formData)
-    {
-        $getToken = jsonResponse\Auth::getToken();
-        if ($getToken['status']) {
-            try {
-                $response = Http::timeout(300)
-                    ->retry(5,1000)
-                    ->withToken($getToken['token'])
-                    ->post($url,$formData);
-                return self::handleResponse($response);
-            } catch (\Exception $e) {
-                return ['status' => false, 'message' => 'Unknown error!'];
+                return ['status' => false, 'message' => $e->getMessage()];
             }
         }
         return jsonResponse\Error::getToken($getToken);
@@ -99,13 +109,28 @@ class HttpRequest
         $getToken = jsonResponse\Auth::getToken();
         if ($getToken['status']) {
             try {
-                $response = Http::timeout(300)
-                    ->retry(5,1000)
-                    ->withToken($getToken['token'])
-                    ->put($url,$formData);
-                return self::handleResponse($response);
+                $ch = curl_init($url);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+                curl_setopt($ch, CURLOPT_HTTPHEADER, [
+                    'Authorization: Bearer ' . $getToken['token']
+                ]);
+                curl_setopt($ch, CURLOPT_POSTFIELDS,http_build_query($formData));
+                $response = curl_exec($ch);
+                if (curl_errno($ch)) {
+                    return [
+                        'status' => false,
+                        'message' => curl_error($ch)
+                    ];
+                }
+                curl_close($ch);
+                return [
+                    'status' => true,
+                    'response' => $response
+                ];
             } catch (\Exception $e) {
-                return ['status' => false, 'message' => 'Unknown error!'];
+                return ['status' => false, 'message' => $e->getMessage()];
             }
         }
         return jsonResponse\Error::getToken($getToken);

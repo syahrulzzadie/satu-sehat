@@ -20,10 +20,9 @@ class Kyc
 
     public static function formDataGenerateUrl($nik,$name)
     {
-        $data = "-----BEGIN ENCRYPTED MESSAGE-----\n";
-        $data .= self::encriptGeneralUrl($nik,$name);
-        $data .= "\n-----END ENCRYPTED MESSAGE-----";
-        return $data;
+        return "-----BEGIN ENCRYPTED MESSAGE-----
+        ".self::encriptGeneralUrl($nik,$name)."
+        -----END ENCRYPTED MESSAGE-----";
     }
 
     private static function encriptChallengeCode($nik,$name)
@@ -43,9 +42,8 @@ class Kyc
 
     public static function formDataChallengeCode($nik,$name)
     {
-        $data = "-----BEGIN ENCRYPTED MESSAGE-----\n";
-        $data .= self::encriptChallengeCode($nik,$name);
-        $data .= "\n-----END ENCRYPTED MESSAGE-----";
-        return $data;
+        return "-----BEGIN ENCRYPTED MESSAGE-----
+        ".self::encriptChallengeCode($nik,$name)."
+        -----END ENCRYPTED MESSAGE-----";
     }
 }
