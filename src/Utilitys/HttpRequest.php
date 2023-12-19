@@ -49,10 +49,9 @@ class HttpRequest
                 curl_setopt($ch, CURLOPT_TIMEOUT, 30);
                 curl_setopt($ch, CURLOPT_POST, true);
                 curl_setopt($ch, CURLOPT_HTTPHEADER, [
-                    'Content-Type: application/x-www-form-urlencoded',
                     'Authorization: Bearer ' . $getToken['token']
                 ]);
-                curl_setopt($ch, CURLOPT_POSTFIELDS,http_build_query($formData));
+                curl_setopt($ch, CURLOPT_POSTFIELDS,$formData);
                 $response = curl_exec($ch);
                 if (curl_errno($ch)) {
                     return [
@@ -115,10 +114,9 @@ class HttpRequest
                 curl_setopt($ch, CURLOPT_TIMEOUT, 30);
                 curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
                 curl_setopt($ch, CURLOPT_HTTPHEADER, [
-                    'Content-Type: application/x-www-form-urlencoded',
                     'Authorization: Bearer ' . $getToken['token']
                 ]);
-                curl_setopt($ch, CURLOPT_POSTFIELDS,http_build_query($formData));
+                curl_setopt($ch, CURLOPT_POSTFIELDS,$formData);
                 $response = curl_exec($ch);
                 if (curl_errno($ch)) {
                     return [
