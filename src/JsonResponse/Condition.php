@@ -8,7 +8,7 @@ class Condition
 {
     public static function convert($response)
     {
-        $data = json_decode($response->body(),true);
+        $data = json_decode($response,true);
         $resType = $data['resourceType'];
         if ($resType == 'Condition') {
             return [
@@ -40,7 +40,7 @@ class Condition
     public static function history($response)
     {
         $history = [];
-        $data = json_decode($response->body(),true);
+        $data = json_decode($response,true);
         $entry = $data['entry'] ?? false;
         if ($entry) {
             foreach ($entry as $item) {

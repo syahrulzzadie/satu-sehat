@@ -4,8 +4,6 @@ namespace syahrulzzadie\SatuSehat\JsonResponse;
 
 use syahrulzzadie\SatuSehat\Utilitys\Enviroment;
 use syahrulzzadie\SatuSehat\Utilitys\Url;
-use Illuminate\Support\Facades\Http;
-use Carbon\Carbon;
 
 class Auth
 {
@@ -15,33 +13,33 @@ class Auth
             $url = Url::authUrl();
             $data['client_id'] = Enviroment::clientId();
             $data['client_secret'] = Enviroment::clientSecret();
-            $response = Http::asForm()
-                ->timeout(300)
-                ->retry(5,1000)
-                ->post($url,$data);
-            if ($response->successful()) {
-                $data = json_decode($response->body(),true);
+            $ch = curl_init($url);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+            curl_setopt($ch, CURLOPT_HTTPHEADER, [
+                'Content-Type: application/x-www-form-urlencoded'
+            ]);
+            $response = curl_exec($ch);
+            if (curl_errno($ch)) {
                 return [
-                    'status' => true,
-                    'data' => [
-                        'token' => $data['access_token'],
-                        'expired' => $data['expires_in'],
-                        'created_at' => date('Y-m-d H:i:s')
-                    ]
+                    'status' => false,
+                    'message' => curl_error($ch)
                 ];
             }
-            if ($response->failed()) {
-                return ['status' => false, 'message' => 'Error generate token!'];
-            }
-            if ($response->clientError()) {
-                return ['status' => false, 'message' => 'Error client!'];
-            }
-            if ($response->serverError()) {
-                return ['status' => false, 'message' => 'Error server!'];
-            }
-            return ['status' => false, 'message' => 'Unknown error!'];
+            curl_close($ch);
+            $data = json_decode($response,true);
+            return [
+                'status' => true,
+                'data' => [
+                    'token' => $data['access_token'],
+                    'expired' => $data['expires_in'],
+                    'created_at' => date('Y-m-d H:i:s')
+                ]
+            ];
         } catch (\Exception $e) {
-            return ['status' => false, 'message' => 'Unknown error!'];
+            return ['status' => false, 'message' => $e->getMessage()];
         }
     }
 
@@ -66,6 +64,15 @@ class Auth
         ];
     }
 
+    private static function getDiffSecond($dateTime)
+    {
+        $datetime = new DateTime($dateTime);
+        $current_datetime = new DateTime();
+        $interval = $current_datetime->diff($datetime);
+        $seconds_difference = $interval->s + ($interval->i * 60) + ($interval->h * 3600) + ($interval->days * 86400);
+        return intval($seconds_difference);
+    }
+
     public static function getToken() : array
     {
         $token = session('satusehat_token_key',false);
@@ -86,7 +93,7 @@ class Auth
                 ];
             }
         } else {
-            $diff = now()->diffInSeconds(Carbon::parse($createdAt));
+            $diff = self::getDiffSecond($createdAt);
             $expired = intval($expired - 60);
             if ($diff >= $expired) {
                 $generate = self::requestToken();

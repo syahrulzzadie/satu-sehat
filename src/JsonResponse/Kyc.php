@@ -6,7 +6,7 @@ class Kyc
 {
     public static function convertGenerateUrl($response) : array
     {
-        $data = json_decode($response->body(),true);
+        $data = json_decode($response,true);
         $cekMetadata = isset($data['metadata']);
         if ($cekMetadata) {
             $code = $data['metadata']['code'];
@@ -25,7 +25,7 @@ class Kyc
 
     public static function convertChallengeCode($response) : array
     {
-        $data = json_decode($response->body(),true);
+        $data = json_decode($response,true);
         $cekMetadata = isset($data['metadata']);
         if ($cekMetadata) {
             $code = $data['metadata']['code'];

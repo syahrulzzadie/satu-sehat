@@ -8,7 +8,7 @@ class Procedure
 {
     public static function convert($response)
     {
-        $data = json_decode($response->body(),true);
+        $data = json_decode($response,true);
         $resType = $data['resourceType'];
         if ($resType == 'Procedure') {
             return [
@@ -35,7 +35,7 @@ class Procedure
     public static function history($response)
     {
         $history = [];
-        $data = json_decode($response->body(),true);
+        $data = json_decode($response,true);
         $entry = $data['entry'] ?? false;
         if ($entry) {
             foreach ($entry as $item) {

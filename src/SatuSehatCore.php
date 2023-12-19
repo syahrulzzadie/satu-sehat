@@ -106,7 +106,7 @@ class SatuSehatCore
     {
         $url = Url::updateConsentPatientUrl();
         $formData = jsonData\Consent::formData($ihsNumber,$petugas,$status);
-        $http = HttpRequest::postConsent($url,$formData);
+        $http = HttpRequest::post($url,$formData);
         if ($http['status']) {
             $response = $http['response'];
             return jsonResponse\Consent::convert($response);

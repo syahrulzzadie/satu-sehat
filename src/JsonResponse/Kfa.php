@@ -6,7 +6,7 @@ class Kfa
 {
     public static function convertByCode($response)
     {
-        $data = json_decode($response->body(),true);
+        $data = json_decode($response,true);
         $result = $data['result'] ?? false;
         if ($result) {
             return [
@@ -22,7 +22,7 @@ class Kfa
 
     public static function convertByType($response)
     {
-        $data = json_decode($response->body(),true);
+        $data = json_decode($response,true);
         $items = $data['items'] ?? false;
         if ($items) {
             $itemsData = $items['data'];

@@ -21,7 +21,7 @@ class Medication
 
     public static function convert($response)
     {
-        $data = json_decode($response->body(), true);
+        $data = json_decode($response, true);
         $resType = $data['resourceType'];
         if ($resType == 'Medication') {
             return [

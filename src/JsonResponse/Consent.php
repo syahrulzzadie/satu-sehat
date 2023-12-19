@@ -6,7 +6,7 @@ class Consent
 {
     public static function convert($response)
     {
-        $data = json_decode($response->body(),true);
+        $data = json_decode($response,true);
         $resType = $data['resourceType'];
         if ($resType == 'Consent') {
             $code = $data['policyRule']['coding'][0]['code'];
