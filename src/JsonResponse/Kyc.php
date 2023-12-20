@@ -16,6 +16,10 @@ class Kyc
                     'data' => $data['data']
                 ];
             }
+            return [
+                'status' => false,
+                'message' => $data['metadata']['message']
+            ];
         }
         return [
             'status' => false,
@@ -35,6 +39,10 @@ class Kyc
                     'data' => $data['data']
                 ];
             }
+            return [
+                'status' => false,
+                'message' => $data['metadata']['message']
+            ];
         }
         return [
             'status' => false,

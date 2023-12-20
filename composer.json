@@ -19,6 +19,8 @@
     "require": {
         "php": "^7.3|^8.0",
         "laravel/framework": "^8.12",
-        "ext-curl": "*"
+        "ext-curl": "*",
+      "ext-openssl": "*",
+      "ext-json": "*"
     }
 }
