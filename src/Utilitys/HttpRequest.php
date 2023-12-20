@@ -71,6 +71,39 @@ class HttpRequest
         return jsonResponse\Error::getToken($getToken);
     }
 
+    public static function postAsForm($url,$formData)
+    {
+        $getToken = jsonResponse\Auth::getToken();
+        if ($getToken['status']) {
+            try {
+                $ch = curl_init($url);
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+                curl_setopt($ch, CURLOPT_POST, true);
+                curl_setopt($ch, CURLOPT_HTTPHEADER, [
+                    'Content-Type: application/x-www-form-urlencoded',
+                    'Authorization: Bearer ' . $getToken['token']
+                ]);
+                curl_setopt($ch, CURLOPT_POSTFIELDS,http_build_query($formData));
+                $response = curl_exec($ch);
+                if (curl_errno($ch)) {
+                    return [
+                        'status' => false,
+                        'message' => curl_error($ch)
+                    ];
+                }
+                curl_close($ch);
+                return [
+                    'status' => true,
+                    'response' => $response
+                ];
+            } catch (\Exception $e) {
+                return ['status' => false, 'message' => $e->getMessage()];
+            }
+        }
+        return jsonResponse\Error::getToken($getToken);
+    }
+
     public static function postTextPlain($url,$textPlain)
     {
         $getToken = jsonResponse\Auth::getToken();

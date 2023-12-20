@@ -25,9 +25,9 @@ class Kyc
         -----END ENCRYPTED MESSAGE-----";
     }
 
-    private static function encriptChallengeCode($nik,$name)
+    public static function formDataChallengeCode($nik,$name)
     {
-        $data = [
+        return [
             'metadata' => [
                 'method' => 'request_per_nik'
             ],
@@ -36,14 +36,5 @@ class Kyc
                 'name' => $name
             ]
         ];
-        $jsonData = json_encode($data);
-        return base64_encode($jsonData);
-    }
-
-    public static function formDataChallengeCode($nik,$name)
-    {
-        return "-----BEGIN ENCRYPTED MESSAGE-----
-        ".self::encriptChallengeCode($nik,$name)."
-        -----END ENCRYPTED MESSAGE-----";
     }
 }
