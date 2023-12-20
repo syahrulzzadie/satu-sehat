@@ -465,7 +465,7 @@ class SatuSehatCore
     {
         $url = Url::kycGenerateUrl();
         $formData = jsonData\Kyc::formDataGenerateUrl($nik,$name);
-        $http = HttpRequest::postAsForm($url,$formData);
+        $http = HttpRequest::postTextPlain($url,$formData);
         if ($http['status']) {
             $response = $http['response'];
             return jsonResponse\Kyc::convertGenerateUrl($response);
@@ -477,7 +477,7 @@ class SatuSehatCore
     {
         $url = Url::kycChallengeCode();
         $formData = jsonData\Kyc::formDataChallengeCode($nik,$name);
-        $http = HttpRequest::postAsForm($url,$formData);
+        $http = HttpRequest::postRaw($url,$formData);
         if ($http['status']) {
             $response = $http['response'];
             return jsonResponse\Kyc::convertChallengeCode($response);
