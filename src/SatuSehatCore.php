@@ -465,7 +465,7 @@ class SatuSehatCore
     {
         $url = Url::kycGenerateUrl();
         $formData = jsonData\Kyc::formDataGenerateUrl($nik,$name);
-        $http = HttpRequest::postTextPlain($url,$formData);
+        $http = HttpRequest::post($url,$formData);
         if ($http['status']) {
             $response = $http['response'];
             return jsonResponse\Kyc::convertGenerateUrl($response);
