@@ -2,28 +2,24 @@
 
 namespace syahrulzzadie\SatuSehat\Utilitys;
 
+defined('_SATUSEHAT_CLIENT_ID_') or die('Satu Sehat Client Id is required!');
+defined('_SATUSEHAT_CLIENT_SECRET_') or die('Satu Sehat Client Secret is required!');
+defined('_SATUSEHAT_ORGANIZATION_ID_') or die('Satu Sehat Organization Id is required!');
+
 class Enviroment
 {
     public static function clientId()
     {
-        $code = strrev(Constant::$clientId);
-        return base64_decode($code);
+        return _SATUSEHAT_CLIENT_ID_;
     }
 
     public static function clientSecret()
     {
-        $code = strrev(Constant::$clientSecret);
-        return base64_decode($code);
+        return _SATUSEHAT_CLIENT_SECRET_;
     }
 
     public static function organizationId()
     {
-        $code = strrev(Constant::$organizationId);
-        return base64_decode($code);
-    }
-
-    public static function publicKey()
-    {
-        return base64_encode('satu-sehat');
+        return _SATUSEHAT_ORGANIZATION_ID_;
     }
 }
