@@ -9,20 +9,6 @@ use phpseclib3\Crypt\RSA;
 
 class Kyc
 {
-    private static function generateKey()
-    {
-        $config = [
-            'private_key_type' => OPENSSL_KEYTYPE_RSA,
-            'private_key_bits' => 2048,
-        ];
-        $keyPair = openssl_pkey_new($config);
-        $publicKey = openssl_pkey_get_details($keyPair)['key'];
-        openssl_pkey_export($keyPair, $privateKey);
-        return [
-            'publicKey' => $publicKey,
-            'privateKey' => $privateKey,
-        ];
-    }
 
     private static function aesDecrypt($encryptedData, $symmetricKey)
     {
@@ -54,9 +40,8 @@ class Kyc
         return self::aesDecrypt($encryptedMessage, $aesKey);
     }
 
-    public static function convertGenerateUrl($response) : array
+    public static function convertGenerateUrl($keyPair, $response) : array
     {
-        $keyPair = self::generateKey();
         $privateKey = $keyPair['privateKey'];
         $response = self::decryptMessage($response, $privateKey);
         $data = json_decode($response,true);

@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Http;
 use syahrulzzadie\SatuSehat\JsonData as jsonData;
 use syahrulzzadie\SatuSehat\JsonResponse as jsonResponse;
 use syahrulzzadie\SatuSehat\Utilitys\HttpRequest;
+use syahrulzzadie\SatuSehat\Utilitys\Security;
 use syahrulzzadie\SatuSehat\Utilitys\Url;
 
 class SatuSehatCore
@@ -463,12 +464,13 @@ class SatuSehatCore
 
     public static function KycGenerateUrl($nik,$name)
     {
+        $keyPair = Security::generateKey();
         $url = Url::kycGenerateUrl();
-        $formData = jsonData\Kyc::formDataGenerateUrl($nik,$name);
-        $http = HttpRequest::post($url,$formData);
+        $formData = jsonData\Kyc::formDataGenerateUrl($keyPair,$nik,$name);
+        $http = HttpRequest::postTextPlain($url,$formData);
         if ($http['status']) {
             $response = $http['response'];
-            return jsonResponse\Kyc::convertGenerateUrl($response);
+            return jsonResponse\Kyc::convertGenerateUrl($keyPair,$response);
         }
         return jsonResponse\Error::http($http);
     }

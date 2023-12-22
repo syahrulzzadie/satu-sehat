@@ -9,35 +9,6 @@ use phpseclib3\Crypt\RSA;
 
 class Kyc
 {
-    private static function generateKey()
-    {
-        $config = [
-            'private_key_type' => OPENSSL_KEYTYPE_RSA,
-            'private_key_bits' => 2048,
-        ];
-        $keyPair = openssl_pkey_new($config);
-        $publicKey = openssl_pkey_get_details($keyPair)['key'];
-        openssl_pkey_export($keyPair, $privateKey);
-        return [
-            'publicKey' => $publicKey,
-            'privateKey' => $privateKey,
-        ];
-    }
-
-    private static function importRsaKey($pem)
-    {
-        $pemHeader = '-----BEGIN PUBLIC KEY-----';
-        $pemFooter = '-----END PUBLIC KEY-----';
-        $pemContents = substr($pem, strlen($pemHeader), strlen($pem) - strlen($pemFooter));
-        $binaryDerString = base64_decode($pemContents);
-        $tempFile = tempnam(sys_get_temp_dir(), 'rsa_key');
-        file_put_contents($tempFile, $binaryDerString);
-        $key = openssl_pkey_get_public('file://'.$tempFile);
-        openssl_pkey_get_details($key);
-        unlink($tempFile);
-        return $key;
-    }
-
     private static function generateSymmetricKey()
     {
         $cryptoStrong = true;
@@ -46,23 +17,6 @@ class Kyc
             return null;
         }
         return $key;
-    }
-
-    private static function generateRSAKeyPair()
-    {
-        $privateKeyConfig = [
-            'digest_alg' => 'sha256',
-            'private_key_bits' => 2048,
-            'private_key_type' => OPENSSL_KEYTYPE_RSA,
-        ];
-        $privateKeyResource = openssl_pkey_new($privateKeyConfig);
-        $privateKeyDetails = openssl_pkey_get_details($privateKeyResource);
-        $publicKey = $privateKeyDetails['key'];
-        $result = [
-            'privateKey' => $privateKeyResource,
-            'publicKey' => $publicKey,
-        ];
-        return $result;
     }
 
     private static function formatMessage($data)
@@ -105,9 +59,8 @@ class Kyc
         return self::formatMessage($payload);
     }
 
-    public static function formDataGenerateUrl($agen_nik,$agen_name)
+    public static function formDataGenerateUrl($keyPair, $agen_nik, $agen_name)
     {
-        $keyPair = self::generateKey();
         $publicKey = $keyPair['publicKey'];
         $pubPEM = '-----BEGIN PUBLIC KEY-----
         MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAxLwvebfOrPLIODIxAwFp
