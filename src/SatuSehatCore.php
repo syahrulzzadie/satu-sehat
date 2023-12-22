@@ -464,8 +464,8 @@ class SatuSehatCore
 
     public static function KycGenerateUrl($nik,$name)
     {
-        $keyPair = Security::generateKey();
         $url = Url::kycGenerateUrl();
+        $keyPair = Security::generateKey();
         $formData = jsonData\Kyc::formDataGenerateUrl($keyPair,$nik,$name);
         $http = HttpRequest::postTextPlain($url,$formData);
         if ($http['status']) {
@@ -479,7 +479,7 @@ class SatuSehatCore
     {
         $url = Url::kycChallengeCode();
         $formData = jsonData\Kyc::formDataChallengeCode($nik,$name);
-        $http = HttpRequest::postRaw($url,$formData);
+        $http = HttpRequest::post($url,$formData);
         if ($http['status']) {
             $response = $http['response'];
             return jsonResponse\Kyc::convertChallengeCode($response);
