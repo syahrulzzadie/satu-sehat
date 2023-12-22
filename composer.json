@@ -13,14 +13,17 @@
     "minimum-stability": "dev",
     "autoload": {
         "psr-4": {
-            "syahrulzzadie\\SatuSehat\\" : "src/"
+            "syahrulzzadie\\SatuSehat\\" : "src/",
+            "syahrulzzadie\\SatuSehat\\JsonData\\" : "src/JsonData/",
+            "syahrulzzadie\\SatuSehat\\JsonResponse\\" : "src/JsonResponse/",
+            "syahrulzzadie\\SatuSehat\\Utilitys\\" : "src/Utilitys/"
         }
     },
     "require": {
         "php": "^7.3|^8.0",
         "laravel/framework": "^8.12",
         "ext-curl": "*",
-      "ext-openssl": "*",
-      "ext-json": "*"
+        "ext-openssl": "*",
+        "ext-json": "*"
     }
 }
