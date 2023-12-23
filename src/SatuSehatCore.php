@@ -150,10 +150,10 @@ class SatuSehatCore
         return jsonResponse\Error::http($http);
     }
 
-    public static function createCondition($encounter,$dataDiagnosis)
+    public static function createCondition($encounter,$code,$name)
     {
         $url = Url::createConditionUrl();
-        $formData = jsonData\Condition::formCreateData($encounter,$dataDiagnosis);
+        $formData = jsonData\Condition::formCreateData($encounter,$code,$name);
         $http = HttpRequest::post($url,$formData);
         if ($http['status']) {
             $response = $http['response'];
@@ -162,10 +162,10 @@ class SatuSehatCore
         return jsonResponse\Error::http($http);
     }
 
-    public static function updateCondition($ihsNumber,$encounter,$dataDiagnosis)
+    public static function updateCondition($ihsNumber,$encounter,$code,$name)
     {
         $url = Url::updateConditionUrl($ihsNumber);
-        $formData = jsonData\Condition::formUpdateData($ihsNumber,$encounter,$dataDiagnosis);
+        $formData = jsonData\Condition::formUpdateData($ihsNumber,$encounter,$code,$name);
         $http = HttpRequest::put($url,$formData);
         if ($http['status']) {
             $response = $http['response'];

@@ -18,7 +18,9 @@ class Condition
                     'ihs_number_patient' => StrHelper::getIhsNumber($data['subject']['reference']),
                     'name_patient' => $data['subject']['display'] ?? '',
                     'ihs_number_encounter' => StrHelper::getIhsNumber($data['encounter']['reference']),
-                    'name_encounter' => $data['encounter']['display'] ?? ''
+                    'name_encounter' => $data['encounter']['display'] ?? '',
+                    'code_condition' => $data['code']['coding'][0]['code'],
+                    'name_condition' => $data['code']['coding'][0]['display'] ?? '',
                 ]
             ];
         }

@@ -4,16 +4,8 @@ namespace syahrulzzadie\SatuSehat\JsonData;
 
 class Condition
 {
-    public static function formCreateData($encounter,$dataDiagnosis)
+    public static function formCreateData($encounter,$code,$name)
     {
-        $data = [];
-        foreach ($dataDiagnosis as $item) {
-            $data[] = [
-                "system"=> "http://hl7.org/fhir/sid/icd-10",
-                "code"=> $item['code'],
-                "display"=> $item['name']
-            ];
-        }
         return [
             "resourceType"=> "Condition",
             "clinicalStatus"=> [
@@ -37,7 +29,13 @@ class Condition
                 ]
             ],
             "code"=> [
-                "coding"=> $data
+                "coding"=> [
+                    [
+                        "system"=> "http://hl7.org/fhir/sid/icd-10",
+                        "code"=> $code,
+                        "display"=> $name
+                    ]
+                ]
             ],
             "subject"=> [
                 "reference"=> "Patient/".$encounter->patient->ihs_number,
@@ -94,16 +92,8 @@ class Condition
         ];
     }
 
-    public static function formUpdateData($ihsNumber,$encounter,$dataDiagnosis)
+    public static function formUpdateData($ihsNumber,$encounter,$code,$name)
     {
-        $data = [];
-        foreach ($dataDiagnosis as $item) {
-            $data[] = [
-                "system"=> "http://hl7.org/fhir/sid/icd-10",
-                "code"=> $item['code'],
-                "display"=> $item['name']
-            ];
-        }
         return [
             "resourceType"=> "Condition",
             "id"=> $ihsNumber,
@@ -128,7 +118,13 @@ class Condition
                 ]
             ],
             "code"=> [
-                "coding"=> $data
+                "coding"=> [
+                    [
+                        "system"=> "http://hl7.org/fhir/sid/icd-10",
+                        "code"=> $code,
+                        "display"=> $name
+                    ]
+                ]
             ],
             "subject"=> [
                 "reference"=> "Patient/".$encounter->patient->ihs_number,
