@@ -146,4 +146,99 @@ class Encounter
             ]
         ];
     }
+
+    public static function formUpdateCondition($encounter,$dataDiagnosis)
+    {
+        $diagnosis = [];
+        foreach ($dataDiagnosis as $item) {
+            $diagnosis[] = [
+                "condition"=> [
+                    "reference"=> "Condition/".$item['ihs_number'],
+                    "display"=> $item['name']
+                ],
+                "use"=> [
+                    "coding"=> [
+                        [
+                            "system"=> "http://terminology.hl7.org/CodeSystem/diagnosis-role",
+                            "code"=> $item['code'],
+                            "display"=> $item['name']
+                        ]
+                    ]
+                ],
+                "rank"=> $item['rank']
+            ];
+        }
+        $organizationId = Enviroment::organizationId();
+        return [
+            "resourceType"=> "Encounter",
+            "id"=> $encounter->ihs_number,
+            "identifier"=> [
+                [
+                    "system"=> "http://sys-ids.kemkes.go.id/encounter/".$organizationId,
+                    "value"=> $encounter->no_rawat
+                ]
+            ],
+            "status"=> "finished",
+            "class"=> [
+                "system"=> "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+                "code"=> "AMB",
+                "display"=> "ambulatory"
+            ],
+            "subject"=> [
+                "reference"=> "Patient/".$encounter->patient->ihs_number,
+                "display"=> $encounter->patient->name
+            ],
+            "participant"=> [
+                [
+                    "type"=> [
+                        [
+                            "coding"=> [
+                                [
+                                    "system"=> "http://terminology.hl7.org/CodeSystem/v3-ParticipationType",
+                                    "code"=> "ATND",
+                                    "display"=> "attender"
+                                ]
+                            ]
+                        ]
+                    ],
+                    "individual"=> [
+                        "reference"=> "Practitioner/".$encounter->practitioner->ihs_number,
+                        "display"=> $encounter->practitioner->name
+                    ]
+                ]
+            ],
+            "period"=> [
+                "start"=> DateTimeFormat::parse($encounter->period_start),
+                "end"=> DateTimeFormat::parse($encounter->period_end)
+            ],
+            "location"=> [
+                [
+                    "location"=> [
+                        "reference"=> "Location/".$encounter->location->ihs_number,
+                        "display"=> $encounter->location->name
+                    ]
+                ]
+            ],
+            "diagnosis"=> $diagnosis,
+            "statusHistory"=> [
+                [
+                    "status"=> "arrived",
+                    "period"=> [
+                        "start"=> DateTimeFormat::parse($encounter->period_start),
+                        "end"=> DateTimeFormat::parse($encounter->period_end)
+                    ]
+                ],
+                [
+                    "status"=> "finished",
+                    "period"=> [
+                        "start"=> DateTimeFormat::parse($encounter->period_start),
+                        "end"=> DateTimeFormat::parse($encounter->period_end)
+                    ]
+                ]
+            ],
+            "serviceProvider"=> [
+                "reference"=>"Organization/".$organizationId
+            ]
+        ];
+    }
 }

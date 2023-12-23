@@ -27,18 +27,6 @@ class Condition
         return Error::checkOperationOutcome($resType,$data);
     }
 
-    private static function getDiagnosis($res)
-    {
-        $data = [];
-        $diagnosis = $res['code']['coding'];
-        foreach ($diagnosis as $item) {
-            $dt['code'] = $item['code'];
-            $dt['name'] = $item['display'];
-            $data[] = $dt;
-        }
-        return $data;
-    }
-
     public static function history($response)
     {
         $history = [];
@@ -55,7 +43,8 @@ class Condition
                     $dt['name_patient'] = $res['subject']['display'] ?? '';
                     $dt['ihs_number_encounter'] = StrHelper::getIhsNumber($res['encounter']['reference']);
                     $dt['name_encounter'] = $res['encounter']['display'] ?? '';
-                    $dt['diagnosis'] = self::getDiagnosis($res);
+                    $dt['code_condition'] = $res['code']['coding'][0]['code'];
+                    $dt['name_condition'] = $res['code']['coding'][0]['display'] ?? '';
                 } else {
                     $dt['consent'] = 'OPTOUT';
                     $dt['message'] = 'The operation did not return any information due to consent or privacy rules.';

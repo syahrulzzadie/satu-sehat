@@ -139,6 +139,18 @@ class SatuSehatCore
         return jsonResponse\Error::http($http);
     }
 
+    public static function updateEncounterCondition($encounter,$dataDiagnosa)
+    {
+        $url = Url::updateEncounterUrl($encounter->ihs_number);
+        $formData = jsonData\Encounter::formUpdateCondition($encounter,$dataDiagnosa);
+        $http = HttpRequest::put($url,$formData);
+        if ($http['status']) {
+            $response = $http['response'];
+            return jsonResponse\Encounter::convert($response);
+        }
+        return jsonResponse\Error::http($http);
+    }
+
     public static function historyEncounter($ihsNumberPatient)
     {
         $url = Url::historyEncounterUrl($ihsNumberPatient);
