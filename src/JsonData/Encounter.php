@@ -154,7 +154,7 @@ class Encounter
             $diagnosis[] = [
                 "condition"=> [
                     "reference"=> "Condition/".$item['ihs_number'],
-                    "display"=> $item['name']
+                    "display"=> $item['code_name']
                 ],
                 "use"=> [
                     "coding"=> [
