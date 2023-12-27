@@ -416,18 +416,35 @@ class SatuSehatCore
         $urls['observation'] = Url::historyObservationUrl($ihsNumber);
         $urls['composition'] = Url::historyCompositionUrl($ihsNumber);
         $urls['procedure'] = Url::historyProcedureUrl($ihsNumber);
-        $urls['medication_request'] = Url::historyMedicationRequestUrl($ihsNumber);
-        $https = HttpRequest::poolGet($urls);
-        foreach ($https as $name => $http) {
-            if ($http['status']) {
-                $data['status'] = true;
-                $data['data'] = $http['response']['data'];
-            } else {
-                $data['status'] = false;
-                $data['message'] = $http['message'];
-            }
-            $dataHistory[$name] = $data;
+        $urls['medicationRequest'] = Url::historyMedicationRequestUrl($ihsNumber);
+        ////////////////////////////////////
+        $gets = HttpRequest::poolGet($urls);
+        /////////////////////////////////////
+        $getEncounter = $gets['encounter'];
+        if ($getEncounter['status']) {
+            $dataHistory['encounter'] = jsonResponse\Encounter::convert($getEncounter['response']);
         }
+        $getCondition = $gets['condition'];
+        if ($getCondition['status']) {
+            $dataHistory['condition'] = jsonResponse\Condition::convert($getCondition['response']);
+        }
+        $getObservation = $gets['observation'];
+        if ($getObservation['status']) {
+            $dataHistory['observation'] = jsonResponse\Observation::convert($getObservation['response']);
+        }
+        $getComposition = $gets['composition'];
+        if ($getComposition['status']) {
+            $dataHistory['composition'] = jsonResponse\Composition::convert($getComposition['response']);
+        }
+        $getProcedure = $gets['procedure'];
+        if ($getProcedure['status']) {
+            $dataHistory['procedure'] = jsonResponse\Procedure::convert($getProcedure['response']);
+        }
+        $getMedicationRequest = $gets['medication'];
+        if ($getMedicationRequest['status']) {
+            $dataHistory['medicationRequest'] = jsonResponse\MedicationRequest::convert($getMedicationRequest['response']);
+        }
+        /////////////////////
         return $dataHistory;
     }
 }
