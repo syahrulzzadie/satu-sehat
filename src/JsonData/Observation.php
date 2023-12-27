@@ -6,7 +6,7 @@ use syahrulzzadie\SatuSehat\Utilitys\DateTimeFormat;
 
 class Observation
 {
-    public static function formCreateData($encounter,$code,$name,$value,$unit)
+    public static function formCreateData($encounter,$codeTtv,$nameTtv,$value,$unit,$code)
     {
         return [
             "resourceType"=> "Observation",
@@ -26,8 +26,8 @@ class Observation
                 "coding"=> [
                     [
                         "system"=> "http://loinc.org",
-                        "code"=> $code,
-                        "display"=> $name
+                        "code"=> $codeTtv,
+                        "display"=> $nameTtv
                     ]
                 ]
             ],
@@ -55,7 +55,7 @@ class Observation
         ];
     }
 
-    public static function formUpdateData($ihsNumber,$encounter,$code,$name,$value,$unit)
+    public static function formUpdateData($ihsNumber,$encounter,$codeTtv,$nameTtv,$value,$unit,$code)
     {
         return [
             "resourceType"=> "Observation",
@@ -76,8 +76,8 @@ class Observation
                 "coding"=> [
                     [
                         "system"=> "http://loinc.org",
-                        "code"=> $code,
-                        "display"=> $name
+                        "code"=> $codeTtv,
+                        "display"=> $nameTtv
                     ]
                 ]
             ],
@@ -98,7 +98,7 @@ class Observation
                 "system"=> "http://unitsofmeasure.org",
                 "value"=> $value,
                 "unit"=> $unit,
-                "code"=> $unit
+                "code"=> $code
             ]
         ];
     }
