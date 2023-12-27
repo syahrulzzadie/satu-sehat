@@ -31,4 +31,12 @@ class StrHelper
         $date = str_replace($months,$bulan,$date);
         return str_replace($days,$hari,$date);
     }
+
+    public static function getName($name)
+    {
+        if (strlen($name) >= 4) {
+            return ucwords(strtolower($name));
+        }
+        return strtoupper($name);
+    }
 }

@@ -3,6 +3,7 @@
 namespace syahrulzzadie\SatuSehat\JsonData;
 
 use syahrulzzadie\SatuSehat\Utilitys\Enviroment;
+use syahrulzzadie\SatuSehat\Utilitys\StrHelper;
 
 class Organization
 {
@@ -30,7 +31,7 @@ class Organization
                     ]
                 ]
             ],
-            "name"=> ucwords(strtolower($name)),
+            "name"=> StrHelper::getName($name),
             "telecom"=> [
                 [
                     "system"=> "phone",
@@ -113,7 +114,7 @@ class Organization
                     ]
                 ]
             ],
-            "name"=> ucwords(strtolower($name)),
+            "name"=> StrHelper::getName($name),
             "telecom"=> [
                 [
                     "system"=> "phone",

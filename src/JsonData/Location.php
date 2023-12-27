@@ -3,6 +3,7 @@
 namespace syahrulzzadie\SatuSehat\JsonData;
 
 use syahrulzzadie\SatuSehat\Utilitys\Enviroment;
+use syahrulzzadie\SatuSehat\Utilitys\StrHelper;
 
 class Location
 {
@@ -18,8 +19,8 @@ class Location
                 ]
             ],
             "status"=> "active",
-            "name"=> ucwords(strtolower($nama)),
-            "description"=> ucwords(strtolower($nama))." - RS Umum Islam Harapan Anda Kota Tegal",
+            "name"=> StrHelper::getName($nama),
+            "description"=> StrHelper::getName($nama)." - RS Umum Islam Harapan Anda Kota Tegal",
             "mode"=> "instance",
             "telecom"=> [
                 [
@@ -109,8 +110,8 @@ class Location
                 ]
             ],
             "status"=> "active",
-            "name"=> ucwords(strtolower($nama)),
-            "description"=> ucwords(strtolower($nama))." - RS Umum Islam Harapan Anda Kota Tegal",
+            "name"=> StrHelper::getName($nama),
+            "description"=> StrHelper::getName($nama)." - RS Umum Islam Harapan Anda Kota Tegal",
             "mode"=> "instance",
             "telecom"=> [
                 [
