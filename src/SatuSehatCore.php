@@ -2,7 +2,6 @@
 
 namespace syahrulzzadie\SatuSehat;
 
-use Illuminate\Support\Facades\Http;
 use syahrulzzadie\SatuSehat\JsonData as jsonData;
 use syahrulzzadie\SatuSehat\JsonResponse as jsonResponse;
 use syahrulzzadie\SatuSehat\Utilitys\HttpRequest;
@@ -440,7 +439,7 @@ class SatuSehatCore
         if ($getProcedure['status']) {
             $dataHistory['procedure'] = jsonResponse\Procedure::convert($getProcedure['response']);
         }
-        $getMedicationRequest = $gets['medication'];
+        $getMedicationRequest = $gets['medicationRequest'];
         if ($getMedicationRequest['status']) {
             $dataHistory['medicationRequest'] = jsonResponse\MedicationRequest::convert($getMedicationRequest['response']);
         }
