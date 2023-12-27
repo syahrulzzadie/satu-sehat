@@ -421,27 +421,27 @@ class SatuSehatCore
         /////////////////////////////////////
         $getEncounter = $gets['encounter'];
         if ($getEncounter['status']) {
-            $dataHistory['encounter'] = jsonResponse\Encounter::convert($getEncounter['response']);
+            $dataHistory['encounter'] = jsonResponse\Encounter::history($getEncounter['response']);
         }
         $getCondition = $gets['condition'];
         if ($getCondition['status']) {
-            $dataHistory['condition'] = jsonResponse\Condition::convert($getCondition['response']);
+            $dataHistory['condition'] = jsonResponse\Condition::history($getCondition['response']);
         }
         $getObservation = $gets['observation'];
         if ($getObservation['status']) {
-            $dataHistory['observation'] = jsonResponse\Observation::convert($getObservation['response']);
+            $dataHistory['observation'] = jsonResponse\Observation::history($getObservation['response']);
         }
         $getComposition = $gets['composition'];
         if ($getComposition['status']) {
-            $dataHistory['composition'] = jsonResponse\Composition::convert($getComposition['response']);
+            $dataHistory['composition'] = jsonResponse\Composition::history($getComposition['response']);
         }
         $getProcedure = $gets['procedure'];
         if ($getProcedure['status']) {
-            $dataHistory['procedure'] = jsonResponse\Procedure::convert($getProcedure['response']);
+            $dataHistory['procedure'] = jsonResponse\Procedure::history($getProcedure['response']);
         }
         $getMedicationRequest = $gets['medicationRequest'];
         if ($getMedicationRequest['status']) {
-            $dataHistory['medicationRequest'] = jsonResponse\MedicationRequest::convert($getMedicationRequest['response']);
+            $dataHistory['medicationRequest'] = jsonResponse\MedicationRequest::history($getMedicationRequest['response']);
         }
         /////////////////////
         return $dataHistory;
