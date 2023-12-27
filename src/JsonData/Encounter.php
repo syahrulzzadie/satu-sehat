@@ -237,7 +237,8 @@ class Encounter
                 ]
             ],
             "serviceProvider"=> [
-                "reference"=>"Organization/".$organizationId
+                "reference"=>"Organization/".$organizationId,
+                "display"=> "RS Umum Islam Harapan Anda Kota Tegal"
             ]
         ];
     }

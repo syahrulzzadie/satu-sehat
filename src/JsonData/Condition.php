@@ -2,6 +2,8 @@
 
 namespace syahrulzzadie\SatuSehat\JsonData;
 
+use syahrulzzadie\SatuSehat\Utilitys\StrHelper;
+
 class Condition
 {
     public static function formCreateData($encounter,$code,$name)
@@ -42,52 +44,8 @@ class Condition
                 "display"=> $encounter->patient->name
             ],
             "encounter"=> [
-                "reference"=> "Encounter/".$encounter->ihs_number
-            ]
-        ];
-    }
-
-    public static function bundleFormCreateData($ihsNumberEncounter,$patient,$dataDiagnosis)
-    {
-        $data = [];
-        foreach ($dataDiagnosis as $item) {
-            $data[] = [
-                "system"=> "http://hl7.org/fhir/sid/icd-10",
-                "code"=> $item['code'],
-                "display"=> $item['name']
-            ];
-        }
-        return [
-            "resourceType"=> "Condition",
-            "clinicalStatus"=> [
-                "coding"=> [
-                    [
-                        "system"=> "http://terminology.hl7.org/CodeSystem/condition-clinical",
-                        "code"=> "active",
-                        "display"=> "Active"
-                    ]
-                ]
-            ],
-            "category"=> [
-                [
-                    "coding"=> [
-                        [
-                            "system"=> "http://terminology.hl7.org/CodeSystem/condition-category",
-                            "code"=> "encounter-diagnosis",
-                            "display"=> "Encounter Diagnosis"
-                        ]
-                    ]
-                ]
-            ],
-            "code"=> [
-                "coding"=> $data
-            ],
-            "subject"=> [
-                "reference"=> "Patient/".$patient->ihs_number,
-                "display"=> $patient->name
-            ],
-            "encounter"=> [
-                "reference"=> "Encounter/".$ihsNumberEncounter
+                "reference"=> "Encounter/".$encounter->ihs_number,
+                "display"=> "Kunjungan pasien pada ".StrHelper::dateTimeId($encounter->period_start)
             ]
         ];
     }
@@ -131,7 +89,8 @@ class Condition
                 "display"=> $encounter->patient->name
             ],
             "encounter"=> [
-                "reference"=> "Encounter/".$encounter->ihs_number
+                "reference"=> "Encounter/".$encounter->ihs_number,
+                "display"=> "Kunjungan pasien pada ".StrHelper::dateTimeId($encounter->period_start)
             ]
         ];
     }

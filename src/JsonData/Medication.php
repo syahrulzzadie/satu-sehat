@@ -90,64 +90,6 @@ class Medication
         ];
     }
 
-    public static function bundleFormCreateData($noRawat,$medication)
-    {
-        $noResep = $medication['no_resep'];
-        $dataResep = $medication['data'];
-        $organizationId = Enviroment::organizationId();
-        return [
-            "resourceType"=> "Medication",
-            "meta"=> [
-                "profile"=> [
-                    "https://fhir.kemkes.go.id/r4/StructureDefinition/Medication"
-                ]
-            ],
-            "identifier"=> [
-                [
-                    "system"=> "http://sys-ids.kemkes.go.id/medication/".$organizationId,
-                    "use"=> "official",
-                    "value"=> $noRawat
-                ]
-            ],
-            "code"=> [
-                "coding"=> [
-                    [
-                        "system"=> "http://sys-ids.kemkes.go.id/kfa",
-                        "code"=> $dataResep['code'],
-                        "display"=> $dataResep['name']
-                    ]
-                ]
-            ],
-            "status"=> "active",
-            "manufacturer"=> [
-                "reference"=> "Organization/".$organizationId
-            ],
-            "form"=> [
-                "coding"=> [
-                    [
-                        "system"=> "http://terminology.kemkes.go.id/CodeSystem/medication-form",
-                        "code"=> $noResep,
-                        "display"=> "Resep Obat Pasien"
-                    ]
-                ]
-            ],
-            "extension"=> [
-                [
-                    "url"=> "https://fhir.kemkes.go.id/r4/StructureDefinition/MedicationType",
-                    "valueCodeableConcept"=> [
-                        "coding"=> [
-                            [
-                                "system"=> "http://terminology.kemkes.go.id/CodeSystem/medication-type",
-                                "code"=> "NC",
-                                "display"=> "Non-compound"
-                            ]
-                        ]
-                    ]
-                ]
-            ]
-        ];
-    }
-
     public static function formUpdateData($ihsNumber,$noRawat,$kodeObat,$namaObat,$dataBahanObat)
     {
         $organizationId = Enviroment::organizationId();

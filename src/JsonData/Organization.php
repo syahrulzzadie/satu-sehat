@@ -30,7 +30,7 @@ class Organization
                     ]
                 ]
             ],
-            "name"=> $name." - RS Umum Islam Harapan Anda Kota Tegal",
+            "name"=> ucwords(strtolower($name)),
             "telecom"=> [
                 [
                     "system"=> "phone",
@@ -113,7 +113,7 @@ class Organization
                     ]
                 ]
             ],
-            "name"=> $name." - RS Umum Islam Harapan Anda Kota Tegal",
+            "name"=> ucwords(strtolower($name)),
             "telecom"=> [
                 [
                     "system"=> "phone",

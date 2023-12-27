@@ -137,13 +137,12 @@ class HttpRequest
         return jsonResponse\Error::getToken($getToken);
     }
 
-    public static function poolGet($pool,$token,$as,$url)
+    public static function poolGet($urls = [])
     {
-        return $pool->as($as)
-            ->asForm()
-            ->timeout(300)
-            ->retry(5,1000)
-            ->withToken($token)
-            ->get($url);
+        $responses = [];
+        foreach ($urls as $name => $url) {
+            $responses[$name] = self::get($url);
+        }
+        return $responses;
     }
 }

@@ -18,8 +18,8 @@ class Location
                 ]
             ],
             "status"=> "active",
-            "name"=> $nama." - RS Umum Islam Harapan Anda Kota Tegal",
-            "description"=> $nama." - RS Umum Islam Harapan Anda Kota Tegal",
+            "name"=> ucwords(strtolower($nama)),
+            "description"=> ucwords(strtolower($nama))." - RS Umum Islam Harapan Anda Kota Tegal",
             "mode"=> "instance",
             "telecom"=> [
                 [
@@ -91,7 +91,7 @@ class Location
             ],
             "managingOrganization"=> [
                 "reference"=> "Organization/".$organization->ihs_number,
-                "display"=> $organization->name." - RS Umum Islam Harapan Anda Kota Tegal"
+                "display"=> $organization->name
             ]
         ];
     }
@@ -109,8 +109,8 @@ class Location
                 ]
             ],
             "status"=> "active",
-            "name"=> $nama." - RS Umum Islam Harapan Anda Kota Tegal",
-            "description"=> $nama." - RS Umum Islam Harapan Anda Kota Tegal",
+            "name"=> ucwords(strtolower($nama)),
+            "description"=> ucwords(strtolower($nama))." - RS Umum Islam Harapan Anda Kota Tegal",
             "mode"=> "instance",
             "telecom"=> [
                 [
@@ -182,7 +182,7 @@ class Location
             ],
             "managingOrganization"=> [
                 "reference"=> "Organization/".$organization->ihs_number,
-                "display"=> $organization->name." - RS Umum Islam Harapan Anda Kota Tegal"
+                "display"=> $organization->name
             ]
         ];
     }
