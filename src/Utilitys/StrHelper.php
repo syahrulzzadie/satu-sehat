@@ -40,6 +40,13 @@ class StrHelper
         return strtoupper($name);
     }
 
+    private static function doubleVal($str)
+    {
+        $str = strtolower($str);
+        $str = str_replace(',','.',$str);
+        return doubleval($str);
+    }
+
     public static function getTtv($name,$value)
     {
         $name = strtolower($name);
@@ -47,7 +54,7 @@ class StrHelper
             return [
                 'code_ttv' => '8310-5',
                 'name_ttv' => 'Body temperature',
-                'value' => intval($value),
+                'value' => self::doubleVal($value),
                 'unit' => 'celcius',
                 'code' => 'C'
             ];
@@ -55,7 +62,7 @@ class StrHelper
             return [
                 'code_ttv' => '8867-4',
                 'name_ttv' => 'Heart rate',
-                'value' => intval($value),
+                'value' => self::doubleVal($value),
                 'unit' => 'beats/minute',
                 'code' => '/min'
             ];
@@ -63,7 +70,7 @@ class StrHelper
             return [
                 'code_ttv' => '8480-6',
                 'name_ttv' => 'Systolic blood pressure',
-                'value' => intval($value),
+                'value' => self::doubleVal($value),
                 'unit' => 'mmHg',
                 'code' => 'mmHg'
             ];
@@ -71,7 +78,7 @@ class StrHelper
             return [
                 'code_ttv' => '8462-4',
                 'name_ttv' => 'Diastolic blood pressure',
-                'value' => intval($value),
+                'value' => self::doubleVal($value),
                 'unit' => 'mmHg',
                 'code' => 'mmHg'
             ];
@@ -79,7 +86,7 @@ class StrHelper
             return [
                 'code_ttv' => '9279-1',
                 'name_ttv' => 'Respiratory rate',
-                'value' => intval($value),
+                'value' => self::doubleVal($value),
                 'unit' => 'breaths/minute',
                 'code' => '/min'
             ];
@@ -87,7 +94,7 @@ class StrHelper
             return [
                 'code_ttv' => '59408-5',
                 'name_ttv' => 'Oxygen saturation',
-                'value' => intval($value),
+                'value' => self::doubleVal($value),
                 'unit' => '%',
                 'code' => '%'
             ];
@@ -95,7 +102,7 @@ class StrHelper
             return [
                 'code_ttv' => '8302-2',
                 'name_ttv' => 'Body height',
-                'value' => intval($value),
+                'value' => self::doubleVal($value),
                 'unit' => 'cm',
                 'code' => 'cm'
             ];
@@ -103,7 +110,7 @@ class StrHelper
             return [
                 'code_ttv' => '29463-7',
                 'name_ttv' => 'Body weight',
-                'value' => intval($value),
+                'value' => self::doubleVal($value),
                 'unit' => 'kg',
                 'code' => 'kg'
             ];
