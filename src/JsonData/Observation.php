@@ -47,7 +47,7 @@ class Observation
                 "reference"=> "Encounter/".$encounter->ihs_number,
                 "display"=> "Pemeriksaan fisik pada ".StrHelper::dateTimeId($encounter->period_start)
             ],
-            "effectiveDateTime"=> DateTimeFormat::dateNow(),
+            "effectiveDateTime"=> DateTimeFormat::now(),
             "issued"=> DateTimeFormat::now(),
             "valueQuantity"=> [
                 "system"=> "http://unitsofmeasure.org",
@@ -99,8 +99,8 @@ class Observation
                 "reference"=> "Encounter/".$encounter->ihs_number,
                 "display"=> "Pemeriksaan fisik pada ".StrHelper::dateTimeId($encounter->period_start)
             ],
-            "effectiveDateTime"=> $encounter->observation->effective,
-            "issued"=> $encounter->observation->issued,
+            "effectiveDateTime"=> DateTimeFormat::parse($encounter->observation->effective),
+            "issued"=> DateTimeFormat::parse($encounter->observation->issued),
             "valueQuantity"=> [
                 "system"=> "http://unitsofmeasure.org",
                 "value"=> $ttv['value'],
