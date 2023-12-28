@@ -16,10 +16,11 @@ class Observation
                 'data' => [
                     'ihs_number' => $data['id'],
                     'issued' => $data['issued'],
-                    'code' => $data['code']['coding'][0]['code'],
-                    'name' => $data['code']['coding'][0]['display'],
+                    'code_ttv' => $data['code']['coding'][0]['code'],
+                    'name_ttv' => $data['code']['coding'][0]['display'],
                     'value' => $data['valueQuantity']['value'],
                     'unit' => $data['valueQuantity']['unit'],
+                    'code' => $data['valueQuantity']['code'],
                     'ihs_number_patient' => StrHelper::getIhsNumber($data['subject']['reference']),
                     'name_patient' => $data['subject']['display'] ?? '',
                     'ihs_number_practitioner' => StrHelper::getIhsNumber($data['performer'][0]['reference']),
@@ -45,10 +46,11 @@ class Observation
                     $dt['consent'] = 'OPTIN';
                     $dt['ihs_number'] = $res['id'];
                     $dt['issued'] = $res['issued'];
-                    $dt['code'] = $res['code']['coding'][0]['code'];
-                    $dt['name'] = $res['code']['coding'][0]['display'];
+                    $dt['code_ttv'] = $res['code']['coding'][0]['code'];
+                    $dt['name_ttv'] = $res['code']['coding'][0]['display'];
                     $dt['value'] = $res['valueQuantity']['value'];
                     $dt['unit'] = $res['valueQuantity']['unit'];
+                    $dt['code'] = $res['valueQuantity']['code'];
                     $dt['ihs_number_patient'] = StrHelper::getIhsNumber($res['subject']['reference']);
                     $dt['name_patient'] = $res['subject']['display'] ?? '';
                     $dt['ihs_number_practitioner'] = StrHelper::getIhsNumber($res['performer'][0]['reference']);

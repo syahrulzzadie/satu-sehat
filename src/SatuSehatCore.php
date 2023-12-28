@@ -196,10 +196,10 @@ class SatuSehatCore
         return jsonResponse\Error::http($http);
     }
 
-    public static function createObservation($encounter,$codeTtv,$nameTtv,$value,$unit,$code)
+    public static function createObservation($encounter,$name,$value)
     {
         $url = Url::createObservationUrl();
-        $formData = jsonData\Observation::formCreateData($encounter,$codeTtv,$nameTtv,$value,$unit,$code);
+        $formData = jsonData\Observation::formCreateData($encounter,$name,$value);
         $http = HttpRequest::post($url,$formData);
         if ($http['status']) {
             $response = $http['response'];
@@ -208,10 +208,10 @@ class SatuSehatCore
         return jsonResponse\Error::http($http);
     }
 
-    public static function updateObservation($ihsNumber,$encounter,$codeTtv,$nameTtv,$value,$unit,$code)
+    public static function updateObservation($ihsNumber,$encounter,$name,$value)
     {
         $url = Url::updateObservationUrl($ihsNumber);
-        $formData = jsonData\Observation::formUpdateData($ihsNumber,$encounter,$codeTtv,$nameTtv,$value,$unit,$code);
+        $formData = jsonData\Observation::formUpdateData($ihsNumber,$encounter,$name,$value);
         $http = HttpRequest::put($url,$formData);
         if ($http['status']) {
             $response = $http['response'];

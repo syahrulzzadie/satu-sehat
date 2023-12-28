@@ -3,11 +3,13 @@
 namespace syahrulzzadie\SatuSehat\JsonData;
 
 use syahrulzzadie\SatuSehat\Utilitys\DateTimeFormat;
+use syahrulzzadie\SatuSehat\Utilitys\StrHelper;
 
 class Observation
 {
-    public static function formCreateData($encounter,$codeTtv,$nameTtv,$value,$unit,$code)
+    public static function formCreateData($encounter,$name,$value)
     {
+        $ttv = StrHelper::getTtv($name,$value);
         return [
             "resourceType"=> "Observation",
             "status"=> "final",
@@ -26,8 +28,8 @@ class Observation
                 "coding"=> [
                     [
                         "system"=> "http://loinc.org",
-                        "code"=> $codeTtv,
-                        "display"=> $nameTtv
+                        "code"=> $ttv['code_ttv'],
+                        "display"=> $ttv['name_ttv']
                     ]
                 ]
             ],
@@ -42,21 +44,23 @@ class Observation
                 ]
             ],
             "encounter"=> [
-                "reference"=> "Encounter/".$encounter->ihs_number
+                "reference"=> "Encounter/".$encounter->ihs_number,
+                "display"=> "Pemeriksaan fisik pada ".StrHelper::dateTimeId($encounter->period_start)
             ],
             "effectiveDateTime"=> DateTimeFormat::dateNow(),
             "issued"=> DateTimeFormat::now(),
             "valueQuantity"=> [
                 "system"=> "http://unitsofmeasure.org",
-                "value"=> $value,
-                "unit"=> $unit,
-                "code"=> $code
+                "value"=> $ttv['value'],
+                "unit"=> $ttv['unit'],
+                "code"=> $ttv['code']
             ]
         ];
     }
 
-    public static function formUpdateData($ihsNumber,$encounter,$codeTtv,$nameTtv,$value,$unit,$code)
+    public static function formUpdateData($ihsNumber,$encounter,$name,$value)
     {
+        $ttv = StrHelper::getTtv($name,$value);
         return [
             "resourceType"=> "Observation",
             "id"=> $ihsNumber,
@@ -76,29 +80,32 @@ class Observation
                 "coding"=> [
                     [
                         "system"=> "http://loinc.org",
-                        "code"=> $codeTtv,
-                        "display"=> $nameTtv
+                        "code"=> $ttv['code_ttv'],
+                        "display"=> $ttv['name_ttv']
                     ]
                 ]
             ],
             "subject"=> [
-                "reference"=> "Patient/".$encounter->patient->ihs_number
+                "reference"=> "Patient/".$encounter->patient->ihs_number,
+                "display"=> $encounter->patient->name
             ],
             "performer"=> [
                 [
-                    "reference"=> "Practitioner/".$encounter->practitioner->ihs_number
+                    "reference"=> "Practitioner/".$encounter->practitioner->ihs_number,
+                    "display"=> $encounter->practitioner->name
                 ]
             ],
             "encounter"=> [
-                "reference"=> "Encounter/".$encounter->ihs_number
+                "reference"=> "Encounter/".$encounter->ihs_number,
+                "display"=> "Pemeriksaan fisik pada ".StrHelper::dateTimeId($encounter->period_start)
             ],
             "effectiveDateTime"=> $encounter->observation->effective,
             "issued"=> $encounter->observation->issued,
             "valueQuantity"=> [
                 "system"=> "http://unitsofmeasure.org",
-                "value"=> $value,
-                "unit"=> $unit,
-                "code"=> $code
+                "value"=> $ttv['value'],
+                "unit"=> $ttv['value'],
+                "code"=> $ttv['code']
             ]
         ];
     }
