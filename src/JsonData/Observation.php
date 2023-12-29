@@ -7,7 +7,7 @@ use syahrulzzadie\SatuSehat\Utilitys\StrHelper;
 
 class Observation
 {
-    public static function formCreateData($encounter,$name,$value)
+    public static function formCreateData($encounter,$practitioner,$name,$value)
     {
         $ttv = StrHelper::getTtv($name,$value);
         return [
@@ -39,8 +39,8 @@ class Observation
             ],
             "performer"=> [
                 [
-                    "reference"=> "Practitioner/".$encounter->practitioner->ihs_number,
-                    "display"=> $encounter->practitioner->name
+                    "reference"=> "Practitioner/".$practitioner->ihs_number,
+                    "display"=> $practitioner->name
                 ]
             ],
             "encounter"=> [
@@ -58,7 +58,7 @@ class Observation
         ];
     }
 
-    public static function formUpdateData($ihsNumber,$encounter,$name,$value)
+    public static function formUpdateData($ihsNumber,$encounter,$practitioner,$name,$value)
     {
         $ttv = StrHelper::getTtv($name,$value);
         return [
@@ -91,8 +91,8 @@ class Observation
             ],
             "performer"=> [
                 [
-                    "reference"=> "Practitioner/".$encounter->practitioner->ihs_number,
-                    "display"=> $encounter->practitioner->name
+                    "reference"=> "Practitioner/".$practitioner->ihs_number,
+                    "display"=> $practitioner->name
                 ]
             ],
             "encounter"=> [
