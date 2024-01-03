@@ -15,7 +15,6 @@ class Observation
                 'status' => true,
                 'data' => [
                     'ihs_number' => $data['id'],
-                    'issued' => $data['issued'],
                     'code_ttv' => $data['code']['coding'][0]['code'],
                     'name_ttv' => $data['code']['coding'][0]['display'],
                     'value' => $data['valueQuantity']['value'],
@@ -45,7 +44,6 @@ class Observation
                 if ($resType == 'Condition') {
                     $dt['consent'] = 'OPTIN';
                     $dt['ihs_number'] = $res['id'];
-                    $dt['issued'] = $res['issued'];
                     $dt['code_ttv'] = $res['code']['coding'][0]['code'];
                     $dt['name_ttv'] = $res['code']['coding'][0]['display'];
                     $dt['value'] = $res['valueQuantity']['value'];
