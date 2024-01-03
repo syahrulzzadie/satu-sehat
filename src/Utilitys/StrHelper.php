@@ -56,7 +56,7 @@ class StrHelper
                 'name_ttv' => 'Body temperature',
                 'value' => self::doubleVal($value),
                 'unit' => 'celcius',
-                'code' => 'C'
+                'code' => 'Cel'
             ];
         } else if($name == 'heart_rate') {
             return [
