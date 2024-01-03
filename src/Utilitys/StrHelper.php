@@ -72,7 +72,7 @@ class StrHelper
                 'name_ttv' => 'Systolic blood pressure',
                 'value' => self::doubleVal($value),
                 'unit' => 'mmHg',
-                'code' => 'mmHg'
+                'code' => 'mm[Hg]'
             ];
         } else if($name == 'diastolic_blood_pressure') {
             return [
@@ -80,7 +80,7 @@ class StrHelper
                 'name_ttv' => 'Diastolic blood pressure',
                 'value' => self::doubleVal($value),
                 'unit' => 'mmHg',
-                'code' => 'mmHg'
+                'code' => 'mm[Hg]'
             ];
         } else if($name == 'respiratory_rate') {
             return [
