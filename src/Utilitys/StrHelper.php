@@ -27,7 +27,7 @@ class StrHelper
             'Jan','Feb','Mar','Apr','May','Jun',
             'Jul','Aug','Sep','Oct','Nov','Dec'
         ];
-        $date = date('D, Y M d',strtotime($dateTime));
+        $date = date('D, d M Y',strtotime($dateTime));
         $date = str_replace($months,$bulan,$date);
         return str_replace($days,$hari,$date);
     }
