@@ -6,7 +6,7 @@ use syahrulzzadie\SatuSehat\Utilitys\DateTimeFormat;
 
 class Procedure
 {
-    public static function formCreateData($encounter,$code,$name,$text)
+    public static function formCreateData($encounter,$conditionCode,$conditionName,$procedureCode,$procedureName,$textNote)
     {
         return [
             "resourceType"=> "Procedure",
@@ -25,8 +25,8 @@ class Procedure
                 "coding"=> [
                     [
                         "system"=> "http://hl7.org/fhir/sid/icd-9-cm",
-                        "code"=> $code,
-                        "display"=> $name
+                        "code"=> $procedureCode,
+                        "display"=> $procedureName
                     ]
                 ]
             ],
@@ -35,11 +35,12 @@ class Procedure
                 "display"=> $encounter->patient->name
             ],
             "encounter"=> [
-                "reference"=> "Encounter/".$encounter->ihs_number
+                "reference"=> "Encounter/".$encounter->ihs_number,
+                "display"=> "Tindakan pasien ".$encounter->patient->name." pada ".$encounter->period_start
             ],
             "performedPeriod"=> [
-                "start"=> DateTimeFormat::now(),
-                "end"=> DateTimeFormat::now()
+                "start"=> DateTimeFormat::parse($encounter->period_start),
+                "end"=> DateTimeFormat::parse($encounter->period_start)
             ],
             "performer"=> [
                 [
@@ -54,8 +55,8 @@ class Procedure
                     "coding"=> [
                         [
                             "system"=> "http://hl7.org/fhir/sid/icd-10",
-                            "code"=> $encounter->condition->code,
-                            "display"=> $encounter->condition->name
+                            "code"=> $conditionCode,
+                            "display"=> $conditionName
                         ]
                     ]
                 ]
@@ -65,24 +66,24 @@ class Procedure
                     "coding"=> [
                         [
                             "system"=> "http://hl7.org/fhir/sid/icd-9-cm",
-                            "code"=> $code,
-                            "display"=> $name
+                            "code"=> $procedureCode,
+                            "display"=> $procedureName
                         ]
                     ]
                 ]
             ],
             "note"=> [
                 [
-                    "text"=> $text
+                    "text"=> $textNote
                 ]
             ]
         ];
     }
 
-    public static function formUpdateData($ihsNumber,$encounter,$code,$name,$text)
+    public static function formUpdateData($ihsNumber,$encounter,$conditionCode,$conditionName,$procedureCode,$procedureName,$textNote)
     {
         return [
-            "id" => $ihsNumber,
+            "id"=> $ihsNumber,
             "resourceType"=> "Procedure",
             "status"=> "completed",
             "category"=> [
@@ -99,8 +100,8 @@ class Procedure
                 "coding"=> [
                     [
                         "system"=> "http://hl7.org/fhir/sid/icd-9-cm",
-                        "code"=> $code,
-                        "display"=> $name
+                        "code"=> $procedureCode,
+                        "display"=> $procedureName
                     ]
                 ]
             ],
@@ -109,11 +110,12 @@ class Procedure
                 "display"=> $encounter->patient->name
             ],
             "encounter"=> [
-                "reference"=> "Encounter/".$encounter->ihs_number
+                "reference"=> "Encounter/".$encounter->ihs_number,
+                "display"=> "Tindakan pasien ".$encounter->patient->name." pada ".$encounter->period_start
             ],
             "performedPeriod"=> [
-                "start"=> DateTimeFormat::now(),
-                "end"=> DateTimeFormat::now()
+                "start"=> DateTimeFormat::parse($encounter->period_start),
+                "end"=> DateTimeFormat::parse($encounter->period_start)
             ],
             "performer"=> [
                 [
@@ -128,8 +130,8 @@ class Procedure
                     "coding"=> [
                         [
                             "system"=> "http://hl7.org/fhir/sid/icd-10",
-                            "code"=> $encounter->condition->code,
-                            "display"=> $encounter->condition->name
+                            "code"=> $conditionCode,
+                            "display"=> $conditionName
                         ]
                     ]
                 ]
@@ -139,15 +141,15 @@ class Procedure
                     "coding"=> [
                         [
                             "system"=> "http://hl7.org/fhir/sid/icd-9-cm",
-                            "code"=> $code,
-                            "display"=> $name
+                            "code"=> $procedureCode,
+                            "display"=> $procedureName
                         ]
                     ]
                 ]
             ],
             "note"=> [
                 [
-                    "text"=> $text
+                    "text"=> $textNote
                 ]
             ]
         ];

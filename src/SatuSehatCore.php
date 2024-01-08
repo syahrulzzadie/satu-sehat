@@ -266,10 +266,10 @@ class SatuSehatCore
         return jsonResponse\Error::http($http);
     }
 
-    public static function createProcedure($encounter,$code,$name,$text)
+    public static function createProcedure($encounter,$conditionCode,$conditionName,$procedureCode,$procedureName,$textNote)
     {
         $url = Url::createProcedureUrl();
-        $formData = jsonData\Procedure::formCreateData($encounter,$code,$name,$text);
+        $formData = jsonData\Procedure::formCreateData($encounter,$conditionCode,$conditionName,$procedureCode,$procedureName,$textNote);
         $http = HttpRequest::post($url,$formData);
         if ($http['status']) {
             $response = $http['response'];
@@ -278,10 +278,10 @@ class SatuSehatCore
         return jsonResponse\Error::http($http);
     }
 
-    public static function updateProcedure($ihsNumber,$encounter,$code,$name,$text)
+    public static function updateProcedure($ihsNumber,$encounter,$conditionCode,$conditionName,$procedureCode,$procedureName,$textNote)
     {
         $url = Url::updateProcedureUrl($ihsNumber);
-        $formData = jsonData\Procedure::formUpdateData($ihsNumber,$encounter,$code,$name,$text);
+        $formData = jsonData\Procedure::formUpdateData($ihsNumber,$encounter,$conditionCode,$conditionName,$procedureCode,$procedureName,$textNote);
         $http = HttpRequest::put($url,$formData);
         if ($http['status']) {
             $response = $http['response'];
