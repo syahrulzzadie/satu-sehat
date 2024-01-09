@@ -6,7 +6,7 @@ use syahrulzzadie\SatuSehat\Utilitys\DateTimeFormat;
 
 class Procedure
 {
-    public static function formCreateData($encounter,$conditionCode,$conditionName,$procedureCode,$procedureName,$textNote)
+    public static function formCreateData($encounter, $procedureCode, $procedureName)
     {
         return [
             "resourceType"=> "Procedure",
@@ -49,38 +49,11 @@ class Procedure
                         "display"=> $encounter->practitioner->name
                     ]
                 ]
-            ],
-            "reasonCode"=> [
-                [
-                    "coding"=> [
-                        [
-                            "system"=> "http://hl7.org/fhir/sid/icd-10",
-                            "code"=> $conditionCode,
-                            "display"=> $conditionName
-                        ]
-                    ]
-                ]
-            ],
-            "bodySite"=> [
-                [
-                    "coding"=> [
-                        [
-                            "system"=> "http://hl7.org/fhir/sid/icd-9-cm",
-                            "code"=> $procedureCode,
-                            "display"=> $procedureName
-                        ]
-                    ]
-                ]
-            ],
-            "note"=> [
-                [
-                    "text"=> $textNote
-                ]
             ]
         ];
     }
 
-    public static function formUpdateData($ihsNumber,$encounter,$conditionCode,$conditionName,$procedureCode,$procedureName,$textNote)
+    public static function formUpdateData($ihsNumber, $encounter, $procedureCode, $procedureName)
     {
         return [
             "id"=> $ihsNumber,
@@ -123,33 +96,6 @@ class Procedure
                         "reference"=> "Practitioner/".$encounter->practitioner->ihs_number,
                         "display"=> $encounter->practitioner->name
                     ]
-                ]
-            ],
-            "reasonCode"=> [
-                [
-                    "coding"=> [
-                        [
-                            "system"=> "http://hl7.org/fhir/sid/icd-10",
-                            "code"=> $conditionCode,
-                            "display"=> $conditionName
-                        ]
-                    ]
-                ]
-            ],
-            "bodySite"=> [
-                [
-                    "coding"=> [
-                        [
-                            "system"=> "http://hl7.org/fhir/sid/icd-9-cm",
-                            "code"=> $procedureCode,
-                            "display"=> $procedureName
-                        ]
-                    ]
-                ]
-            ],
-            "note"=> [
-                [
-                    "text"=> $textNote
                 ]
             ]
         ];
