@@ -43,7 +43,7 @@ class Procedure
             foreach ($entry as $item) {
                 $res = $item['resource'];
                 $resType = $res['resourceType'];
-                if ($resType == 'Composition') {
+                if ($resType == 'Procedure') {
                     $dt['consent'] = 'OPTIN';
                     $dt['ihs_number'] = $res['id'];
                     $dt['period_start'] = $res['performedPeriod']['start'];
