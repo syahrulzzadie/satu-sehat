@@ -34,10 +34,4 @@ class DateTimeFormat
         $time = date('H:i:s',strtotime($time));
         return $date.'T'.$time.'+07:00';
     }
-
-    public static function dateParseDateAndTime($date,$time)
-    {
-        $dateTime = $date." ".$time;
-        return date('Y-m-d',strtotime($dateTime));
-    }
 }

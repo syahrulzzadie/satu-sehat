@@ -2,7 +2,6 @@
 
 namespace syahrulzzadie\SatuSehat\JsonData;
 
-use syahrulzzadie\SatuSehat\Utilitys\DateTimeFormat;
 use syahrulzzadie\SatuSehat\Utilitys\StrHelper;
 
 class Observation
@@ -47,8 +46,6 @@ class Observation
                 "reference"=> "Encounter/".$encounter->ihs_number,
                 "display"=> "Pemeriksaan fisik pada ".StrHelper::dateTimeId($encounter->period_start)
             ],
-            "effectiveDateTime"=> DateTimeFormat::parse($encounter->period_start),
-            "issued"=> DateTimeFormat::parse($encounter->period_start),
             "valueQuantity"=> [
                 "system"=> "http://unitsofmeasure.org",
                 "value"=> $ttv['value'],
@@ -99,8 +96,6 @@ class Observation
                 "reference"=> "Encounter/".$encounter->ihs_number,
                 "display"=> "Pemeriksaan fisik pada ".StrHelper::dateTimeId($encounter->period_start)
             ],
-            "effectiveDateTime"=> DateTimeFormat::parse($encounter->period_start),
-            "issued"=> DateTimeFormat::parse($encounter->period_start),
             "valueQuantity"=> [
                 "system"=> "http://unitsofmeasure.org",
                 "value"=> $ttv['value'],

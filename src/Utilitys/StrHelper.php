@@ -56,7 +56,8 @@ class StrHelper
                 'name_ttv' => 'Body temperature',
                 'value' => self::doubleVal($value),
                 'unit' => 'celcius',
-                'code' => 'Cel'
+                'code' => 'Cel',
+                'order' => 1
             ];
         } else if($name == 'heart_rate') {
             return [
@@ -64,7 +65,8 @@ class StrHelper
                 'name_ttv' => 'Heart rate',
                 'value' => self::doubleVal($value),
                 'unit' => 'beats/minute',
-                'code' => '/min'
+                'code' => '/min',
+                'order' => 2
             ];
         } else if($name == 'systolic_blood_pressure') {
             return [
@@ -72,7 +74,8 @@ class StrHelper
                 'name_ttv' => 'Systolic blood pressure',
                 'value' => self::doubleVal($value),
                 'unit' => 'mmHg',
-                'code' => 'mm[Hg]'
+                'code' => 'mm[Hg]',
+                'order' => 3
             ];
         } else if($name == 'diastolic_blood_pressure') {
             return [
@@ -80,7 +83,8 @@ class StrHelper
                 'name_ttv' => 'Diastolic blood pressure',
                 'value' => self::doubleVal($value),
                 'unit' => 'mmHg',
-                'code' => 'mm[Hg]'
+                'code' => 'mm[Hg]',
+                'order' => 4
             ];
         } else if($name == 'respiratory_rate') {
             return [
@@ -88,7 +92,8 @@ class StrHelper
                 'name_ttv' => 'Respiratory rate',
                 'value' => self::doubleVal($value),
                 'unit' => 'breaths/minute',
-                'code' => '/min'
+                'code' => '/min',
+                'order' => 5
             ];
         } else if($name == 'oxygen_saturation') {
             return [
@@ -96,7 +101,8 @@ class StrHelper
                 'name_ttv' => 'Oxygen saturation',
                 'value' => self::doubleVal($value),
                 'unit' => '%',
-                'code' => '%'
+                'code' => '%',
+                'order' => 6
             ];
         } else if($name == 'body_height') {
             return [
@@ -104,7 +110,8 @@ class StrHelper
                 'name_ttv' => 'Body height',
                 'value' => self::doubleVal($value),
                 'unit' => 'cm',
-                'code' => 'cm'
+                'code' => 'cm',
+                'order' => 7
             ];
         } else if($name == 'body_weight') {
             return [
@@ -112,7 +119,8 @@ class StrHelper
                 'name_ttv' => 'Body weight',
                 'value' => self::doubleVal($value),
                 'unit' => 'kg',
-                'code' => 'kg'
+                'code' => 'kg',
+                'order' => 8
             ];
         } else {
             return [
