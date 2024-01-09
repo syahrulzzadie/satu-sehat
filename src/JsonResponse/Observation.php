@@ -41,7 +41,7 @@ class Observation
             foreach ($entry as $item) {
                 $res = $item['resource'];
                 $resType = $res['resourceType'];
-                if ($resType == 'Condition') {
+                if ($resType == 'Observation') {
                     $dt['consent'] = 'OPTIN';
                     $dt['ihs_number'] = $res['id'];
                     $dt['code_ttv'] = $res['code']['coding'][0]['code'];
