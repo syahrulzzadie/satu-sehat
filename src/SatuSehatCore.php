@@ -243,10 +243,10 @@ class SatuSehatCore
         return jsonResponse\Error::http($http);
     }
 
-    public static function createComposition($encounter,$kodeDiet,$code,$name,$text)
+    public static function createComposition($encounter,$noRawat,$code,$name,$text)
     {
         $url = Url::createCompositionUrl();
-        $formData = jsonData\Composition::formCreateData($encounter,$kodeDiet,$code,$name,$text);
+        $formData = jsonData\Composition::formCreateData($encounter,$noRawat,$code,$name,$text);
         $http = HttpRequest::post($url,$formData);
         if ($http['status']) {
             $response = $http['response'];
@@ -255,10 +255,10 @@ class SatuSehatCore
         return jsonResponse\Error::http($http);
     }
 
-    public static function updateComposition($ihsNumber,$encounter,$kodeDiet,$code,$name,$text)
+    public static function updateComposition($ihsNumber,$encounter,$noRawat,$code,$name,$text)
     {
         $url = Url::updateCompositionUrl($ihsNumber);
-        $formData = jsonData\Composition::formUpdateData($ihsNumber,$encounter,$kodeDiet,$code,$name,$text);
+        $formData = jsonData\Composition::formUpdateData($ihsNumber,$encounter,$noRawat,$code,$name,$text);
         $http = HttpRequest::put($url,$formData);
         if ($http['status']) {
             $response = $http['response'];
