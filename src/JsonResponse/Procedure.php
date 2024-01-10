@@ -47,11 +47,11 @@ class Procedure
                     $dt['period_end'] = $res['performedPeriod']['end'];
                     $dt['procedure_code'] = $res['code']['coding'][0]['code'];
                     $dt['procedure_name'] = $res['code']['coding'][0]['display'] ?? '';
-                    $dt['ihs_number_patient'] = StrHelper::getIhsNumber($data['subject']['reference']);
+                    $dt['ihs_number_patient'] = StrHelper::getIhsNumber($res['subject']['reference']);
                     $dt['name_patient'] = $res['subject']['display'] ?? '';
-                    $dt['ihs_number_encounter'] = StrHelper::getIhsNumber($data['encounter']['reference']);
+                    $dt['ihs_number_encounter'] = StrHelper::getIhsNumber($res['encounter']['reference']);
                     $dt['name_encounter'] = $res['encounter']['display'] ?? '';
-                    $dt['ihs_number_practitioner'] = StrHelper::getIhsNumber($data['performer'][0]['actor']['reference']);
+                    $dt['ihs_number_practitioner'] = StrHelper::getIhsNumber($res['performer'][0]['actor']['reference']);
                     $dt['name_practitioner'] = $res['performer'][0]['actor']['display'] ?? '';
                 } else {
                     $dt['consent'] = 'OPTOUT';
