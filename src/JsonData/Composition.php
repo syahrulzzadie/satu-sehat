@@ -42,7 +42,8 @@ class Composition
                 "display"=> $encounter->patient->name
             ],
             "encounter"=> [
-                "reference"=> "Encounter/".$encounter->ihs_number
+                "reference"=> "Encounter/".$encounter->ihs_number,
+                "display"=> "Diet pasien ".$encounter->patient->name." pada ".$encounter->period_start
             ],
             "date"=> DateTimeFormat::dateNow(),
             "author"=> [
@@ -51,9 +52,10 @@ class Composition
                     "display"=> $encounter->practitioner->name
                 ]
             ],
-            "title"=> "Resume Medis Rawat Jalan",
+            "title"=> "Diet Pasien",
             "custodian"=> [
-                "reference"=> "Organization/".$organizationId
+                "reference"=> "Organization/".$organizationId,
+                "display"=> "RS Umum Islam Harapan Anda"
             ],
             "section"=> [
                 [
@@ -111,18 +113,20 @@ class Composition
                 "display"=> $encounter->patient->name
             ],
             "encounter"=> [
-                "reference"=> "Encounter/".$encounter->ihs_number
+                "reference"=> "Encounter/".$encounter->ihs_number,
+                "display"=> "Diet pasien ".$encounter->patient->name." pada ".$encounter->period_start
             ],
-            "date"=> DateTimeFormat::dateParse($encounter->composition->created_at),
+            "date"=> DateTimeFormat::dateParse($encounter->period_start),
             "author"=> [
                 [
                     "reference"=> "Practitioner/".$encounter->practitioner->ihs_number,
                     "display"=> $encounter->practitioner->name
                 ]
             ],
-            "title"=> "Resume Medis Rawat Jalan",
+            "title"=> "Diet Pasien",
             "custodian"=> [
-                "reference"=> "Organization/".$encounter->organization->ihs_number
+                "reference"=> "Organization/".$encounter->organization->ihs_number,
+                "display"=> "RS Umum Islam Harapan Anda"
             ],
             "section"=> [
                 [

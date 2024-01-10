@@ -18,13 +18,14 @@ class Composition
                     'date' => $data['date'],
                     'code' => $data['section'][0]['code']['coding'][0]['code'],
                     'name' => $data['section'][0]['code']['coding'][0]['display'],
+                    'text' => $data['section'][0]['text']['div'] ?? '',
                     'ihs_number_patient' => StrHelper::getIhsNumber($data['subject']['reference']),
                     'name_patient' => $data['subject']['display'] ?? '',
                     'ihs_number_encounter' => StrHelper::getIhsNumber($data['encounter']['reference']),
                     'name_encounter' => $data['encounter']['display'] ?? '',
-                    'ihs_practitioner' => StrHelper::getIhsNumber($data['author'][0]['reference']),
+                    'ihs_number_practitioner' => StrHelper::getIhsNumber($data['author'][0]['reference']),
                     'name_practitioner' => $data['author'][0]['display'] ?? '',
-                    'ihs_organization' => StrHelper::getIhsNumber($data['custodian']['reference']),
+                    'ihs_number_organization' => StrHelper::getIhsNumber($data['custodian']['reference']),
                     'name_organization' => $data['custodian']['display'] ?? ''
                 ]
             ];
@@ -47,13 +48,14 @@ class Composition
                     $dt['date'] = $res['date'];
                     $dt['code'] = $res['section'][0]['code']['coding'][0]['code'];
                     $dt['name'] = $res['section'][0]['code']['coding'][0]['name'];
+                    $dt['text'] = $data['section'][0]['text']['div'] ?? '';
                     $dt['ihs_number_patient'] = StrHelper::getIhsNumber($res['subject']['reference']);
                     $dt['name_patient'] = $res['subject']['display'] ?? '';
                     $dt['ihs_number_encounter'] = StrHelper::getIhsNumber($res['encounter']['reference']);
                     $dt['name_encounter'] = $res['encounter']['display'] ?? '';
-                    $dt['ihs_practitioner'] = StrHelper::getIhsNumber($res['author'][0]['reference']);
+                    $dt['ihs_number_practitioner'] = StrHelper::getIhsNumber($res['author'][0]['reference']);
                     $dt['name_practitioner'] = $res['author'][0]['display'] ?? '';
-                    $dt['ihs_organization'] = StrHelper::getIhsNumber($res['custodian']['reference']);
+                    $dt['ihs_number_organization'] = StrHelper::getIhsNumber($res['custodian']['reference']);
                     $dt['name_organization'] = $res['custodian']['display'] ?? '';
                 } else {
                     $dt['consent'] = 'OPTOUT';
