@@ -54,8 +54,7 @@ class Composition
             ],
             "title"=> "Diet Pasien",
             "custodian"=> [
-                "reference"=> "Organization/".$organizationId,
-                "display"=> "RS Umum Islam Harapan Anda"
+                "reference"=> "Organization/".$organizationId
             ],
             "section"=> [
                 [
@@ -125,8 +124,7 @@ class Composition
             ],
             "title"=> "Diet Pasien",
             "custodian"=> [
-                "reference"=> "Organization/".$encounter->organization->ihs_number,
-                "display"=> "RS Umum Islam Harapan Anda"
+                "reference"=> "Organization/".$encounter->organization->ihs_number
             ],
             "section"=> [
                 [

@@ -23,9 +23,7 @@ class Composition
                     'ihs_number_encounter' => StrHelper::getIhsNumber($data['encounter']['reference']),
                     'name_encounter' => $data['encounter']['display'] ?? '',
                     'ihs_number_practitioner' => StrHelper::getIhsNumber($data['author'][0]['reference']),
-                    'name_practitioner' => $data['author'][0]['display'] ?? '',
-                    'ihs_number_organization' => StrHelper::getIhsNumber($data['custodian']['reference']),
-                    'name_organization' => $data['custodian']['display'] ?? ''
+                    'name_practitioner' => $data['author'][0]['display'] ?? ''
                 ]
             ];
         }
@@ -53,8 +51,6 @@ class Composition
                     $dt['name_encounter'] = $res['encounter']['display'] ?? '';
                     $dt['ihs_number_practitioner'] = StrHelper::getIhsNumber($res['author'][0]['reference']);
                     $dt['name_practitioner'] = $res['author'][0]['display'] ?? '';
-                    $dt['ihs_number_organization'] = StrHelper::getIhsNumber($res['custodian']['reference']);
-                    $dt['name_organization'] = $res['custodian']['display'] ?? '';
                 } else {
                     $dt['consent'] = 'OPTOUT';
                     $dt['message'] = 'The operation did not return any information due to consent or privacy rules.';
