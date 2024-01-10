@@ -62,7 +62,7 @@ class Composition
                     "code"=> [
                         "coding"=> [
                             [
-                                "system"=> "http://hl7.org/fhir/sid/icd-10",
+                                "system"=> "http://loinc.org",
                                 "code"=> $code,
                                 "display"=> $name
                             ]
@@ -133,7 +133,7 @@ class Composition
                     "code"=> [
                         "coding"=> [
                             [
-                                "system"=> "http://hl7.org/fhir/sid/icd-10",
+                                "system"=> "http://loinc.org",
                                 "code"=> $code,
                                 "display"=> $name
                             ]
