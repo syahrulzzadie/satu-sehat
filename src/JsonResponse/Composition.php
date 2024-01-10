@@ -15,10 +15,9 @@ class Composition
                 'status' => true,
                 'data' => [
                     'ihs_number' => $data['id'],
-                    'date' => $data['date'],
-                    'code' => $data['section'][0]['code']['coding'][0]['code'],
-                    'name' => $data['section'][0]['code']['coding'][0]['display'],
-                    'text' => $data['section'][0]['text']['div'] ?? '',
+                    'composition_code' => $data['section'][0]['code']['coding'][0]['code'],
+                    'composition_name' => $data['section'][0]['code']['coding'][0]['display'],
+                    'composition_text' => $data['section'][0]['text']['div'] ?? '',
                     'ihs_number_patient' => StrHelper::getIhsNumber($data['subject']['reference']),
                     'name_patient' => $data['subject']['display'] ?? '',
                     'ihs_number_encounter' => StrHelper::getIhsNumber($data['encounter']['reference']),
@@ -45,10 +44,9 @@ class Composition
                 if ($resType == 'Composition') {
                     $dt['consent'] = 'OPTIN';
                     $dt['ihs_number'] = $res['id'];
-                    $dt['date'] = $res['date'];
-                    $dt['code'] = $res['section'][0]['code']['coding'][0]['code'];
-                    $dt['name'] = $res['section'][0]['code']['coding'][0]['name'];
-                    $dt['text'] = $data['section'][0]['text']['div'] ?? '';
+                    $dt['composition_code'] = $res['section'][0]['code']['coding'][0]['code'];
+                    $dt['composition_name'] = $res['section'][0]['code']['coding'][0]['name'];
+                    $dt['composition_text'] = $data['section'][0]['text']['div'] ?? '';
                     $dt['ihs_number_patient'] = StrHelper::getIhsNumber($res['subject']['reference']);
                     $dt['name_patient'] = $res['subject']['display'] ?? '';
                     $dt['ihs_number_encounter'] = StrHelper::getIhsNumber($res['encounter']['reference']);
