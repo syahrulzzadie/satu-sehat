@@ -43,7 +43,7 @@ class Composition
                     $dt['consent'] = 'OPTIN';
                     $dt['ihs_number'] = $res['id'];
                     $dt['composition_code'] = $res['section'][0]['code']['coding'][0]['code'];
-                    $dt['composition_name'] = $res['section'][0]['code']['coding'][0]['name'];
+                    $dt['composition_name'] = $res['section'][0]['code']['coding'][0]['display'];
                     $dt['composition_text'] = $res['section'][0]['text']['div'] ?? '';
                     $dt['ihs_number_patient'] = StrHelper::getIhsNumber($res['subject']['reference']);
                     $dt['name_patient'] = $res['subject']['display'] ?? '';
