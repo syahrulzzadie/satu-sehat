@@ -124,7 +124,7 @@ class Composition
             ],
             "title"=> "Diet Pasien",
             "custodian"=> [
-                "reference"=> "Organization/".$encounter->organization->ihs_number
+                "reference"=> "Organization/".$organizationId
             ],
             "section"=> [
                 [
