@@ -45,7 +45,7 @@ class Composition
                 "reference"=> "Encounter/".$encounter->ihs_number,
                 "display"=> "Diet pasien ".$encounter->patient->name." pada ".$encounter->period_start
             ],
-            "date"=> DateTimeFormat::dateNow(),
+            "date"=> DateTimeFormat::now(),
             "author"=> [
                 [
                     "reference"=> "Practitioner/".$encounter->practitioner->ihs_number,
@@ -116,7 +116,7 @@ class Composition
                 "reference"=> "Encounter/".$encounter->ihs_number,
                 "display"=> "Diet pasien ".$encounter->patient->name." pada ".$encounter->period_start
             ],
-            "date"=> DateTimeFormat::dateParse($encounter->period_start),
+            "date"=> DateTimeFormat::parse($encounter->period_start),
             "author"=> [
                 [
                     "reference"=> "Practitioner/".$encounter->practitioner->ihs_number,
