@@ -7,7 +7,7 @@ use syahrulzzadie\SatuSehat\Utilitys\Enviroment;
 
 class MedicationRequest
 {
-    public static function formCreateData($encounter,$medication,$noResep,$aturanPakai,$jumlahObatPerhari,$jumahHariObatHabis)
+    public static function formCreateData($encounter, $medication, $noRawat, $aturanPakai)
     {
         $organizationId = Enviroment::organizationId();
         return [
@@ -16,7 +16,7 @@ class MedicationRequest
                 [
                     "system"=> "http://sys-ids.kemkes.go.id/prescription/".$organizationId,
                     "use"=> "official",
-                    "value"=> $noResep
+                    "value"=> $noRawat
                 ]
             ],
             "status"=> "completed",
@@ -44,34 +44,13 @@ class MedicationRequest
             "encounter"=> [
                 "reference"=> "Encounter/".$encounter->ihs_number
             ],
-            "authoredOn"=> DateTimeFormat::dateNow(),
+            "authoredOn"=> DateTimeFormat::parse($encounter->period_start),
             "requester"=> [
                 "reference"=> "Practitioner/".$encounter->practitioner->ihs_number,
                 "display"=> $encounter->practitioner->name
             ],
-            "reasonCode"=> [
-                [
-                    "coding"=> [
-                        [
-                            "system"=> "http://hl7.org/fhir/sid/icd-10",
-                            "code"=> $encounter->condition->code,
-                            "display"=> $encounter->condition->name
-                        ]
-                    ]
-                ]
-            ],
-            "courseOfTherapyType"=> [
-                "coding"=> [
-                    [
-                        "system"=> "http://terminology.hl7.org/CodeSystem/medicationrequest-course-of-therapy",
-                        "code"=> "continuous",
-                        "display"=> "Continuing long term therapy"
-                    ]
-                ]
-            ],
             "dosageInstruction"=> [
                 [
-                    "sequence"=> 1,
                     "text"=> $aturanPakai,
                     "additionalInstruction"=> [
                         [
@@ -94,60 +73,13 @@ class MedicationRequest
                                 "display"=> "Oral"
                             ]
                         ]
-                    ],
-                    "doseAndRate"=> [
-                        [
-                            "type"=> [
-                                "coding"=> [
-                                    [
-                                        "system"=> "http://terminology.hl7.org/CodeSystem/dose-rate-type",
-                                        "code"=> "ordered",
-                                        "display"=> "Ordered"
-                                    ]
-                                ]
-                            ],
-                            "doseQuantity"=> [
-                                "value"=> $jumlahObatPerhari,
-                                "unit"=> "TAB",
-                                "system"=> "http://terminology.hl7.org/CodeSystem/v3-orderableDrugForm",
-                                "code"=> "TAB"
-                            ]
-                        ]
                     ]
                 ]
             ],
-            "dispenseRequest"=> [
-                "dispenseInterval"=> [
-                    "value"=> 1,
-                    "unit"=> "days",
-                    "system"=> "http://unitsofmeasure.org",
-                    "code"=> "d"
-                ],
-                "validityPeriod"=> [
-                    "start"=> DateTimeFormat::dateNow(),
-                    "end"=> DateTimeFormat::dateNow()
-                ],
-                "numberOfRepeatsAllowed"=> 0,
-                "quantity"=> [
-                    "value"=> $jumlahObatPerhari,
-                    "unit"=> "TAB",
-                    "system"=> "http://terminology.hl7.org/CodeSystem/v3-orderableDrugForm",
-                    "code"=> "TAB"
-                ],
-                "expectedSupplyDuration"=> [
-                    "value"=> $jumahHariObatHabis,
-                    "unit"=> "days",
-                    "system"=> "http://unitsofmeasure.org",
-                    "code"=> "d"
-                ],
-                "performer"=> [
-                    "reference"=> "Organization/".$organizationId
-                ]
-            ]
         ];
     }
 
-    public static function formUpdateData($ihsNumber,$encounter,$medication,$noResep,$aturanPakai,$jumlahObatPerhari,$jumahHariObatHabis)
+    public static function formUpdateData($ihsNumber, $encounter, $medication, $noRawat, $aturanPakai)
     {
         $organizationId = Enviroment::organizationId();
         return [
@@ -157,7 +89,7 @@ class MedicationRequest
                 [
                     "system"=> "http://sys-ids.kemkes.go.id/prescription/".$organizationId,
                     "use"=> "official",
-                    "value"=> $noResep
+                    "value"=> $noRawat
                 ]
             ],
             "status"=> "completed",
@@ -185,34 +117,13 @@ class MedicationRequest
             "encounter"=> [
                 "reference"=> "Encounter/".$encounter->ihs_number
             ],
-            "authoredOn"=> DateTimeFormat::dateNow(),
+            "authoredOn"=> DateTimeFormat::parse($encounter->period_start),
             "requester"=> [
                 "reference"=> "Practitioner/".$encounter->practitioner->ihs_number,
                 "display"=> $encounter->practitioner->name
             ],
-            "reasonCode"=> [
-                [
-                    "coding"=> [
-                        [
-                            "system"=> "http://hl7.org/fhir/sid/icd-10",
-                            "code"=> $encounter->condition->code,
-                            "display"=> $encounter->condition->name
-                        ]
-                    ]
-                ]
-            ],
-            "courseOfTherapyType"=> [
-                "coding"=> [
-                    [
-                        "system"=> "http://terminology.hl7.org/CodeSystem/medicationrequest-course-of-therapy",
-                        "code"=> "continuous",
-                        "display"=> "Continuing long term therapy"
-                    ]
-                ]
-            ],
             "dosageInstruction"=> [
                 [
-                    "sequence"=> 1,
                     "text"=> $aturanPakai,
                     "additionalInstruction"=> [
                         [
@@ -235,56 +146,9 @@ class MedicationRequest
                                 "display"=> "Oral"
                             ]
                         ]
-                    ],
-                    "doseAndRate"=> [
-                        [
-                            "type"=> [
-                                "coding"=> [
-                                    [
-                                        "system"=> "http://terminology.hl7.org/CodeSystem/dose-rate-type",
-                                        "code"=> "ordered",
-                                        "display"=> "Ordered"
-                                    ]
-                                ]
-                            ],
-                            "doseQuantity"=> [
-                                "value"=> $jumlahObatPerhari,
-                                "unit"=> "TAB",
-                                "system"=> "http://terminology.hl7.org/CodeSystem/v3-orderableDrugForm",
-                                "code"=> "TAB"
-                            ]
-                        ]
                     ]
                 ]
             ],
-            "dispenseRequest"=> [
-                "dispenseInterval"=> [
-                    "value"=> 1,
-                    "unit"=> "days",
-                    "system"=> "http://unitsofmeasure.org",
-                    "code"=> "d"
-                ],
-                "validityPeriod"=> [
-                    "start"=> DateTimeFormat::dateNow(),
-                    "end"=> DateTimeFormat::dateNow()
-                ],
-                "numberOfRepeatsAllowed"=> 0,
-                "quantity"=> [
-                    "value"=> $jumlahObatPerhari,
-                    "unit"=> "TAB",
-                    "system"=> "http://terminology.hl7.org/CodeSystem/v3-orderableDrugForm",
-                    "code"=> "TAB"
-                ],
-                "expectedSupplyDuration"=> [
-                    "value"=> $jumahHariObatHabis,
-                    "unit"=> "days",
-                    "system"=> "http://unitsofmeasure.org",
-                    "code"=> "d"
-                ],
-                "performer"=> [
-                    "reference"=> "Organization/".$organizationId
-                ]
-            ]
         ];
     }
 }

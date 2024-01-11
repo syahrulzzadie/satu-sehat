@@ -313,10 +313,10 @@ class SatuSehatCore
         return jsonResponse\Error::http($http);
     }
 
-    public static function createMedication($encounter,$noResep,$kodeObat,$namaObat,$dataBahanObat)
+    public static function createMedication($noRawat, $kodeObat, $namaObat)
     {
         $url = Url::createMedicationUrl();
-        $formData = jsonData\Medication::formCreateData($encounter,$noResep,$kodeObat,$namaObat,$dataBahanObat);
+        $formData = jsonData\Medication::formCreateData($noRawat, $kodeObat, $namaObat);
         $http = HttpRequest::post($url,$formData);
         if ($http['status']) {
             $response = $http['response'];
@@ -325,10 +325,10 @@ class SatuSehatCore
         return jsonResponse\Error::http($http);
     }
 
-    public static function updateMedication($ihsNumber,$encounter,$noResep,$kodeObat,$namaObat,$dataBahanObat)
+    public static function updateMedication($ihsNumber,$noRawat,$kodeObat,$namaObat)
     {
         $url = Url::updateMedicationUrl($ihsNumber);
-        $formData = jsonData\Medication::formUpdateData($ihsNumber,$encounter,$noResep,$kodeObat,$namaObat,$dataBahanObat);
+        $formData = jsonData\Medication::formUpdateData($ihsNumber,$noRawat,$kodeObat,$namaObat);
         $http = HttpRequest::put($url,$formData);
         if ($http['status']) {
             $response = $http['response'];
@@ -337,10 +337,10 @@ class SatuSehatCore
         return jsonResponse\Error::http($http);
     }
 
-    public static function createMedicationRequest($encounter,$medication,$noResep,$aturanPakai,$jumlahObatPerhari,$jumahHariObatHabis)
+    public static function createMedicationRequest($encounter,$medication,$noRawat,$aturanPakai)
     {
         $url = Url::createMedicationRequestUrl();
-        $formData = jsonData\MedicationRequest::formCreateData($encounter,$medication,$noResep,$aturanPakai,$jumlahObatPerhari,$jumahHariObatHabis);
+        $formData = jsonData\MedicationRequest::formCreateData($encounter, $medication, $noRawat, $aturanPakai);
         $http = HttpRequest::post($url,$formData);
         if ($http['status']) {
             $response = $http['response'];
@@ -349,10 +349,10 @@ class SatuSehatCore
         return jsonResponse\Error::http($http);
     }
 
-    public static function updateMedicationRequest($ihsNumber,$encounter,$medication,$noResep,$aturanPakai,$jumlahObatPerhari,$jumahHariObatHabis)
+    public static function updateMedicationRequest($ihsNumber,$encounter,$medication,$noRawat,$aturanPakai)
     {
         $url = Url::updateMedicationRequestUrl($ihsNumber);
-        $formData = jsonData\MedicationRequest::formUpdateData($ihsNumber,$encounter,$medication,$noResep,$aturanPakai,$jumlahObatPerhari,$jumahHariObatHabis);
+        $formData = jsonData\MedicationRequest::formUpdateData($ihsNumber, $encounter,$medication,$noRawat,$aturanPakai);
         $http = HttpRequest::put($url,$formData);
         if ($http['status']) {
             $response = $http['response'];
