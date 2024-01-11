@@ -6,7 +6,7 @@ use syahrulzzadie\SatuSehat\Utilitys\Enviroment;
 
 class Medication
 {
-    public static function formCreateData($noRawat, $kodeObat, $namaObat)
+    public static function formCreateData($noResep, $kodeObat, $namaObat)
     {
         $organizationId = Enviroment::organizationId();
         return [
@@ -15,7 +15,7 @@ class Medication
                 [
                     "system"=> "http://sys-ids.kemkes.go.id/medication/".$organizationId,
                     "use"=> "official",
-                    "value"=> $noRawat
+                    "value"=> $noResep
                 ]
             ],
             "code"=> [
@@ -45,7 +45,7 @@ class Medication
         ];
     }
 
-    public static function formUpdateData($ihsNumber, $noRawat, $kodeObat, $namaObat)
+    public static function formUpdateData($ihsNumber, $noResep, $kodeObat, $namaObat)
     {
         $organizationId = Enviroment::organizationId();
         return [
@@ -55,7 +55,7 @@ class Medication
                 [
                     "system"=> "http://sys-ids.kemkes.go.id/medication/".$organizationId,
                     "use"=> "official",
-                    "value"=> $noRawat
+                    "value"=> $noResep
                 ]
             ],
             "code"=> [
