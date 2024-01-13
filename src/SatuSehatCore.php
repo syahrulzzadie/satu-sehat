@@ -372,6 +372,41 @@ class SatuSehatCore
         return jsonResponse\Error::http($http);
     }
 
+    public static function createMedicationDispense($encounter,$practitoner,$noRawat,$medication)
+    {
+        $url = Url::createMedicationDispenseUrl();
+        $formData = jsonData\MedicationDispense::formCreateData($encounter,$practitoner,$noRawat,$medication);
+        $http = HttpRequest::post($url,$formData);
+        if ($http['status']) {
+            $response = $http['response'];
+            return jsonResponse\MedicationDispense::convert($response);
+        }
+        return jsonResponse\Error::http($http);
+    }
+
+    public static function updateMedicationDispense($ihsNumber,$encounter,$practitoner,$noRawat,$medication)
+    {
+        $url = Url::updateMedicationDispenseUrl($ihsNumber);
+        $formData = jsonData\MedicationDispense::formUpdateData($ihsNumber,$encounter,$practitoner,$noRawat,$medication);
+        $http = HttpRequest::put($url,$formData);
+        if ($http['status']) {
+            $response = $http['response'];
+            return jsonResponse\MedicationDispense::convert($response);
+        }
+        return jsonResponse\Error::http($http);
+    }
+
+    public static function historyMedicationDispense($ihsNumberPatient)
+    {
+        $url = Url::historyMedicationDispenseUrl($ihsNumberPatient);
+        $http = HttpRequest::get($url);
+        if ($http['status']) {
+            $response = $http['response'];
+            return jsonResponse\MedicationDispense::history($response);
+        }
+        return jsonResponse\Error::http($http);
+    }
+
     public static function searchProductsByCode($code)
     {
         $url = Url::searchProductsByCode($code);
@@ -428,6 +463,7 @@ class SatuSehatCore
         $urls['composition'] = Url::historyCompositionUrl($ihsNumber);
         $urls['procedure'] = Url::historyProcedureUrl($ihsNumber);
         $urls['medicationRequest'] = Url::historyMedicationRequestUrl($ihsNumber);
+        $urls['medicationDispense'] = Url::historyMedicationDispenseUrl($ihsNumber);
         ////////////////////////////////////
         $gets = HttpRequest::poolGet($urls);
         /////////////////////////////////////
@@ -454,6 +490,10 @@ class SatuSehatCore
         $getMedicationRequest = $gets['medicationRequest'];
         if ($getMedicationRequest['status']) {
             $dataHistory['medicationRequest'] = jsonResponse\MedicationRequest::history($getMedicationRequest['response']);
+        }
+        $getMedicationDispense = $gets['medicationDispense'];
+        if ($getMedicationDispense['status']) {
+            $dataHistory['medicationDispense'] = jsonResponse\MedicationDispense::history($getMedicationDispense['response']);
         }
         /////////////////////
         return $dataHistory;
