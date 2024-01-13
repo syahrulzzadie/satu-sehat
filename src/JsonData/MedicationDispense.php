@@ -6,7 +6,7 @@ use syahrulzzadie\SatuSehat\Utilitys\Enviroment;
 
 class MedicationDispense
 {
-    public static function formCreateData($encounter, $practitioner, $noRawat, $medication)
+    public static function formCreateData($encounter, $practitioner, $noRawat, $medicationRequest)
     {
         $organizationId = Enviroment::organizationId();
         return [
@@ -19,9 +19,14 @@ class MedicationDispense
                 ]
             ],
             "status"=> "completed",
+            "authorizingPrescription"=> [
+                [
+                    "reference"=> "MedicationRequest/".$medicationRequest->ihs_number
+                ]
+            ],
             "medicationReference"=> [
-                "reference"=> "Medication/".$medication->ihs_number,
-                "display"=> $medication->name
+                "reference"=> "Medication/".$medicationRequest->medication->ihs_number,
+                "display"=> $medicationRequest->medication->name
             ],
             "subject"=> [
                 "reference"=> "Patient/".$encounter->patient->ihs_number,
@@ -45,7 +50,7 @@ class MedicationDispense
         ];
     }
 
-    public static function formUpdateData($ihsNumber, $encounter, $practitioner, $medication, $noRawat)
+    public static function formUpdateData($ihsNumber, $encounter, $practitioner, $noRawat, $medicationRequest)
     {
         $organizationId = Enviroment::organizationId();
         return [
@@ -59,9 +64,14 @@ class MedicationDispense
                 ]
             ],
             "status"=> "completed",
+            "authorizingPrescription"=> [
+                [
+                    "reference"=> "MedicationRequest/".$medicationRequest->ihs_number
+                ]
+            ],
             "medicationReference"=> [
-                "reference"=> "Medication/".$medication->ihs_number,
-                "display"=> $medication->name
+                "reference"=> "Medication/".$medicationRequest->medication->ihs_number,
+                "display"=> $medicationRequest->medication->name
             ],
             "subject"=> [
                 "reference"=> "Patient/".$encounter->patient->ihs_number,
