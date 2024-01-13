@@ -25,8 +25,8 @@ class MedicationDispense
                     'name_encounter' => $res['context']['display'] ?? '',
                     'ihs_number_location' => StrHelper::getIhsNumber($data['location']['reference']),
                     'name_location' => $res['location']['display'] ?? '',
-                    'ihs_number_medication_request' => StrHelper::getIhsNumber($data['authorizingPrescription']['reference']),
-                    'name_medication_request' => $res['authorizingPrescription']['display'] ?? ''
+                    'ihs_number_medication_request' => StrHelper::getIhsNumber($data['authorizingPrescription'][0]['reference']),
+                    'name_medication_request' => $res['authorizingPrescription'][0]['display'] ?? ''
                 ]
             ];
         }
@@ -55,8 +55,8 @@ class MedicationDispense
                     $dt['name_medication'] = $res['medicationReference']['display'] ?? '';
                     $dt['ihs_number_location'] = StrHelper::getIhsNumber($res['location']['reference']);
                     $dt['name_location'] = $res['location']['display'] ?? '';
-                    $dt['ihs_number_medication_request'] = StrHelper::getIhsNumber($res['authorizingPrescription']['reference']);
-                    $dt['name_medication_request'] = $res['authorizingPrescription']['display'] ?? '';
+                    $dt['ihs_number_medication_request'] = StrHelper::getIhsNumber($res['authorizingPrescription'][0]['reference']);
+                    $dt['name_medication_request'] = $res['authorizingPrescription'][0]['display'] ?? '';
                 } else {
                     $dt['consent'] = 'OPTOUT';
                     $dt['message'] = 'The operation did not return any information due to consent or privacy rules.';
