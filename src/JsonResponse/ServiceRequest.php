@@ -15,6 +15,7 @@ class ServiceRequest
                 'status' => true,
                 'data' => [
                     'ihs_number' => $data['id'],
+                    'no_rawat' => $data['identifier'][0]['value'] ?? '',
                     'code_text' => $data['code']['coding'][0]['text'] ?? '',
                     'ihs_number_patient' => StrHelper::getIhsNumber($data['subject']['reference']),
                     'name_patient' => $data['subject']['display'] ?? '',
@@ -42,6 +43,7 @@ class ServiceRequest
                 if ($resType == 'ServiceRequest') {
                     $dt['consent'] = 'OPTIN';
                     $dt['ihs_number'] = $res['id'];
+                    $dt['no_rawat'] = $res['identifier'][0]['value'] ?? '';
                     $dt['code_text'] = $data['code']['coding'][0]['text'] ?? '';
                     $dt['ihs_number_patient'] = StrHelper::getIhsNumber($res['subject']['reference']);
                     $dt['name_patient'] = $res['subject']['display'] ?? '';
