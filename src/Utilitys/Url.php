@@ -200,6 +200,21 @@ class Url
         return self::baseUrl('MedicationDispense?subject='.$ihsNumberPatient);
     }
 
+    public static function createServiceRequestUrl()
+    {
+        return self::baseUrl('ServiceRequest');
+    }
+
+    public static function updateServiceRequestUrl($ihsNumber)
+    {
+        return self::baseUrl('ServiceRequest/'.$ihsNumber);
+    }
+
+    public static function historyServiceRequestUrl($ihsNumberPatient)
+    {
+        return self::baseUrl('ServiceRequest?subject='.$ihsNumberPatient);
+    }
+
     public static function searchProductsByCode($code)
     {
         return self::kfaUrl('products?identifier=kfa&code='.$code);

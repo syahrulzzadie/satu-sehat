@@ -407,6 +407,41 @@ class SatuSehatCore
         return jsonResponse\Error::http($http);
     }
 
+    public static function createServiceRequest($noRawat,$encounter,$location)
+    {
+        $url = Url::createServiceRequestUrl();
+        $formData = jsonData\ServiceRequest::formCreateData($noRawat,$encounter,$location);
+        $http = HttpRequest::post($url,$formData);
+        if ($http['status']) {
+            $response = $http['response'];
+            return jsonResponse\ServiceRequest::convert($response);
+        }
+        return jsonResponse\Error::http($http);
+    }
+
+    public static function updateServiceRequest($ihsNumber,$noRawat,$encounter,$location)
+    {
+        $url = Url::updateServiceRequestUrl($ihsNumber);
+        $formData = jsonData\ServiceRequest::formUpdateData($ihsNumber,$noRawat,$encounter,$location);
+        $http = HttpRequest::put($url,$formData);
+        if ($http['status']) {
+            $response = $http['response'];
+            return jsonResponse\ServiceRequest::convert($response);
+        }
+        return jsonResponse\Error::http($http);
+    }
+
+    public static function historyServiceRequest($ihsNumberPatient)
+    {
+        $url = Url::historyServiceRequestUrl($ihsNumberPatient);
+        $http = HttpRequest::get($url);
+        if ($http['status']) {
+            $response = $http['response'];
+            return jsonResponse\ServiceRequest::history($response);
+        }
+        return jsonResponse\Error::http($http);
+    }
+
     public static function searchProductsByCode($code)
     {
         $url = Url::searchProductsByCode($code);
@@ -464,9 +499,10 @@ class SatuSehatCore
         $urls['procedure'] = Url::historyProcedureUrl($ihsNumber);
         $urls['medicationRequest'] = Url::historyMedicationRequestUrl($ihsNumber);
         $urls['medicationDispense'] = Url::historyMedicationDispenseUrl($ihsNumber);
-        ////////////////////////////////////
-        $gets = HttpRequest::poolGet($urls);
+        $urls['serviceRequest'] = Url::historyServiceRequestUrl($ihsNumber);
         /////////////////////////////////////
+        $gets = HttpRequest::poolGet($urls);
+        ///////////////////////////////////
         $getEncounter = $gets['encounter'];
         if ($getEncounter['status']) {
             $dataHistory['encounter'] = jsonResponse\Encounter::history($getEncounter['response']);
@@ -494,6 +530,10 @@ class SatuSehatCore
         $getMedicationDispense = $gets['medicationDispense'];
         if ($getMedicationDispense['status']) {
             $dataHistory['medicationDispense'] = jsonResponse\MedicationDispense::history($getMedicationDispense['response']);
+        }
+        $getServiceRequest = $gets['serviceRequest'];
+        if ($getServiceRequest['status']) {
+            $dataHistory['serviceRequest'] = jsonResponse\ServiceRequest::history($getServiceRequest['response']);
         }
         /////////////////////
         return $dataHistory;
