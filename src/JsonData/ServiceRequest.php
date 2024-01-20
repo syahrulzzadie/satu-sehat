@@ -2,6 +2,7 @@
 
 namespace syahrulzzadie\SatuSehat\JsonData;
 
+use syahrulzzadie\SatuSehat\Utilitys\DateTimeFormat;
 use syahrulzzadie\SatuSehat\Utilitys\Enviroment;
 use syahrulzzadie\SatuSehat\Utilitys\StrHelper;
 
@@ -11,15 +12,16 @@ class ServiceRequest
     {
         $organizationId = Enviroment::organizationId();
         return [
+            "resourceType"=> "ServiceRequest",
             "identifier"=> [
                 [
                     "system"=> "http://sys-ids.kemkes.go.id/servicerequest/".$organizationId,
                     "value"=> $noRawat
                 ]
             ],
-            "resourceType"=> "ServiceRequest",
             "status"=> "active",
             "intent"=> "original-order",
+            "priority"=> "routine",
             "category"=> [
                 [
                     "coding"=> [
@@ -57,6 +59,8 @@ class ServiceRequest
                 "reference"=> "Encounter/".$encounter->ihs_number,
                 "display"=> "Kunjungan pasien ".$encounter->patient->name." pada ".StrHelper::dateTimeId($encounter->period_start)
             ],
+            "occurrenceDateTime"=> DateTimeFormat::parse($encounter->period_start),
+            "authoredOn"=> DateTimeFormat::parse($encounter->period_start),
             "requester"=> [
                 "reference"=> "Practitioner/".$encounter->practitioner->ihs_number,
                 "display"=> $encounter->practitioner->name
@@ -81,7 +85,8 @@ class ServiceRequest
                     "reference"=> "Location/".$location->ihs_number,
                     "display"=> $location->name
                 ]
-            ]
+            ],
+            "patientInstruction"=> "Rujuk Internal pasien ".$encounter->patient->name. " ke ".$location->name
         ];
     }
 
@@ -90,13 +95,13 @@ class ServiceRequest
         $organizationId = Enviroment::organizationId();
         return [
             "id" => $ihsNumber,
+            "resourceType"=> "ServiceRequest",
             "identifier"=> [
                 [
                     "system"=> "http://sys-ids.kemkes.go.id/servicerequest/".$organizationId,
                     "value"=> $noRawat
                 ]
             ],
-            "resourceType"=> "ServiceRequest",
             "status"=> "active",
             "intent"=> "original-order",
             "category"=> [
@@ -136,6 +141,8 @@ class ServiceRequest
                 "reference"=> "Encounter/".$encounter->ihs_number,
                 "display"=> "Kunjungan pasien ".$encounter->patient->name." pada ".StrHelper::dateTimeId($encounter->period_start)
             ],
+            "occurrenceDateTime"=> DateTimeFormat::parse($encounter->period_start),
+            "authoredOn"=> DateTimeFormat::parse($encounter->period_start),
             "requester"=> [
                 "reference"=> "Practitioner/".$encounter->practitioner->ihs_number,
                 "display"=> $encounter->practitioner->name
@@ -160,7 +167,8 @@ class ServiceRequest
                     "reference"=> "Location/".$location->ihs_number,
                     "display"=> $location->name
                 ]
-            ]
+            ],
+            "patientInstruction"=> "Rujuk Internal pasien ".$encounter->patient->name. " ke ".$location->name
         ];
     }
 }
