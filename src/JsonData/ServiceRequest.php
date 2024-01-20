@@ -2,7 +2,6 @@
 
 namespace syahrulzzadie\SatuSehat\JsonData;
 
-use syahrulzzadie\SatuSehat\Utilitys\DateTimeFormat;
 use syahrulzzadie\SatuSehat\Utilitys\Enviroment;
 use syahrulzzadie\SatuSehat\Utilitys\StrHelper;
 
@@ -59,8 +58,6 @@ class ServiceRequest
                 "reference"=> "Encounter/".$encounter->ihs_number,
                 "display"=> "Kunjungan pasien ".$encounter->patient->name." pada ".StrHelper::dateTimeId($encounter->period_start)
             ],
-            "occurrenceDateTime"=> DateTimeFormat::dateParse($encounter->period_start),
-            "authoredOn"=> DateTimeFormat::parse($encounter->period_start),
             "requester"=> [
                 "reference"=> "Practitioner/".$encounter->practitioner->ihs_number,
                 "display"=> $encounter->practitioner->name
@@ -137,8 +134,6 @@ class ServiceRequest
                 "reference"=> "Encounter/".$encounter->ihs_number,
                 "display"=> "Kunjungan pasien ".$encounter->patient->name." pada ".StrHelper::dateTimeId($encounter->period_start)
             ],
-            "occurrenceDateTime"=> DateTimeFormat::dateParse($encounter->period_start),
-            "authoredOn"=> DateTimeFormat::parse($encounter->period_start),
             "requester"=> [
                 "reference"=> "Practitioner/".$encounter->practitioner->ihs_number,
                 "display"=> $encounter->practitioner->name
