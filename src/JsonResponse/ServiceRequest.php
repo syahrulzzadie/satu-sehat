@@ -21,10 +21,8 @@ class ServiceRequest
                     'name_patient' => $data['subject']['display'] ?? '',
                     'ihs_number_encounter' => StrHelper::getIhsNumber($data['encounter']['reference']),
                     'name_encounter' => $data['encounter']['display'] ?? '',
-                    'ihs_number_practitioner' => StrHelper::getIhsNumber($data['requester']['reference']),
-                    'name_practitioner' => $data['requester']['display'] ?? '',
-                    'ihs_number_performer' => StrHelper::getIhsNumber($data['performer']['reference']),
-                    'name_performer' => $data['performer']['display'] ?? '',
+                    'ihs_number_practitioner' => StrHelper::getIhsNumber($data['performer']['reference']),
+                    'name_practitioner' => $data['performer']['display'] ?? '',
                     'ihs_number_location' => StrHelper::getIhsNumber($data['locationReference'][0]['reference']),
                     'name_location' => $data['locationReference'][0]['display'] ?? ''
                 ]
@@ -51,10 +49,8 @@ class ServiceRequest
                     $dt['name_patient'] = $res['subject']['display'] ?? '';
                     $dt['ihs_number_encounter'] = StrHelper::getIhsNumber($res['encounter']['reference']);
                     $dt['name_encounter'] = $res['encounter']['display'] ?? '';
-                    $dt['ihs_number_practitioner'] = StrHelper::getIhsNumber($res['requester']['reference']);
-                    $dt['name_practitioner'] = $res['requester']['display'] ?? '';
-                    $dt['ihs_number_performer'] = StrHelper::getIhsNumber($res['performer']['reference']);
-                    $dt['name_performer'] = $res['performer']['display'] ?? '';
+                    $dt['ihs_number_practitioner'] = StrHelper::getIhsNumber($res['performer']['reference']);
+                    $dt['name_practitioner'] = $res['performer']['display'] ?? '';
                     $dt['ihs_number_location'] = StrHelper::getIhsNumber($res['locationReference'][0]['reference']);
                     $dt['name_location'] = $res['locationReference'][0]['display'] ?? '';
                 } else {
