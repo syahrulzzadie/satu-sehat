@@ -7,7 +7,7 @@ use syahrulzzadie\SatuSehat\Utilitys\StrHelper;
 
 class ServiceRequest
 {
-    public static function formCreateData($noRawat,$encounter,$location)
+    public static function formCreateData($noRawat,$encounter,$location,$performer)
     {
         $organizationId = Enviroment::organizationId();
         return [
@@ -58,9 +58,13 @@ class ServiceRequest
                 "reference"=> "Encounter/".$encounter->ihs_number,
                 "display"=> "Kunjungan pasien ".$encounter->patient->name." pada ".StrHelper::dateTimeId($encounter->period_start)
             ],
-            "performer"=> [
+            "requester"=> [
                 "reference"=> "Practitioner/".$encounter->practitioner->ihs_number,
                 "display"=> $encounter->practitioner->name
+            ],
+            "performer"=> [
+                "reference"=> "Practitioner/".$performer->ihs_number,
+                "display"=> $performer->name
             ],
             "locationCode"=> [
                 [
@@ -82,7 +86,7 @@ class ServiceRequest
         ];
     }
 
-    public static function formUpdateData($ihsNumber,$noRawat,$encounter,$location)
+    public static function formUpdateData($ihsNumber,$noRawat,$encounter,$location,$performer)
     {
         $organizationId = Enviroment::organizationId();
         return [
@@ -134,9 +138,13 @@ class ServiceRequest
                 "reference"=> "Encounter/".$encounter->ihs_number,
                 "display"=> "Kunjungan pasien ".$encounter->patient->name." pada ".StrHelper::dateTimeId($encounter->period_start)
             ],
-            "performer"=> [
+            "requester"=> [
                 "reference"=> "Practitioner/".$encounter->practitioner->ihs_number,
                 "display"=> $encounter->practitioner->name
+            ],
+            "performer"=> [
+                "reference"=> "Practitioner/".$performer->ihs_number,
+                "display"=> $performer->name
             ],
             "locationCode"=> [
                 [
