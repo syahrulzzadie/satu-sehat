@@ -53,7 +53,8 @@ class ServiceRequest
                 "text"=> "Rujuk Internal pasien ".$encounter->patient->name. " ke ".$location->name
             ],
             "subject"=> [
-                "reference"=> "Patient/".$encounter->patient->ihs_number
+                "reference"=> "Patient/".$encounter->patient->ihs_number,
+                "display"=> $encounter->patient->name
             ],
             "encounter"=> [
                 "reference"=> "Encounter/".$encounter->ihs_number,
@@ -137,7 +138,8 @@ class ServiceRequest
                 "text"=> "Rujuk Internal pasien ".$encounter->patient->name. " ke ".$location->name
             ],
             "subject"=> [
-                "reference"=> "Patient/".$encounter->patient->ihs_number
+                "reference"=> "Patient/".$encounter->patient->ihs_number,
+                "display"=> $encounter->patient->name
             ],
             "encounter"=> [
                 "reference"=> "Encounter/".$encounter->ihs_number,
