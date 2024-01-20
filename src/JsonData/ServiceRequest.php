@@ -66,8 +66,10 @@ class ServiceRequest
                 "display"=> $encounter->practitioner->name
             ],
             "performer"=> [
-                "reference"=> "Practitioner/".$performer->ihs_number,
-                "display"=> $performer->name
+                [
+                    "reference"=> "Practitioner/".$performer->ihs_number,
+                    "display"=> $performer->name
+                ]
             ],
             "locationCode"=> [
                 [
@@ -148,8 +150,10 @@ class ServiceRequest
                 "display"=> $encounter->practitioner->name
             ],
             "performer"=> [
-                "reference"=> "Practitioner/".$performer->ihs_number,
-                "display"=> $performer->name
+                [
+                    "reference"=> "Practitioner/".$performer->ihs_number,
+                    "display"=> $performer->name
+                ]
             ],
             "locationCode"=> [
                 [
