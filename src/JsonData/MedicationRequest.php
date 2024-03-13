@@ -10,6 +10,7 @@ class MedicationRequest
     public static function formCreateData($encounter, $medication, $noRawat, $aturanPakai)
     {
         $organizationId = Enviroment::organizationId();
+        $expiredYear = intval(date("Y")+1);
         return [
             "resourceType"=> "MedicationRequest",
             "identifier"=> [
@@ -76,12 +77,41 @@ class MedicationRequest
                     ]
                 ]
             ],
+            "dispenseRequest"=> [
+                "dispenseInterval"=> [
+                    "value"=> 1,
+                    "unit"=> "days",
+                    "system"=> "http://unitsofmeasure.org",
+                    "code"=> "d"
+                ],
+                "validityPeriod"=> [
+                    "start"=> DateTimeFormat::dateNow(),
+                    "end"=> $expiredYear."-01-01"
+                ],
+                "numberOfRepeatsAllowed"=> 0,
+                "quantity"=> [
+                    "value"=> 1,
+                    "unit"=> "TAB",
+                    "system"=> "http://terminology.hl7.org/CodeSystem/v3-orderableDrugForm",
+                    "code"=> "TAB"
+                ],
+                "expectedSupplyDuration"=> [
+                    "value"=> 1,
+                    "unit"=> "days",
+                    "system"=> "http://unitsofmeasure.org",
+                    "code"=> "d"
+                ],
+                "performer"=> [
+                    "reference"=> "Organization/".$organizationId
+                ]
+            ]
         ];
     }
 
     public static function formUpdateData($ihsNumber, $encounter, $medication, $noRawat, $aturanPakai)
     {
         $organizationId = Enviroment::organizationId();
+        $expiredYear = intval(date("Y")+1);
         return [
             "id"=> $ihsNumber,
             "resourceType"=> "MedicationRequest",
@@ -149,6 +179,34 @@ class MedicationRequest
                     ]
                 ]
             ],
+            "dispenseRequest"=> [
+                "dispenseInterval"=> [
+                    "value"=> 1,
+                    "unit"=> "days",
+                    "system"=> "http://unitsofmeasure.org",
+                    "code"=> "d"
+                ],
+                "validityPeriod"=> [
+                    "start"=> DateTimeFormat::dateNow(),
+                    "end"=> $expiredYear."-01-01"
+                ],
+                "numberOfRepeatsAllowed"=> 0,
+                "quantity"=> [
+                    "value"=> 1,
+                    "unit"=> "TAB",
+                    "system"=> "http://terminology.hl7.org/CodeSystem/v3-orderableDrugForm",
+                    "code"=> "TAB"
+                ],
+                "expectedSupplyDuration"=> [
+                    "value"=> 1,
+                    "unit"=> "days",
+                    "system"=> "http://unitsofmeasure.org",
+                    "code"=> "d"
+                ],
+                "performer"=> [
+                    "reference"=> "Organization/".$organizationId
+                ]
+            ]
         ];
     }
 }
