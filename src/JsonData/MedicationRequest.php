@@ -85,8 +85,8 @@ class MedicationRequest
                     "code"=> "d"
                 ],
                 "validityPeriod"=> [
-                    "start"=> DateTimeFormat::dateNow(),
-                    "end"=> $expiredYear."-01-01"
+                    "start"=> DateTimeFormat::now(),
+                    "end"=> $expiredYear."-01-01T12:00:00+07:00"
                 ],
                 "numberOfRepeatsAllowed"=> 0,
                 "quantity"=> [
@@ -187,8 +187,8 @@ class MedicationRequest
                     "code"=> "d"
                 ],
                 "validityPeriod"=> [
-                    "start"=> DateTimeFormat::dateNow(),
-                    "end"=> $expiredYear."-01-01"
+                    "start"=> DateTimeFormat::now(),
+                    "end"=> $expiredYear."-01-01T12:00:00+07:00"
                 ],
                 "numberOfRepeatsAllowed"=> 0,
                 "quantity"=> [
