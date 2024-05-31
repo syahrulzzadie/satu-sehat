@@ -40,7 +40,7 @@ class Encounter
         foreach ($diagnosis as $item) {
             $dt['ihs_number_condition'] = StrHelper::getIhsNumber($item['condition']['reference']);
             $dt['condition_name'] = $item['condition']['display'];
-            $dt['rank'] = $item['rank'];
+            $dt['rank'] = $item['rank'] ?? '1';
             $dt['coding_code'] = $item['use']['coding'][0]['code'];
             $dt['coding_name'] = $item['use']['coding'][0]['display'];
             $data[] = $dt;
