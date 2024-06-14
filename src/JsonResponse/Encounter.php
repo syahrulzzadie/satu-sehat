@@ -2,12 +2,11 @@
 
 namespace syahrulzzadie\SatuSehat\JsonResponse;
 
+use ErrorException;
 use syahrulzzadie\SatuSehat\Utilitys\StrHelper;
-use Exception;
-use TypeError;
 
-set_error_handler(function ($severity, $message, $previous) {
-    throw new Exception($message, 0, $previous);
+set_error_handler(function ($severity, $message, $file, $line) {
+    throw new ErrorException($message, 0, $severity, $file, $line);
 });
 
 class Encounter
@@ -36,9 +35,9 @@ class Encounter
                         'period_end' => $data['period']['end'] ?? ''
                     ]
                 ];
-            } catch (Exception $e) {
+            } catch (\ErrorException $e) {
                 return ['status' => false, 'message' => $e->getMessage()];
-            } catch (TypeError $e) {
+            } catch (\TypeError $e) {
                 return ['status' => false, 'message' => $e->getMessage()];
             }
         }
@@ -86,10 +85,10 @@ class Encounter
                         $dt['period_start'] = $res['period']['start'] ?? '';
                         $dt['period_end'] = $res['period']['end'] ?? '';
                         $dt['diagnosis'] = self::getDiagnosis($res);
-                    } catch (Exception $e) {
+                    } catch (\ErrorException $e) {
                         $dt['consent'] = 'OPTOUT';
                         $dt['message'] = $e->getMessage();
-                    } catch (TypeError $e) {
+                    } catch (\TypeError $e) {
                         $dt['consent'] = 'OPTOUT';
                         $dt['message'] = $e->getMessage();
                     }
