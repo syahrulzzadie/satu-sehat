@@ -3,6 +3,7 @@
 namespace syahrulzzadie\SatuSehat\JsonResponse;
 
 use DateTime;
+use Exception;
 use syahrulzzadie\SatuSehat\Utilitys\Enviroment;
 use syahrulzzadie\SatuSehat\Utilitys\Url;
 
@@ -39,7 +40,7 @@ class Auth
                     'created_at' => date('Y-m-d H:i:s')
                 ]
             ];
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return ['status' => false, 'message' => $e->getMessage()];
         }
     }
