@@ -7,8 +7,27 @@ use syahrulzzadie\SatuSehat\Utilitys\StrHelper;
 
 class Organization
 {
-    public static function formCreateData($kode, $name)
+    private static function typeCode($type)
     {
+        if ($type == 'rs') {
+            return [
+                'code' => 'dept',
+                'display' => 'Hospital Department'
+            ];
+        } else if($type == 'klinik') {
+            return [
+                'code' => 'crs',
+                'display' => 'Clinical Research Sponsor'
+            ];
+        }
+        return [
+            'code' => 'other',
+            'display' => 'Other'
+        ];
+    }
+    public static function formCreateData($hospitalName, $kode, $name, $type, $phone, $email, $site, $address, $city, $postCode)
+    {
+        $typeRs = self::typeCode($type);
         $organizationId = Enviroment::organizationId();
         return [
             "resourceType"=> "Organization",
@@ -25,8 +44,8 @@ class Organization
                     "coding"=> [
                         [
                             "system"=> "http://terminology.hl7.org/CodeSystem/organization-type",
-                            "code"=> "dept",
-                            "display"=> "Hospital Department"
+                            "code"=> $typeRs['code'],
+                            "display"=> $typeRs['display']
                         ]
                     ]
                 ]
@@ -35,17 +54,17 @@ class Organization
             "telecom"=> [
                 [
                     "system"=> "phone",
-                    "value"=> "(0283) 358244",
+                    "value"=> $phone,
                     "use"=> "work"
                 ],
                 [
                     "system"=> "email",
-                    "value"=> "rsui@harapananda.com",
+                    "value"=> $email,
                     "use"=> "work"
                 ],
                 [
                     "system"=> "url",
-                    "value"=> "www.harapananda.com",
+                    "value"=> $site,
                     "use"=> "work"
                 ]
             ],
@@ -53,9 +72,9 @@ class Organization
                 [
                     "use"=> "work",
                     "type"=> "both",
-                    "line"=> [ "Jl. Ababil No.42, Randugunting, Kec. Tegal Selatan, Kota Tegal, Jawa Tengah" ],
-                    "city"=> "Kota Tegal",
-                    "postalCode"=> "52131",
+                    "line"=> [ $address ],
+                    "city"=> $city,
+                    "postalCode"=> $postCode,
                     "country"=> "ID",
                     "extension"=> [
                         [
@@ -84,17 +103,18 @@ class Organization
             ],
             "partOf"=> [
                 "reference"=> "Organization/".$organizationId,
-                "display"=> "RS Umum Islam Harapan Anda Kota Tegal"
+                "display"=> $hospitalName
             ]
         ];
     }
 
-    public static function formUpdateData($ihsNumber, $kode, $name)
+    public static function formUpdateData($ihsNumber, $hospitalName, $kode, $name, $type, $phone, $email, $site, $address, $city, $postCode)
     {
+        $typeRs = self::typeCode($type);
         $organizationId = Enviroment::organizationId();
         return [
+            "id"=> $ihsNumber,
             "resourceType"=> "Organization",
-            "id" => $ihsNumber,
             "active"=> true,
             "identifier"=> [
                 [
@@ -108,8 +128,8 @@ class Organization
                     "coding"=> [
                         [
                             "system"=> "http://terminology.hl7.org/CodeSystem/organization-type",
-                            "code"=> "dept",
-                            "display"=> "Hospital Department"
+                            "code"=> $typeRs['code'],
+                            "display"=> $typeRs['display']
                         ]
                     ]
                 ]
@@ -118,17 +138,17 @@ class Organization
             "telecom"=> [
                 [
                     "system"=> "phone",
-                    "value"=> "(0283) 358244",
+                    "value"=> $phone,
                     "use"=> "work"
                 ],
                 [
                     "system"=> "email",
-                    "value"=> "rsui@harapananda.com",
+                    "value"=> $email,
                     "use"=> "work"
                 ],
                 [
                     "system"=> "url",
-                    "value"=> "www.harapananda.com",
+                    "value"=> $site,
                     "use"=> "work"
                 ]
             ],
@@ -136,9 +156,9 @@ class Organization
                 [
                     "use"=> "work",
                     "type"=> "both",
-                    "line"=> [ "Jalan Ababil 42" ],
-                    "city"=> "Kota Tegal",
-                    "postalCode"=> "52131",
+                    "line"=> [ $address ],
+                    "city"=> $city,
+                    "postalCode"=> $postCode,
                     "country"=> "ID",
                     "extension"=> [
                         [
@@ -167,7 +187,7 @@ class Organization
             ],
             "partOf"=> [
                 "reference"=> "Organization/".$organizationId,
-                "display"=> "RS Umum Islam Harapan Anda Kota Tegal"
+                "display"=> $hospitalName
             ]
         ];
     }
