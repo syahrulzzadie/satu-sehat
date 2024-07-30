@@ -7,7 +7,7 @@ use syahrulzzadie\SatuSehat\Utilitys\StrHelper;
 
 class Location
 {
-    public static function formCreateData($organization, $kode, $nama)
+    public static function formCreateData($organization, $kode, $nama, $hospitalName, $phone, $email, $website, $address, $city, $postCode)
     {
         $organizationId = Enviroment::organizationId();
         return [
@@ -20,29 +20,29 @@ class Location
             ],
             "status"=> "active",
             "name"=> StrHelper::getName($nama),
-            "description"=> StrHelper::getName($nama)." - RS Umum Islam Harapan Anda Kota Tegal",
+            "description"=> StrHelper::getName($nama)." - ".$hospitalName,
             "mode"=> "instance",
             "telecom"=> [
                 [
                     "system"=> "phone",
-                    "value"=> "(0283) 358244",
+                    "value"=> $phone,
                     "use"=> "work"
                 ],
                 [
                     "system"=> "email",
-                    "value"=> "rsui@harapananda.com"
+                    "value"=> $email
                 ],
                 [
                     "system"=> "url",
-                    "value"=> "www.harapananda.com",
+                    "value"=> $website,
                     "use"=> "work"
                 ]
             ],
             "address"=> [
                 "use"=> "work",
-                "line"=> ["Jl. Ababil No.42, Randugunting, Kec. Tegal Selatan, Kota Tegal, Jawa Tengah"],
-                "city"=> "Kota Tegal",
-                "postalCode"=> "52131",
+                "line"=> [$address],
+                "city"=> $city,
+                "postalCode"=> $postCode,
                 "country"=> "ID",
                 "extension"=> [
                     [
@@ -97,7 +97,7 @@ class Location
         ];
     }
 
-    public static function formUpdateData($ihsNumber, $organization, $kode, $nama)
+    public static function formUpdateData($ihsNumber, $organization, $kode, $nama, $hospitalName, $phone, $email, $website, $address, $city, $postCode)
     {
         $organizationId = Enviroment::organizationId();
         return [
@@ -111,29 +111,29 @@ class Location
             ],
             "status"=> "active",
             "name"=> StrHelper::getName($nama),
-            "description"=> StrHelper::getName($nama)." - RS Umum Islam Harapan Anda Kota Tegal",
+            "description"=> StrHelper::getName($nama)." - ".$hospitalName,
             "mode"=> "instance",
             "telecom"=> [
                 [
                     "system"=> "phone",
-                    "value"=> "(0283) 358244",
+                    "value"=> $phone,
                     "use"=> "work"
                 ],
                 [
                     "system"=> "email",
-                    "value"=> "rsui@harapananda.com"
+                    "value"=> $email
                 ],
                 [
                     "system"=> "url",
-                    "value"=> "www.harapananda.com",
+                    "value"=> $website,
                     "use"=> "work"
                 ]
             ],
             "address"=> [
                 "use"=> "work",
-                "line"=> ["Jl. Ababil No.42, Randugunting, Kec. Tegal Selatan, Kota Tegal, Jawa Tengah"],
-                "city"=> "Kota Tegal",
-                "postalCode"=> "52131",
+                "line"=> [$address],
+                "city"=> $city,
+                "postalCode"=> $postCode,
                 "country"=> "ID",
                 "extension"=> [
                     [

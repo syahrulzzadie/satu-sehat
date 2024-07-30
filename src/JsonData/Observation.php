@@ -99,7 +99,7 @@ class Observation
             "valueQuantity"=> [
                 "system"=> "http://unitsofmeasure.org",
                 "value"=> $ttv['value'],
-                "unit"=> $ttv['value'],
+                "unit"=> $ttv['unit'],
                 "code"=> $ttv['code']
             ]
         ];

@@ -8,7 +8,7 @@ use syahrulzzadie\SatuSehat\Utilitys\StrHelper;
 
 class Encounter
 {
-    public static function formCreateData($noRawat,$date,$time,$patient,$practitioner,$location)
+    public static function formCreateData($noRawat,$date,$time,$patient,$practitioner,$location,$hospitalName)
     {
         $organizationId = Enviroment::organizationId();
         $noRawat = StrHelper::cleanNoRawat($noRawat);
@@ -66,7 +66,7 @@ class Encounter
             ],
             "serviceProvider"=> [
                 "reference"=> "Organization/".$organizationId,
-                "display"=> "RS Umum Islam Harapan Anda Kota Tegal"
+                "display"=> $hospitalName
             ],
             "identifier"=> [
                 [
@@ -77,7 +77,7 @@ class Encounter
         ];
     }
 
-    public static function formUpdateData($encounter,$patient,$practitioner,$location)
+    public static function formUpdateData($encounter,$patient,$practitioner,$location,$hospitalName)
     {
         $organizationId = Enviroment::organizationId();
         $noRawat = StrHelper::cleanNoRawat($encounter->no_rawat);
@@ -136,7 +136,7 @@ class Encounter
             ],
             "serviceProvider"=> [
                 "reference"=> "Organization/".$organizationId,
-                "display"=> "RS Umum Islam Harapan Anda Kota Tegal"
+                "display"=> $hospitalName
             ],
             "identifier"=> [
                 [
@@ -147,7 +147,7 @@ class Encounter
         ];
     }
 
-    public static function formCancelData($encounter,$patient,$practitioner,$location)
+    public static function formCancelData($encounter,$patient,$practitioner,$location,$hospitalName)
     {
         $organizationId = Enviroment::organizationId();
         $noRawat = StrHelper::cleanNoRawat($encounter->no_rawat);
@@ -206,7 +206,7 @@ class Encounter
             ],
             "serviceProvider"=> [
                 "reference"=> "Organization/".$organizationId,
-                "display"=> "RS Umum Islam Harapan Anda Kota Tegal"
+                "display"=> $hospitalName
             ],
             "identifier"=> [
                 [
@@ -217,7 +217,7 @@ class Encounter
         ];
     }
 
-    public static function formUpdateCondition($encounter,$dataDiagnosis)
+    public static function formUpdateCondition($encounter,$dataDiagnosis,$hospitalName)
     {
         $diagnosis = [];
         foreach ($dataDiagnosis as $item) {
@@ -308,7 +308,7 @@ class Encounter
             ],
             "serviceProvider"=> [
                 "reference"=>"Organization/".$organizationId,
-                "display"=> "RS Umum Islam Harapan Anda Kota Tegal"
+                "display"=> $hospitalName
             ]
         ];
     }

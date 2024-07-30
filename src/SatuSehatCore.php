@@ -78,10 +78,10 @@ class SatuSehatCore
         return jsonResponse\Error::http($http);
     }
 
-    public static function createLocation($organization,$kode,$name)
+    public static function createLocation($organization,$kode,$name,$hospitalName,$phone,$email,$website,$address,$city,$postCode)
     {
         $url = Url::createLocationUrl();
-        $formData = jsonData\Location::formCreateData($organization,$kode,$name);
+        $formData = jsonData\Location::formCreateData($organization,$kode,$name,$hospitalName,$phone,$email,$website,$address,$city,$postCode);
         $http = HttpRequest::post($url,$formData);
         if ($http['status']) {
             $response = $http['response'];
@@ -90,10 +90,10 @@ class SatuSehatCore
         return jsonResponse\Error::http($http);
     }
 
-    public static function updateLocation($ihsNumber,$organization,$kode,$name)
+    public static function updateLocation($ihsNumber,$organization,$kode,$name,$hospitalName,$phone,$email,$website,$address,$city,$postCode)
     {
         $url = Url::updateLocationUrl($ihsNumber);
-        $formData = jsonData\Location::formUpdateData($ihsNumber,$organization,$kode,$name);
+        $formData = jsonData\Location::formUpdateData($ihsNumber,$organization,$kode,$name,$hospitalName,$phone,$email,$website,$address,$city,$postCode);
         $http = HttpRequest::put($url,$formData);
         if ($http['status']) {
             $response = $http['response'];
@@ -114,10 +114,10 @@ class SatuSehatCore
         return jsonResponse\Error::http($http);
     }
 
-    public static function createEncounter($noRawat,$date,$time,$patient,$practitioner,$location)
+    public static function createEncounter($noRawat,$date,$time,$patient,$practitioner,$location,$hospitalName)
     {
         $url = Url::createEncounterUrl();
-        $formData = jsonData\Encounter::formCreateData($noRawat,$date,$time,$patient,$practitioner,$location);
+        $formData = jsonData\Encounter::formCreateData($noRawat,$date,$time,$patient,$practitioner,$location,$hospitalName);
         $http = HttpRequest::post($url,$formData);
         if ($http['status']) {
             $response = $http['response'];
@@ -126,10 +126,10 @@ class SatuSehatCore
         return jsonResponse\Error::http($http);
     }
 
-    public static function updateEncounter($encounter,$patient,$practitioner,$location)
+    public static function updateEncounter($encounter,$patient,$practitioner,$location,$hospitalName)
     {
         $url = Url::updateEncounterUrl($encounter->ihs_number);
-        $formData = jsonData\Encounter::formUpdateData($encounter,$patient,$practitioner,$location);
+        $formData = jsonData\Encounter::formUpdateData($encounter,$patient,$practitioner,$location,$hospitalName);
         $http = HttpRequest::put($url,$formData);
         if ($http['status']) {
             $response = $http['response'];
@@ -138,10 +138,10 @@ class SatuSehatCore
         return jsonResponse\Error::http($http);
     }
 
-    public static function cancelEncounter($encounter,$patient,$practitioner,$location)
+    public static function cancelEncounter($encounter,$patient,$practitioner,$location,$hospitalName)
     {
         $url = Url::updateEncounterUrl($encounter->ihs_number);
-        $formData = jsonData\Encounter::formCancelData($encounter,$patient,$practitioner,$location);
+        $formData = jsonData\Encounter::formCancelData($encounter,$patient,$practitioner,$location,$hospitalName);
         $http = HttpRequest::put($url,$formData);
         if ($http['status']) {
             $response = $http['response'];
@@ -150,10 +150,10 @@ class SatuSehatCore
         return jsonResponse\Error::http($http);
     }
 
-    public static function updateEncounterCondition($encounter,$dataDiagnosa)
+    public static function updateEncounterCondition($encounter,$dataDiagnosa,$hospitalName)
     {
         $url = Url::updateEncounterUrl($encounter->ihs_number);
-        $formData = jsonData\Encounter::formUpdateCondition($encounter,$dataDiagnosa);
+        $formData = jsonData\Encounter::formUpdateCondition($encounter,$dataDiagnosa,$hospitalName);
         $http = HttpRequest::put($url,$formData);
         if ($http['status']) {
             $response = $http['response'];
