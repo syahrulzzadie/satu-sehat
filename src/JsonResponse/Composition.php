@@ -13,7 +13,7 @@ class Composition
         }
         $allText = "";
         foreach ($dataSection as $section) {
-            $title = $section['text']['title'] ?? '';
+            $title = $section['title'] ?? '';
             $text = $section['text']['div'] ?? '';
             $allText .= $title." : ".strip_tags($text)."\n";
         }
