@@ -6,6 +6,19 @@ use syahrulzzadie\SatuSehat\Utilitys\StrHelper;
 
 class Composition
 {
+    public static function getAllSection($dataSection)
+    {
+        if (count($dataSection) == 0) {
+            return '';
+        }
+        $allText = "";
+        foreach ($dataSection as $section) {
+            $title = $section['text']['title'] ?? '';
+            $text = $section['text']['div'] ?? '';
+            $allText .= $title." : ".strip_tags($text)."\n";
+        }
+        return $allText;
+    }
     public static function convert($response)
     {
         $data = json_decode($response, true);
@@ -15,9 +28,7 @@ class Composition
                 'status' => true,
                 'data' => [
                     'ihs_number' => $data['id'],
-                    'composition_code' => $data['section'][0]['code']['coding'][0]['code'],
-                    'composition_name' => $data['section'][0]['code']['coding'][0]['display'],
-                    'composition_text' => $data['section'][0]['text']['div'] ?? '',
+                    'composition_text' => self::getAllSection($data['section']),
                     'ihs_number_patient' => StrHelper::getIhsNumber($data['subject']['reference']),
                     'name_patient' => $data['subject']['display'] ?? '',
                     'ihs_number_encounter' => StrHelper::getIhsNumber($data['encounter']['reference']),
@@ -42,9 +53,7 @@ class Composition
                 if ($resType == 'Composition') {
                     $dt['consent'] = 'OPTIN';
                     $dt['ihs_number'] = $res['id'];
-                    $dt['composition_code'] = $res['section'][0]['code']['coding'][0]['code'];
-                    $dt['composition_name'] = $res['section'][0]['code']['coding'][0]['display'];
-                    $dt['composition_text'] = $res['section'][0]['text']['div'] ?? '';
+                    $dt['composition_text'] = self::getAllSection($res['section']);
                     $dt['ihs_number_patient'] = StrHelper::getIhsNumber($res['subject']['reference']);
                     $dt['name_patient'] = $res['subject']['display'] ?? '';
                     $dt['ihs_number_encounter'] = StrHelper::getIhsNumber($res['encounter']['reference']);

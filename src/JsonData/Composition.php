@@ -7,7 +7,7 @@ use syahrulzzadie\SatuSehat\Utilitys\Enviroment;
 
 class Composition
 {
-    public static function formCreateData($encounter,$noRawat,$subjective,$objective,$analisys,$procedure,$instruksi)
+    public static function formCreateData($encounter,$noRawat,$subjective,$objective,$analisys,$planning,$instruksi)
     {
         $organizationId = Enviroment::organizationId();
         return [
@@ -71,7 +71,7 @@ class Composition
                     "title" => "Terapi Saat Perawatan",
                     "text" => [
                         "status" => "generated",
-                        "div" => nl2br($procedure)
+                        "div" => nl2br($planning)
                     ]
                 ],
                 [
@@ -85,7 +85,7 @@ class Composition
         ];
     }
 
-    public static function formUpdateData($ihsNumber,$encounter,$noRawat,$subjective,$objective,$analisys,$procedure,$instruksi)
+    public static function formUpdateData($ihsNumber,$encounter,$noRawat,$subjective,$objective,$analisys,$planning,$instruksi)
     {
         $organizationId = Enviroment::organizationId();
         return [
@@ -150,7 +150,7 @@ class Composition
                     "title" => "Terapi Saat Perawatan",
                     "text" => [
                         "status" => "generated",
-                        "div" => nl2br($procedure)
+                        "div" => nl2br($planning)
                     ]
                 ],
                 [
