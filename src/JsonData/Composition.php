@@ -7,7 +7,7 @@ use syahrulzzadie\SatuSehat\Utilitys\Enviroment;
 
 class Composition
 {
-    public static function formCreateData($encounter,$noRawat,$code,$name,$text)
+    public static function formCreateData($encounter,$noRawat,$subjective,$objective,$analisys,$procedure,$instruksi)
     {
         $organizationId = Enviroment::organizationId();
         return [
@@ -26,24 +26,13 @@ class Composition
                     ]
                 ]
             ],
-            "category"=> [
-                [
-                    "coding"=> [
-                        [
-                            "system"=> "http://loinc.org",
-                            "code"=> "LP173421-1",
-                            "display"=> "Report"
-                        ]
-                    ]
-                ]
-            ],
             "subject"=> [
                 "reference"=> "Patient/".$encounter->patient->ihs_number,
                 "display"=> $encounter->patient->name
             ],
             "encounter"=> [
                 "reference"=> "Encounter/".$encounter->ihs_number,
-                "display"=> "Diet pasien ".$encounter->patient->name." pada ".$encounter->period_start
+                "display"=> "Resume Medis Pasien ".$encounter->patient->name." pada ".$encounter->period_start
             ],
             "date"=> DateTimeFormat::now(),
             "author"=> [
@@ -52,31 +41,51 @@ class Composition
                     "display"=> $encounter->practitioner->name
                 ]
             ],
-            "title"=> "Diet Pasien",
+            "title"=> "Resume Medis Pasien",
             "custodian"=> [
                 "reference"=> "Organization/".$organizationId
             ],
             "section"=> [
                 [
-                    "code"=> [
-                        "coding"=> [
-                            [
-                                "system"=> "http://loinc.org",
-                                "code"=> $code,
-                                "display"=> $name
-                            ]
-                        ]
-                    ],
-                    "text"=> [
-                        "status"=> "additional",
-                        "div"=> $text
+                    "title" => "Ringkasan Masuk",
+                    "text" => [
+                        "status" => "generated",
+                        "div" => nl2br($subjective)
+                    ]
+                ],
+                [
+                    "title" => "Pemeriksaan Fisik",
+                    "text" => [
+                        "status" => "generated",
+                        "div" => nl2br($objective)
+                    ]
+                ],
+                [
+                    "title" => "Diagnosis",
+                    "text" => [
+                        "status" => "generated",
+                        "div" => nl2br($analisys)
+                    ]
+                ],
+                [
+                    "title" => "Terapi Saat Perawatan",
+                    "text" => [
+                        "status" => "generated",
+                        "div" => nl2br($procedure)
+                    ]
+                ],
+                [
+                    "title" => "Instruksi",
+                    "text" => [
+                        "status" => "generated",
+                        "div" => nl2br($instruksi)
                     ]
                 ]
             ]
         ];
     }
 
-    public static function formUpdateData($ihsNumber,$encounter,$noRawat,$code,$name,$text)
+    public static function formUpdateData($ihsNumber,$encounter,$noRawat,$subjective,$objective,$analisys,$procedure,$instruksi)
     {
         $organizationId = Enviroment::organizationId();
         return [
@@ -96,24 +105,13 @@ class Composition
                     ]
                 ]
             ],
-            "category"=> [
-                [
-                    "coding"=> [
-                        [
-                            "system"=> "http://loinc.org",
-                            "code"=> "LP173421-1",
-                            "display"=> "Report"
-                        ]
-                    ]
-                ]
-            ],
             "subject"=> [
                 "reference"=> "Patient/".$encounter->patient->ihs_number,
                 "display"=> $encounter->patient->name
             ],
             "encounter"=> [
                 "reference"=> "Encounter/".$encounter->ihs_number,
-                "display"=> "Diet pasien ".$encounter->patient->name." pada ".$encounter->period_start
+                "display"=> "Resume Medis pasien ".$encounter->patient->name." pada ".$encounter->period_start
             ],
             "date"=> DateTimeFormat::parse($encounter->period_start),
             "author"=> [
@@ -122,24 +120,44 @@ class Composition
                     "display"=> $encounter->practitioner->name
                 ]
             ],
-            "title"=> "Diet Pasien",
+            "title"=> "Resume Medis Pasien",
             "custodian"=> [
                 "reference"=> "Organization/".$organizationId
             ],
             "section"=> [
                 [
-                    "code"=> [
-                        "coding"=> [
-                            [
-                                "system"=> "http://loinc.org",
-                                "code"=> $code,
-                                "display"=> $name
-                            ]
-                        ]
-                    ],
-                    "text"=> [
-                        "status"=> "additional",
-                        "div"=> $text
+                    "title" => "Ringkasan Masuk",
+                    "text" => [
+                        "status" => "generated",
+                        "div" => nl2br($subjective)
+                    ]
+                ],
+                [
+                    "title" => "Pemeriksaan Fisik",
+                    "text" => [
+                        "status" => "generated",
+                        "div" => nl2br($objective)
+                    ]
+                ],
+                [
+                    "title" => "Diagnosis",
+                    "text" => [
+                        "status" => "generated",
+                        "div" => nl2br($analisys)
+                    ]
+                ],
+                [
+                    "title" => "Terapi Saat Perawatan",
+                    "text" => [
+                        "status" => "generated",
+                        "div" => nl2br($procedure)
+                    ]
+                ],
+                [
+                    "title" => "Instruksi",
+                    "text" => [
+                        "status" => "generated",
+                        "div" => nl2br($instruksi)
                     ]
                 ]
             ]
