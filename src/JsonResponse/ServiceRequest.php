@@ -22,7 +22,11 @@ class ServiceRequest
                     'ihs_number_patient' => StrHelper::getIhsNumber($data['subject']['reference']),
                     'name_patient' => $data['subject']['display'] ?? '',
                     'ihs_number_encounter' => StrHelper::getIhsNumber($data['encounter']['reference']),
-                    'name_encounter' => $data['encounter']['display'] ?? ''
+                    'name_encounter' => $data['encounter']['display'] ?? '',
+                    'ihs_number_practitioner' => StrHelper::getIhsNumber($data['requester']['reference']),
+                    'name_practitioner' => $data['requester']['display'] ?? '',
+                    'ihs_number_performer' => StrHelper::getIhsNumber($data['performer'][0]['reference']),
+                    'name_performer' => $data['performer'][0]['display'] ?? ''
                 ]
             ];
         }
@@ -49,6 +53,10 @@ class ServiceRequest
                     $dt['name_patient'] = $res['subject']['display'] ?? '';
                     $dt['ihs_number_encounter'] = StrHelper::getIhsNumber($res['encounter']['reference']);
                     $dt['name_encounter'] = $res['encounter']['display'] ?? '';
+                    $dt['ihs_number_practitioner'] = StrHelper::getIhsNumber($res['requester']['reference']);
+                    $dt['name_practitioner'] = $res['requester']['display'] ?? '';
+                    $dt['ihs_number_performer'] = StrHelper::getIhsNumber($res['performer'][0]['reference']);
+                    $dt['name_performer'] = $res['performer'][0]['display'] ?? '';
                 } else {
                     $dt['consent'] = 'OPTOUT';
                     $dt['message'] = 'The operation did not return any information due to consent or privacy rules.';

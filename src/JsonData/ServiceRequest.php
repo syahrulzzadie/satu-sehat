@@ -35,6 +35,16 @@ class ServiceRequest
                 "reference"=> "Patient/".$encounter->patient->ihs_number,
                 "display"=> $encounter->patient->name
             ],
+            "requester"=> [
+                "reference"=> "Practitioner/".$encounter->practitioner->ihs_number,
+                "display"=> $encounter->practitioner->name
+            ],
+            "performer"=> [
+                [
+                    "reference"=> "Practitioner/".$encounter->practitioner->ihs_number,
+                    "display"=> $encounter->practitioner->name
+                ]
+            ],
             "encounter"=> [
                 "reference"=> "Encounter/".$encounter->ihs_number,
                 "display"=> "Kunjungan pasien ".$encounter->patient->name." pada ".StrHelper::dateTimeId($encounter->period_start)
@@ -70,6 +80,16 @@ class ServiceRequest
             "subject"=> [
                 "reference"=> "Patient/".$encounter->patient->ihs_number,
                 "display"=> $encounter->patient->name
+            ],
+            "requester"=> [
+                "reference"=> "Practitioner/".$encounter->practitioner->ihs_number,
+                "display"=> $encounter->practitioner->name
+            ],
+            "performer"=> [
+                [
+                    "reference"=> "Practitioner/".$encounter->practitioner->ihs_number,
+                    "display"=> $encounter->practitioner->name
+                ]
             ],
             "encounter"=> [
                 "reference"=> "Encounter/".$encounter->ihs_number,
