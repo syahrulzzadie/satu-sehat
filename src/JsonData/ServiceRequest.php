@@ -8,7 +8,7 @@ use syahrulzzadie\SatuSehat\Utilitys\StrHelper;
 
 class ServiceRequest
 {
-    public static function formCreateData($noRawat,$encounter,$location,$performer)
+    public static function formCreateData($noPermintaan,$encounter,$code,$name,$description)
     {
         $organizationId = Enviroment::organizationId();
         return [
@@ -16,41 +16,20 @@ class ServiceRequest
             "identifier"=> [
                 [
                     "system"=> "http://sys-ids.kemkes.go.id/servicerequest/".$organizationId,
-                    "value"=> $noRawat
+                    "value"=> $noPermintaan
                 ]
             ],
-            "status"=> "active",
-            "intent"=> "original-order",
-            "priority"=> "routine",
-            "category"=> [
-                [
-                    "coding"=> [
-                        [
-                            "system"=> "http://snomed.info/sct",
-                            "code"=> "306098008",
-                            "display"=> "Self-referral"
-                        ]
-                    ]
-                ],
-                [
-                    "coding"=> [
-                        [
-                            "system"=> "http://snomed.info/sct",
-                            "code"=> "11429006",
-                            "display"=> "Consultation"
-                        ]
-                    ]
-                ]
-            ],
+            "status"=> "completed",
+            "intent"=> "order",
             "code"=> [
                 "coding"=> [
                     [
                         "system"=> "http://snomed.info/sct",
-                        "code"=> "185389009",
-                        "display"=> "Follow-up visit"
+                        "code"=> $code,
+                        "display"=> $name
                     ]
                 ],
-                "text"=> "Rujuk Internal pasien ".$encounter->patient->name. " ke ".$location->name
+                "text"=> $description
             ],
             "subject"=> [
                 "reference"=> "Patient/".$encounter->patient->ihs_number,
@@ -60,82 +39,33 @@ class ServiceRequest
                 "reference"=> "Encounter/".$encounter->ihs_number,
                 "display"=> "Kunjungan pasien ".$encounter->patient->name." pada ".StrHelper::dateTimeId($encounter->period_start)
             ],
-            "occurrenceDateTime"=> DateTimeFormat::parse($encounter->period_start),
-            "authoredOn"=> DateTimeFormat::parse($encounter->period_start),
-            "requester"=> [
-                "reference"=> "Practitioner/".$encounter->practitioner->ihs_number,
-                "display"=> $encounter->practitioner->name
-            ],
-            "performer"=> [
-                [
-                    "reference"=> "Practitioner/".$performer->ihs_number,
-                    "display"=> $performer->name
-                ]
-            ],
-            "locationCode"=> [
-                [
-                    "coding"=> [
-                        [
-                            "system"=> "http://terminology.hl7.org/CodeSystem/v3-RoleCode",
-                            "code"=> "OF",
-                            "display"=> "Outpatient Facility"
-                        ]
-                    ]
-                ]
-            ],
-            "locationReference"=> [
-                [
-                    "reference"=> "Location/".$location->ihs_number,
-                    "display"=> $location->name
-                ]
-            ],
-            "patientInstruction"=> "Rujuk Internal pasien ".$encounter->patient->name. " ke ".$location->name
+            "occurrenceDateTime"=> DateTimeFormat::parse($encounter->period_start)
         ];
     }
 
-    public static function formUpdateData($ihsNumber,$noRawat,$encounter,$location,$performer)
+    public static function formUpdateData($ihsNumber,$noPermintaan,$encounter,$code,$name,$description)
     {
         $organizationId = Enviroment::organizationId();
         return [
-            "id" => $ihsNumber,
+            "id"=> $ihsNumber,
             "resourceType"=> "ServiceRequest",
             "identifier"=> [
                 [
                     "system"=> "http://sys-ids.kemkes.go.id/servicerequest/".$organizationId,
-                    "value"=> $noRawat
+                    "value"=> $noPermintaan
                 ]
             ],
-            "status"=> "active",
-            "intent"=> "original-order",
-            "category"=> [
-                [
-                    "coding"=> [
-                        [
-                            "system"=> "http://snomed.info/sct",
-                            "code"=> "306098008",
-                            "display"=> "Self-referral"
-                        ]
-                    ]
-                ],
-                [
-                    "coding"=> [
-                        [
-                            "system"=> "http://snomed.info/sct",
-                            "code"=> "11429006",
-                            "display"=> "Consultation"
-                        ]
-                    ]
-                ]
-            ],
+            "status"=> "completed",
+            "intent"=> "order",
             "code"=> [
                 "coding"=> [
                     [
                         "system"=> "http://snomed.info/sct",
-                        "code"=> "185389009",
-                        "display"=> "Follow-up visit"
+                        "code"=> $code,
+                        "display"=> $name
                     ]
                 ],
-                "text"=> "Rujuk Internal pasien ".$encounter->patient->name. " ke ".$location->name
+                "text"=> $description
             ],
             "subject"=> [
                 "reference"=> "Patient/".$encounter->patient->ihs_number,
@@ -145,36 +75,7 @@ class ServiceRequest
                 "reference"=> "Encounter/".$encounter->ihs_number,
                 "display"=> "Kunjungan pasien ".$encounter->patient->name." pada ".StrHelper::dateTimeId($encounter->period_start)
             ],
-            "occurrenceDateTime"=> DateTimeFormat::parse($encounter->period_start),
-            "authoredOn"=> DateTimeFormat::parse($encounter->period_start),
-            "requester"=> [
-                "reference"=> "Practitioner/".$encounter->practitioner->ihs_number,
-                "display"=> $encounter->practitioner->name
-            ],
-            "performer"=> [
-                [
-                    "reference"=> "Practitioner/".$performer->ihs_number,
-                    "display"=> $performer->name
-                ]
-            ],
-            "locationCode"=> [
-                [
-                    "coding"=> [
-                        [
-                            "system"=> "http://terminology.hl7.org/CodeSystem/v3-RoleCode",
-                            "code"=> "OF",
-                            "display"=> "Outpatient Facility"
-                        ]
-                    ]
-                ]
-            ],
-            "locationReference"=> [
-                [
-                    "reference"=> "Location/".$location->ihs_number,
-                    "display"=> $location->name
-                ]
-            ],
-            "patientInstruction"=> "Rujuk Internal pasien ".$encounter->patient->name. " ke ".$location->name
+            "occurrenceDateTime"=> DateTimeFormat::parse($encounter->period_start)
         ];
     }
 }

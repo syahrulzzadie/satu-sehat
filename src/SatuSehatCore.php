@@ -407,10 +407,10 @@ class SatuSehatCore
         return jsonResponse\Error::http($http);
     }
 
-    public static function createServiceRequest($noRawat,$encounter,$location,$performer)
+    public static function createServiceRequest($noPermintaan,$encounter,$code,$name,$description)
     {
         $url = Url::createServiceRequestUrl();
-        $formData = jsonData\ServiceRequest::formCreateData($noRawat,$encounter,$location,$performer);
+        $formData = jsonData\ServiceRequest::formCreateData($noPermintaan,$encounter,$code,$name,$description);
         $http = HttpRequest::post($url,$formData);
         if ($http['status']) {
             $response = $http['response'];
@@ -419,10 +419,10 @@ class SatuSehatCore
         return jsonResponse\Error::http($http);
     }
 
-    public static function updateServiceRequest($ihsNumber,$noRawat,$encounter,$location,$performer)
+    public static function updateServiceRequest($ihsNumber,$noPermintaan,$encounter,$code,$name,$description)
     {
         $url = Url::updateServiceRequestUrl($ihsNumber);
-        $formData = jsonData\ServiceRequest::formUpdateData($ihsNumber,$noRawat,$encounter,$location,$performer);
+        $formData = jsonData\ServiceRequest::formUpdateData($ihsNumber,$noPermintaan,$encounter,$code,$name,$description);
         $http = HttpRequest::put($url,$formData);
         if ($http['status']) {
             $response = $http['response'];
