@@ -98,4 +98,143 @@ class ServiceRequest
             "occurrenceDateTime"=> DateTimeFormat::parse($encounter->period_start)
         ];
     }
+
+    public static function formCreateDataRadiologi($noPermintaan,$encounter,$code,$name,$description,$acsn)
+    {
+        $organizationId = Enviroment::organizationId();
+        return [
+            "resourceType"=> "ServiceRequest",
+            "identifier"=> [
+                [
+                    "system"=> "http://sys-ids.kemkes.go.id/servicerequest/".$organizationId,
+                    "value"=> $noPermintaan
+                ],
+                [
+                    "use" => "usual",
+                    "type" => [
+                        "coding" => [
+                            [
+                                "system" => "http://terminology.hl7.org/CodeSystem/v2-0203",
+                                "code"   => "ACSN"
+                            ]
+                        ]
+                    ],
+                    "system" => "http://sys-ids.kemkes.go.id/acsn/".$organizationId,
+                    "value"  => $acsn
+                ]
+            ],
+            "status"=> "completed",
+            "intent"=> "order",
+            "category" => [
+                [
+                    "coding" => [
+                        [
+                            "system"  => "http://snomed.info/sct",
+                            "code"    => "363679005",
+                            "display" => "Imaging"
+                        ]
+                    ]
+                ]
+            ],
+            "code"=> [
+                "coding"=> [
+                    [
+                        "system"=> "http://snomed.info/sct",
+                        "code"=> $code,
+                        "display"=> $name
+                    ]
+                ],
+                "text"=> $description
+            ],
+            "subject"=> [
+                "reference"=> "Patient/".$encounter->patient->ihs_number,
+                "display"=> $encounter->patient->name
+            ],
+            "requester"=> [
+                "reference"=> "Practitioner/".$encounter->practitioner->ihs_number,
+                "display"=> $encounter->practitioner->name
+            ],
+            "performer"=> [
+                [
+                    "reference"=> "Practitioner/".$encounter->practitioner->ihs_number,
+                    "display"=> $encounter->practitioner->name
+                ]
+            ],
+            "encounter"=> [
+                "reference"=> "Encounter/".$encounter->ihs_number,
+                "display"=> "Kunjungan pasien ".$encounter->patient->name." pada ".StrHelper::dateTimeId($encounter->period_start)
+            ],
+            "occurrenceDateTime"=> DateTimeFormat::parse($encounter->period_start)
+        ];
+    }
+
+    public static function formUpdateDataRadiologi($ihsNumber,$noPermintaan,$encounter,$code,$name,$description,$acsn)
+    {
+        $organizationId = Enviroment::organizationId();
+        return [
+            "id"=> $ihsNumber,
+            "resourceType"=> "ServiceRequest",
+            "identifier"=> [
+                [
+                    "system"=> "http://sys-ids.kemkes.go.id/servicerequest/".$organizationId,
+                    "value"=> $noPermintaan
+                ],
+                [
+                    "use" => "usual",
+                    "type" => [
+                        "coding" => [
+                            [
+                                "system" => "http://terminology.hl7.org/CodeSystem/v2-0203",
+                                "code"   => "ACSN"
+                            ]
+                        ]
+                    ],
+                    "system" => "http://sys-ids.kemkes.go.id/acsn/".$organizationId,
+                    "value"  => $acsn
+                ]
+            ],
+            "status"=> "completed",
+            "intent"=> "order",
+            "category" => [
+                [
+                    "coding" => [
+                        [
+                            "system"  => "http://snomed.info/sct",
+                            "code"    => "363679005",
+                            "display" => "Imaging"
+                        ]
+                    ]
+                ]
+            ],
+            "code"=> [
+                "coding"=> [
+                    [
+                        "system"=> "http://snomed.info/sct",
+                        "code"=> $code,
+                        "display"=> $name
+                    ]
+                ],
+                "text"=> $description
+            ],
+            "subject"=> [
+                "reference"=> "Patient/".$encounter->patient->ihs_number,
+                "display"=> $encounter->patient->name
+            ],
+            "requester"=> [
+                "reference"=> "Practitioner/".$encounter->practitioner->ihs_number,
+                "display"=> $encounter->practitioner->name
+            ],
+            "performer"=> [
+                [
+                    "reference"=> "Practitioner/".$encounter->practitioner->ihs_number,
+                    "display"=> $encounter->practitioner->name
+                ]
+            ],
+            "encounter"=> [
+                "reference"=> "Encounter/".$encounter->ihs_number,
+                "display"=> "Kunjungan pasien ".$encounter->patient->name." pada ".StrHelper::dateTimeId($encounter->period_start)
+            ],
+            "occurrenceDateTime"=> DateTimeFormat::parse($encounter->period_start)
+        ];
+    }
 }

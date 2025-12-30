@@ -442,6 +442,41 @@ class SatuSehatCore
         return jsonResponse\Error::http($http);
     }
 
+    public static function createServiceRequestRadiologi($noPermintaan,$encounter,$code,$name,$description,$acsn)
+    {
+        $url = Url::createServiceRequestUrl();
+        $formData = jsonData\ServiceRequest::formCreateDataRadiologi($noPermintaan,$encounter,$code,$name,$description,$acsn);
+        $http = HttpRequest::post($url,$formData);
+        if ($http['status']) {
+            $response = $http['response'];
+            return jsonResponse\ServiceRequest::convertRadiologi($response);
+        }
+        return jsonResponse\Error::http($http);
+    }
+
+    public static function updateServiceRequestRadiologi($ihsNumber,$noPermintaan,$encounter,$code,$name,$description,$acsn)
+    {
+        $url = Url::updateServiceRequestUrl($ihsNumber);
+        $formData = jsonData\ServiceRequest::formUpdateDataRadiologi($ihsNumber,$noPermintaan,$encounter,$code,$name,$description,$acsn);
+        $http = HttpRequest::put($url,$formData);
+        if ($http['status']) {
+            $response = $http['response'];
+            return jsonResponse\ServiceRequest::convertRadiologi($response);
+        }
+        return jsonResponse\Error::http($http);
+    }
+
+    public static function historyServiceRequestRadiologi($ihsNumberPatient)
+    {
+        $url = Url::historyServiceRequestUrl($ihsNumberPatient);
+        $http = HttpRequest::get($url);
+        if ($http['status']) {
+            $response = $http['response'];
+            return jsonResponse\ServiceRequest::historyRadiologi($response);
+        }
+        return jsonResponse\Error::http($http);
+    }
+
     public static function searchProductsByCode($code)
     {
         $url = Url::searchProductsByCode($code);
