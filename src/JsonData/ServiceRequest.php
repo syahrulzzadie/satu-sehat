@@ -24,7 +24,7 @@ class ServiceRequest
             "code"=> [
                 "coding"=> [
                     [
-                        "system"=> "http://snomed.info/sct",
+                        "system"=> "http://loinc.org",
                         "code"=> $code,
                         "display"=> $name
                     ]
@@ -70,7 +70,7 @@ class ServiceRequest
             "code"=> [
                 "coding"=> [
                     [
-                        "system"=> "http://snomed.info/sct",
+                        "system"=> "http://loinc.org",
                         "code"=> $code,
                         "display"=> $name
                     ]
@@ -139,7 +139,7 @@ class ServiceRequest
             "code"=> [
                 "coding"=> [
                     [
-                        "system"=> "http://snomed.info/sct",
+                        "system"=> "http://loinc.org",
                         "code"=> $code,
                         "display"=> $name
                     ]
@@ -209,7 +209,7 @@ class ServiceRequest
             "code"=> [
                 "coding"=> [
                     [
-                        "system"=> "http://snomed.info/sct",
+                        "system"=> "http://loinc.org",
                         "code"=> $code,
                         "display"=> $name
                     ]
