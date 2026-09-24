@@ -524,6 +524,32 @@ class SatuSehatCore
         return jsonResponse\Error::http($http);
     }
 
+    public static function createChLink($patient,$practitioner,$organization,$emergencyReason = null)
+    {
+        $url = Url::createChLinkUrl();
+        $formData = $emergencyReason
+            ? jsonData\Ssrme::formDataEmergency($patient,$practitioner,$organization,$emergencyReason)
+            : jsonData\Ssrme::formData($patient,$practitioner,$organization);
+        $http = HttpRequest::post($url,$formData);
+        if ($http['status']) {
+            $response = $http['response'];
+            return jsonResponse\Ssrme::convert($response);
+        }
+        return jsonResponse\Error::http($http);
+    }
+
+    public static function createShLink($patient,$practitioner,$organization)
+    {
+        $url = Url::createShLinkUrl();
+        $formData = jsonData\Ssrme::formData($patient,$practitioner,$organization);
+        $http = HttpRequest::post($url,$formData);
+        if ($http['status']) {
+            $response = $http['response'];
+            return jsonResponse\Ssrme::convert($response);
+        }
+        return jsonResponse\Error::http($http);
+    }
+
     public static function historyPatient($ihsNumber)
     {
         $dataHistory = [];

@@ -29,6 +29,11 @@ class Url
         return Constant::$kycUrl.'/'.$subUrl;
     }
 
+    private static function ssrmeUrl($subUrl)
+    {
+        return Constant::$ssrmeUrl.'/'.$subUrl;
+    }
+
     public static function authUrl()
     {
         return self::authHost('accesstoken?grant_type=client_credentials');
@@ -233,5 +238,15 @@ class Url
     public static function kycChallengeCode()
     {
         return self::kycUrl('challenge-code');
+    }
+
+    public static function createChLinkUrl()
+    {
+        return self::ssrmeUrl('chl');
+    }
+
+    public static function createShLinkUrl()
+    {
+        return self::ssrmeUrl('shl');
     }
 }

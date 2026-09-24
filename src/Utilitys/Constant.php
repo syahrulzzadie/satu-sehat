@@ -9,4 +9,5 @@ class Constant
     public static $consentUrl = "https://api-satusehat.kemkes.go.id/consent/v1";
     public static $kfaUrl = "https://api-satusehat.kemkes.go.id/kfa-v2";
     public static $kycUrl = "https://api-satusehat.kemkes.go.id/kyc/v1";
+    public static $ssrmeUrl = "https://api-satusehat.kemkes.go.id/ssrme/v2/ntl";
 }
