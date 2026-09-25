@@ -524,24 +524,17 @@ class SatuSehatCore
         return jsonResponse\Error::http($http);
     }
 
-    public static function createChLink($patient,$practitioner,$organization,$emergencyReason = null)
+    /**
+     * Satu-satunya panggilan SSRME resmi (POST /ssrme/v1/hf/shl) per Postman collection
+     * "PORTALRME (DES 2025) PROD" - langsung menghasilkan shlinkUrl, tidak ada
+     * endpoint/consent step terpisah seperti asumsi awal dari slide presentasi Kemenkes.
+     */
+    public static function createSsrmeLink($patient,$practitioner,$organization,$encounterId,$emergencyReason = null)
     {
-        $url = Url::createChLinkUrl();
+        $url = Url::createSsrmeLinkUrl();
         $formData = $emergencyReason
-            ? jsonData\Ssrme::formDataEmergency($patient,$practitioner,$organization,$emergencyReason)
-            : jsonData\Ssrme::formData($patient,$practitioner,$organization);
-        $http = HttpRequest::post($url,$formData);
-        if ($http['status']) {
-            $response = $http['response'];
-            return jsonResponse\Ssrme::convert($response);
-        }
-        return jsonResponse\Error::http($http);
-    }
-
-    public static function createShLink($patient,$practitioner,$organization)
-    {
-        $url = Url::createShLinkUrl();
-        $formData = jsonData\Ssrme::formData($patient,$practitioner,$organization);
+            ? jsonData\Ssrme::formDataEmergency($patient,$practitioner,$organization,$encounterId,$emergencyReason)
+            : jsonData\Ssrme::formData($patient,$practitioner,$organization,$encounterId);
         $http = HttpRequest::post($url,$formData);
         if ($http['status']) {
             $response = $http['response'];

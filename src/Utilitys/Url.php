@@ -240,12 +240,12 @@ class Url
         return self::kycUrl('challenge-code');
     }
 
-    public static function createChLinkUrl()
-    {
-        return self::ssrmeUrl('chl');
-    }
-
-    public static function createShLinkUrl()
+    /**
+     * Satu-satunya endpoint SSRME resmi per Postman collection "PORTALRME (DES 2025) PROD":
+     * POST /ssrme/v1/hf/shl - butuh encounter_id, langsung mengembalikan shlinkUrl
+     * (tidak ada endpoint CHLink terpisah seperti asumsi awal dari slide presentasi).
+     */
+    public static function createSsrmeLinkUrl()
     {
         return self::ssrmeUrl('shl');
     }

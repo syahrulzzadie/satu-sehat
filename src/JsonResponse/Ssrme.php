@@ -7,7 +7,11 @@ class Ssrme
     public static function convert($response)
     {
         $data = json_decode($response, true);
-        if (isset($data['success']) && $data['success'] === true) {
+        // Endpoint resmi (POST /ssrme/v1/hf/shl) menandai sukses dgn "error": false,
+        // bukan "success": true - beda dari shape endpoint SATUSEHAT lain.
+        $isSuccess = (isset($data['error']) && $data['error'] === false)
+            || (isset($data['success']) && $data['success'] === true);
+        if ($isSuccess) {
             $result = $data['data'] ?? [];
             $result['request_id'] = $data['request_id'] ?? null;
             return [
