@@ -211,10 +211,13 @@ class SatuSehatCore
         return jsonResponse\Error::http($http);
     }
 
-    public static function createObservation($encounter,$practitioner,$name,$value)
+    /**
+     * Observation TTV. effectiveDateTime wajib (RuleNumber 10295), default period_start encounter.
+     */
+    public static function createObservation($encounter,$practitioner,$name,$value,$effectiveDateTime = null)
     {
         $url = Url::createObservationUrl();
-        $formData = jsonData\Observation::formCreateData($encounter,$practitioner,$name,$value);
+        $formData = jsonData\Observation::formCreateData($encounter,$practitioner,$name,$value,$effectiveDateTime);
         $http = HttpRequest::post($url,$formData);
         if ($http['status']) {
             $response = $http['response'];
@@ -223,10 +226,10 @@ class SatuSehatCore
         return jsonResponse\Error::http($http);
     }
 
-    public static function updateObservation($ihsNumber,$encounter,$practitioner,$name,$value)
+    public static function updateObservation($ihsNumber,$encounter,$practitioner,$name,$value,$effectiveDateTime = null)
     {
         $url = Url::updateObservationUrl($ihsNumber);
-        $formData = jsonData\Observation::formUpdateData($ihsNumber,$encounter,$practitioner,$name,$value);
+        $formData = jsonData\Observation::formUpdateData($ihsNumber,$encounter,$practitioner,$name,$value,$effectiveDateTime);
         $http = HttpRequest::put($url,$formData);
         if ($http['status']) {
             $response = $http['response'];

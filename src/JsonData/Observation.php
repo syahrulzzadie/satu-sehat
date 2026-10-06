@@ -8,7 +8,7 @@ use syahrulzzadie\SatuSehat\Utilitys\StrHelper;
 
 class Observation
 {
-    public static function formCreateData($encounter,$practitioner,$name,$value)
+    public static function formCreateData($encounter,$practitioner,$name,$value,$effectiveDateTime = null)
     {
         $ttv = StrHelper::getTtv($name,$value);
         return [
@@ -48,6 +48,8 @@ class Observation
                 "reference"=> "Encounter/".$encounter->ihs_number,
                 "display"=> "Pemeriksaan fisik pada ".StrHelper::dateTimeId($encounter->period_start)
             ],
+            "effectiveDateTime"=> DateTimeFormat::parse($effectiveDateTime ?? $encounter->period_start),
+            "issued"=> DateTimeFormat::parse($effectiveDateTime ?? $encounter->period_start),
             "valueQuantity"=> [
                 "system"=> "http://unitsofmeasure.org",
                 "value"=> $ttv['value'],
@@ -57,7 +59,7 @@ class Observation
         ];
     }
 
-    public static function formUpdateData($ihsNumber,$encounter,$practitioner,$name,$value)
+    public static function formUpdateData($ihsNumber,$encounter,$practitioner,$name,$value,$effectiveDateTime = null)
     {
         $ttv = StrHelper::getTtv($name,$value);
         return [
@@ -98,6 +100,8 @@ class Observation
                 "reference"=> "Encounter/".$encounter->ihs_number,
                 "display"=> "Pemeriksaan fisik pada ".StrHelper::dateTimeId($encounter->period_start)
             ],
+            "effectiveDateTime"=> DateTimeFormat::parse($effectiveDateTime ?? $encounter->period_start),
+            "issued"=> DateTimeFormat::parse($effectiveDateTime ?? $encounter->period_start),
             "valueQuantity"=> [
                 "system"=> "http://unitsofmeasure.org",
                 "value"=> $ttv['value'],
