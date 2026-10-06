@@ -220,6 +220,36 @@ class Url
         return self::baseUrl('ServiceRequest?subject='.$ihsNumberPatient);
     }
 
+    public static function createSpecimenUrl()
+    {
+        return self::baseUrl('Specimen');
+    }
+
+    public static function updateSpecimenUrl($ihsNumber)
+    {
+        return self::baseUrl('Specimen/'.$ihsNumber);
+    }
+
+    public static function historySpecimenUrl($ihsNumberPatient)
+    {
+        return self::baseUrl('Specimen?subject='.$ihsNumberPatient);
+    }
+
+    public static function createDiagnosticReportUrl()
+    {
+        return self::baseUrl('DiagnosticReport');
+    }
+
+    public static function updateDiagnosticReportUrl($ihsNumber)
+    {
+        return self::baseUrl('DiagnosticReport/'.$ihsNumber);
+    }
+
+    public static function historyDiagnosticReportUrl($ihsNumberPatient)
+    {
+        return self::baseUrl('DiagnosticReport?subject='.$ihsNumberPatient);
+    }
+
     public static function searchProductsByCode($code)
     {
         return self::kfaUrl('products?identifier=kfa&code='.$code);

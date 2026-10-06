@@ -8,18 +8,14 @@ use syahrulzzadie\SatuSehat\Utilitys\StrHelper;
 
 class Encounter
 {
-    public static function formCreateData($noRawat,$date,$time,$patient,$practitioner,$location,$hospitalName)
+    public static function formCreateData($noRawat,$date,$time,$patient,$practitioner,$location,$hospitalName,$classCode = 'AMB')
     {
         $organizationId = Enviroment::organizationId();
         $noRawat = StrHelper::cleanNoRawat($noRawat);
         return [
             "resourceType"=> "Encounter",
             "status"=> "arrived",
-            "class"=> [
-                "system"=> "http://terminology.hl7.org/CodeSystem/v3-ActCode",
-                "code"=> "AMB",
-                "display"=> "ambulatory"
-            ],
+            "class"=> StrHelper::encounterClass($classCode),
             "subject"=> [
                 "reference"=> "Patient/".$patient->ihs_number,
                 "display"=> $patient->name
@@ -77,7 +73,7 @@ class Encounter
         ];
     }
 
-    public static function formUpdateData($encounter,$patient,$practitioner,$location,$hospitalName)
+    public static function formUpdateData($encounter,$patient,$practitioner,$location,$hospitalName,$classCode = 'AMB')
     {
         $organizationId = Enviroment::organizationId();
         $noRawat = StrHelper::cleanNoRawat($encounter->no_rawat);
@@ -85,11 +81,7 @@ class Encounter
             "resourceType"=> "Encounter",
             "id"=> $encounter->ihs_number,
             "status"=> 'arrived',
-            "class"=> [
-                "system"=> "http://terminology.hl7.org/CodeSystem/v3-ActCode",
-                "code"=> "AMB",
-                "display"=> "ambulatory"
-            ],
+            "class"=> StrHelper::encounterClass($classCode),
             "subject"=> [
                 "reference"=> "Patient/".$patient->ihs_number,
                 "display"=> $patient->name
@@ -147,7 +139,7 @@ class Encounter
         ];
     }
 
-    public static function formCancelData($encounter,$patient,$practitioner,$location,$hospitalName)
+    public static function formCancelData($encounter,$patient,$practitioner,$location,$hospitalName,$classCode = 'AMB')
     {
         $organizationId = Enviroment::organizationId();
         $noRawat = StrHelper::cleanNoRawat($encounter->no_rawat);
@@ -155,11 +147,7 @@ class Encounter
             "resourceType"=> "Encounter",
             "id"=> $encounter->ihs_number,
             "status"=> 'cancelled',
-            "class"=> [
-                "system"=> "http://terminology.hl7.org/CodeSystem/v3-ActCode",
-                "code"=> "AMB",
-                "display"=> "ambulatory"
-            ],
+            "class"=> StrHelper::encounterClass($classCode),
             "subject"=> [
                 "reference"=> "Patient/".$patient->ihs_number,
                 "display"=> $patient->name
@@ -217,7 +205,7 @@ class Encounter
         ];
     }
 
-    public static function formUpdateCondition($encounter,$dataDiagnosis,$hospitalName)
+    public static function formUpdateCondition($encounter,$dataDiagnosis,$hospitalName,$classCode = 'AMB')
     {
         $diagnosis = [];
         foreach ($dataDiagnosis as $item) {
@@ -230,12 +218,12 @@ class Encounter
                     "coding"=> [
                         [
                             "system"=> "http://terminology.hl7.org/CodeSystem/diagnosis-role",
-                            "code"=> $item['code'],
-                            "display"=> $item['name']
+                            "code"=> "DD",
+                            "display"=> "Discharge diagnosis"
                         ]
                     ]
                 ],
-                "rank"=> $item['rank']
+                "rank"=> intval($item['rank'])
             ];
         }
         $organizationId = Enviroment::organizationId();
@@ -245,15 +233,11 @@ class Encounter
             "identifier"=> [
                 [
                     "system"=> "http://sys-ids.kemkes.go.id/encounter/".$organizationId,
-                    "value"=> $encounter->no_rawat
+                    "value"=> StrHelper::cleanNoRawat($encounter->no_rawat)
                 ]
             ],
             "status"=> "finished",
-            "class"=> [
-                "system"=> "http://terminology.hl7.org/CodeSystem/v3-ActCode",
-                "code"=> "AMB",
-                "display"=> "ambulatory"
-            ],
+            "class"=> StrHelper::encounterClass($classCode),
             "subject"=> [
                 "reference"=> "Patient/".$encounter->patient->ihs_number,
                 "display"=> $encounter->patient->name

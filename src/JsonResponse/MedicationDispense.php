@@ -22,11 +22,11 @@ class MedicationDispense
                     'ihs_number_patient' => StrHelper::getIhsNumber($data['subject']['reference']),
                     'name_patient' => $data['subject']['display'] ?? '',
                     'ihs_number_encounter' => StrHelper::getIhsNumber($data['context']['reference']),
-                    'name_encounter' => $res['context']['display'] ?? '',
+                    'name_encounter' => $data['context']['display'] ?? '',
                     'ihs_number_location' => StrHelper::getIhsNumber($data['location']['reference']),
-                    'name_location' => $res['location']['display'] ?? '',
+                    'name_location' => $data['location']['display'] ?? '',
                     'ihs_number_medication_request' => StrHelper::getIhsNumber($data['authorizingPrescription'][0]['reference']),
-                    'name_medication_request' => $res['authorizingPrescription'][0]['display'] ?? ''
+                    'name_medication_request' => $data['authorizingPrescription'][0]['display'] ?? ''
                 ]
             ];
         }

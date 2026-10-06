@@ -2,13 +2,23 @@
 
 namespace syahrulzzadie\SatuSehat\JsonResponse;
 
-use DateTime;
 use Exception;
+use Illuminate\Support\Facades\Cache;
 use syahrulzzadie\SatuSehat\Utilitys\Enviroment;
 use syahrulzzadie\SatuSehat\Utilitys\Url;
 
 class Auth
 {
+    /**
+     * Token disimpan di Cache (bukan session) supaya juga berlaku untuk route API /
+     * scheduler / n8n yang tidak punya session, sehingga tidak meminta token baru
+     * di setiap request ke Satu Sehat.
+     */
+    private static function cacheKey()
+    {
+        return 'satusehat_token_'.md5(Enviroment::clientId());
+    }
+
     private static function requestToken() : array
     {
         try {
@@ -32,11 +42,17 @@ class Auth
             }
             curl_close($ch);
             $data = json_decode($response,true);
+            if (empty($data['access_token'])) {
+                return [
+                    'status' => false,
+                    'message' => $data['issue'][0]['details']['text'] ?? ($data['error_description'] ?? 'Gagal mendapatkan token Satu Sehat!')
+                ];
+            }
             return [
                 'status' => true,
                 'data' => [
                     'token' => $data['access_token'],
-                    'expired' => $data['expires_in'],
+                    'expired' => intval($data['expires_in'] ?? 3600),
                     'created_at' => date('Y-m-d H:i:s')
                 ]
             ];
@@ -45,87 +61,34 @@ class Auth
         }
     }
 
-    private static function generateToken() : array
+    public static function forgetToken()
     {
-        $requestToken = self::requestToken();
-        if ($requestToken['status']) {
-            $data = $requestToken['data'];
-            session()->put('satusehat_token_key',$data['token']);
-            session()->put('satusehat_token_exp',$data['expired']);
-            session()->put('satusehat_token_created_at',$data['created_at']);
-            return [
-                'status' => true,
-                'data' => [
-                    'token' => $data['token']
-                ]
-            ];
-        }
-        return [
-            'status' => false,
-            'message' => $requestToken['message']
-        ];
-    }
-
-    private static function getDiffSecond($dateTime)
-    {
-        $datetime = new DateTime($dateTime);
-        $current_datetime = new DateTime();
-        $interval = $current_datetime->diff($datetime);
-        $seconds_difference = $interval->s + ($interval->i * 60) + ($interval->h * 3600) + ($interval->days * 86400);
-        return intval($seconds_difference);
+        Cache::forget(self::cacheKey());
     }
 
     public static function getToken() : array
     {
-        $token = session('satusehat_token_key',false);
-        $expired = session('satusehat_token_exp',false);
-        $createdAt = session('satusehat_token_created_at',false);
-        if (!$token && !$expired && !$createdAt) {
-            $generate = self::generateToken();
-            if ($generate['status']) {
-                $data = $generate['data'];
-                return [
-                    'status' => true,
-                    'token' => $data['token']
-                ];
-            } else {
-                return [
-                    'status' => false,
-                    'message' => $generate['message']
-                ];
-            }
-        } else {
-            $diff = self::getDiffSecond($createdAt);
-            $expired = intval($expired - 60);
-            if ($diff >= $expired) {
-                $generate = self::requestToken();
-                if ($generate['status']) {
-                    $generateData = $generate['data'];
-                    return [
-                        'status' => true,
-                        'token' => $generateData['token']
-                    ];
-                } else {
-                    return [
-                        'status' => false,
-                        'message' => $generate['message']
-                    ];
-                }
-            } else {
-                $generate = self::generateToken();
-                if ($generate['status']) {
-                    $data = $generate['data'];
-                    return [
-                        'status' => true,
-                        'token' => $data['token']
-                    ];
-                } else {
-                    return [
-                        'status' => false,
-                        'message' => $generate['message']
-                    ];
-                }
-            }
+        $token = Cache::get(self::cacheKey());
+        if ($token) {
+            return [
+                'status' => true,
+                'token' => $token
+            ];
         }
+        $requestToken = self::requestToken();
+        if (!$requestToken['status']) {
+            return [
+                'status' => false,
+                'message' => $requestToken['message']
+            ];
+        }
+        $data = $requestToken['data'];
+        // Simpan dengan margin 5 menit sebelum token benar-benar kedaluwarsa
+        $ttl = max(60, $data['expired'] - 300);
+        Cache::put(self::cacheKey(), $data['token'], $ttl);
+        return [
+            'status' => true,
+            'token' => $data['token']
+        ];
     }
 }

@@ -114,10 +114,13 @@ class SatuSehatCore
         return jsonResponse\Error::http($http);
     }
 
-    public static function createEncounter($noRawat,$date,$time,$patient,$practitioner,$location,$hospitalName)
+    /**
+     * @param string $classCode AMB (rawat jalan), EMER (IGD), IMP (rawat inap)
+     */
+    public static function createEncounter($noRawat,$date,$time,$patient,$practitioner,$location,$hospitalName,$classCode = 'AMB')
     {
         $url = Url::createEncounterUrl();
-        $formData = jsonData\Encounter::formCreateData($noRawat,$date,$time,$patient,$practitioner,$location,$hospitalName);
+        $formData = jsonData\Encounter::formCreateData($noRawat,$date,$time,$patient,$practitioner,$location,$hospitalName,$classCode);
         $http = HttpRequest::post($url,$formData);
         if ($http['status']) {
             $response = $http['response'];
@@ -126,10 +129,10 @@ class SatuSehatCore
         return jsonResponse\Error::http($http);
     }
 
-    public static function updateEncounter($encounter,$patient,$practitioner,$location,$hospitalName)
+    public static function updateEncounter($encounter,$patient,$practitioner,$location,$hospitalName,$classCode = 'AMB')
     {
         $url = Url::updateEncounterUrl($encounter->ihs_number);
-        $formData = jsonData\Encounter::formUpdateData($encounter,$patient,$practitioner,$location,$hospitalName);
+        $formData = jsonData\Encounter::formUpdateData($encounter,$patient,$practitioner,$location,$hospitalName,$classCode);
         $http = HttpRequest::put($url,$formData);
         if ($http['status']) {
             $response = $http['response'];
@@ -138,10 +141,10 @@ class SatuSehatCore
         return jsonResponse\Error::http($http);
     }
 
-    public static function cancelEncounter($encounter,$patient,$practitioner,$location,$hospitalName)
+    public static function cancelEncounter($encounter,$patient,$practitioner,$location,$hospitalName,$classCode = 'AMB')
     {
         $url = Url::updateEncounterUrl($encounter->ihs_number);
-        $formData = jsonData\Encounter::formCancelData($encounter,$patient,$practitioner,$location,$hospitalName);
+        $formData = jsonData\Encounter::formCancelData($encounter,$patient,$practitioner,$location,$hospitalName,$classCode);
         $http = HttpRequest::put($url,$formData);
         if ($http['status']) {
             $response = $http['response'];
@@ -150,10 +153,10 @@ class SatuSehatCore
         return jsonResponse\Error::http($http);
     }
 
-    public static function updateEncounterCondition($encounter,$dataDiagnosa,$hospitalName)
+    public static function updateEncounterCondition($encounter,$dataDiagnosa,$hospitalName,$classCode = 'AMB')
     {
         $url = Url::updateEncounterUrl($encounter->ihs_number);
-        $formData = jsonData\Encounter::formUpdateCondition($encounter,$dataDiagnosa,$hospitalName);
+        $formData = jsonData\Encounter::formUpdateCondition($encounter,$dataDiagnosa,$hospitalName,$classCode);
         $http = HttpRequest::put($url,$formData);
         if ($http['status']) {
             $response = $http['response'];
@@ -337,10 +340,13 @@ class SatuSehatCore
         return jsonResponse\Error::http($http);
     }
 
-    public static function createMedicationRequest($encounter,$medication,$noRawat,$aturanPakai)
+    /**
+     * @param string $category outpatient | inpatient
+     */
+    public static function createMedicationRequest($encounter,$medication,$noRawat,$aturanPakai,$category = 'outpatient')
     {
         $url = Url::createMedicationRequestUrl();
-        $formData = jsonData\MedicationRequest::formCreateData($encounter, $medication, $noRawat, $aturanPakai);
+        $formData = jsonData\MedicationRequest::formCreateData($encounter, $medication, $noRawat, $aturanPakai, $category);
         $http = HttpRequest::post($url,$formData);
         if ($http['status']) {
             $response = $http['response'];
@@ -349,10 +355,10 @@ class SatuSehatCore
         return jsonResponse\Error::http($http);
     }
 
-    public static function updateMedicationRequest($ihsNumber,$encounter,$medication,$noRawat,$aturanPakai)
+    public static function updateMedicationRequest($ihsNumber,$encounter,$medication,$noRawat,$aturanPakai,$category = 'outpatient')
     {
         $url = Url::updateMedicationRequestUrl($ihsNumber);
-        $formData = jsonData\MedicationRequest::formUpdateData($ihsNumber, $encounter,$medication,$noRawat,$aturanPakai);
+        $formData = jsonData\MedicationRequest::formUpdateData($ihsNumber, $encounter,$medication,$noRawat,$aturanPakai,$category);
         $http = HttpRequest::put($url,$formData);
         if ($http['status']) {
             $response = $http['response'];
@@ -477,6 +483,124 @@ class SatuSehatCore
         return jsonResponse\Error::http($http);
     }
 
+    public static function createObservationLab($noPermintaan,$encounter,$practitioner,$code,$name,$serviceRequestIhs,$specimenIhs,$value,$effectiveDateTime,$issuedDateTime = null)
+    {
+        $url = Url::createObservationUrl();
+        $formData = jsonData\Observation::formCreateDataLab($noPermintaan,$encounter,$practitioner,$code,$name,$serviceRequestIhs,$specimenIhs,$value,$effectiveDateTime,$issuedDateTime);
+        $http = HttpRequest::post($url,$formData);
+        if ($http['status']) {
+            $response = $http['response'];
+            return jsonResponse\Observation::convertResult($response);
+        }
+        return jsonResponse\Error::http($http);
+    }
+
+    public static function createObservationRadiologi($noPermintaan,$encounter,$practitioner,$code,$name,$serviceRequestIhs,$value,$effectiveDateTime,$issuedDateTime = null)
+    {
+        $url = Url::createObservationUrl();
+        $formData = jsonData\Observation::formCreateDataRadiologi($noPermintaan,$encounter,$practitioner,$code,$name,$serviceRequestIhs,$value,$effectiveDateTime,$issuedDateTime);
+        $http = HttpRequest::post($url,$formData);
+        if ($http['status']) {
+            $response = $http['response'];
+            return jsonResponse\Observation::convertResult($response);
+        }
+        return jsonResponse\Error::http($http);
+    }
+
+    public static function createSpecimen($noSpecimen,$encounter,$serviceRequestIhs,$specimenCode,$specimenName,$collectedDateTime,$receivedDateTime = null)
+    {
+        $url = Url::createSpecimenUrl();
+        $formData = jsonData\Specimen::formCreateData($noSpecimen,$encounter,$serviceRequestIhs,$specimenCode,$specimenName,$collectedDateTime,$receivedDateTime);
+        $http = HttpRequest::post($url,$formData);
+        if ($http['status']) {
+            $response = $http['response'];
+            return jsonResponse\Specimen::convert($response);
+        }
+        return jsonResponse\Error::http($http);
+    }
+
+    public static function updateSpecimen($ihsNumber,$noSpecimen,$encounter,$serviceRequestIhs,$specimenCode,$specimenName,$collectedDateTime,$receivedDateTime = null)
+    {
+        $url = Url::updateSpecimenUrl($ihsNumber);
+        $formData = jsonData\Specimen::formUpdateData($ihsNumber,$noSpecimen,$encounter,$serviceRequestIhs,$specimenCode,$specimenName,$collectedDateTime,$receivedDateTime);
+        $http = HttpRequest::put($url,$formData);
+        if ($http['status']) {
+            $response = $http['response'];
+            return jsonResponse\Specimen::convert($response);
+        }
+        return jsonResponse\Error::http($http);
+    }
+
+    public static function historySpecimen($ihsNumberPatient)
+    {
+        $url = Url::historySpecimenUrl($ihsNumberPatient);
+        $http = HttpRequest::get($url);
+        if ($http['status']) {
+            $response = $http['response'];
+            return jsonResponse\Specimen::history($response);
+        }
+        return jsonResponse\Error::http($http);
+    }
+
+    public static function createDiagnosticReportLab($noPermintaan,$encounter,$practitioner,$code,$name,$serviceRequestIhs,$specimenIhs,$observationIhs,$conclusion,$effectiveDateTime,$issuedDateTime = null)
+    {
+        $url = Url::createDiagnosticReportUrl();
+        $formData = jsonData\DiagnosticReport::formCreateDataLab($noPermintaan,$encounter,$practitioner,$code,$name,$serviceRequestIhs,$specimenIhs,$observationIhs,$conclusion,$effectiveDateTime,$issuedDateTime);
+        $http = HttpRequest::post($url,$formData);
+        if ($http['status']) {
+            $response = $http['response'];
+            return jsonResponse\DiagnosticReport::convert($response);
+        }
+        return jsonResponse\Error::http($http);
+    }
+
+    public static function updateDiagnosticReportLab($ihsNumber,$noPermintaan,$encounter,$practitioner,$code,$name,$serviceRequestIhs,$specimenIhs,$observationIhs,$conclusion,$effectiveDateTime,$issuedDateTime = null)
+    {
+        $url = Url::updateDiagnosticReportUrl($ihsNumber);
+        $formData = jsonData\DiagnosticReport::formUpdateDataLab($ihsNumber,$noPermintaan,$encounter,$practitioner,$code,$name,$serviceRequestIhs,$specimenIhs,$observationIhs,$conclusion,$effectiveDateTime,$issuedDateTime);
+        $http = HttpRequest::put($url,$formData);
+        if ($http['status']) {
+            $response = $http['response'];
+            return jsonResponse\DiagnosticReport::convert($response);
+        }
+        return jsonResponse\Error::http($http);
+    }
+
+    public static function createDiagnosticReportRadiologi($noPermintaan,$encounter,$practitioner,$code,$name,$serviceRequestIhs,$observationIhs,$conclusion,$effectiveDateTime,$issuedDateTime = null,$imagingStudyIhs = null)
+    {
+        $url = Url::createDiagnosticReportUrl();
+        $formData = jsonData\DiagnosticReport::formCreateDataRadiologi($noPermintaan,$encounter,$practitioner,$code,$name,$serviceRequestIhs,$observationIhs,$conclusion,$effectiveDateTime,$issuedDateTime,$imagingStudyIhs);
+        $http = HttpRequest::post($url,$formData);
+        if ($http['status']) {
+            $response = $http['response'];
+            return jsonResponse\DiagnosticReport::convert($response);
+        }
+        return jsonResponse\Error::http($http);
+    }
+
+    public static function updateDiagnosticReportRadiologi($ihsNumber,$noPermintaan,$encounter,$practitioner,$code,$name,$serviceRequestIhs,$observationIhs,$conclusion,$effectiveDateTime,$issuedDateTime = null,$imagingStudyIhs = null)
+    {
+        $url = Url::updateDiagnosticReportUrl($ihsNumber);
+        $formData = jsonData\DiagnosticReport::formUpdateDataRadiologi($ihsNumber,$noPermintaan,$encounter,$practitioner,$code,$name,$serviceRequestIhs,$observationIhs,$conclusion,$effectiveDateTime,$issuedDateTime,$imagingStudyIhs);
+        $http = HttpRequest::put($url,$formData);
+        if ($http['status']) {
+            $response = $http['response'];
+            return jsonResponse\DiagnosticReport::convert($response);
+        }
+        return jsonResponse\Error::http($http);
+    }
+
+    public static function historyDiagnosticReport($ihsNumberPatient)
+    {
+        $url = Url::historyDiagnosticReportUrl($ihsNumberPatient);
+        $http = HttpRequest::get($url);
+        if ($http['status']) {
+            $response = $http['response'];
+            return jsonResponse\DiagnosticReport::history($response);
+        }
+        return jsonResponse\Error::http($http);
+    }
+
     public static function searchProductsByCode($code)
     {
         $url = Url::searchProductsByCode($code);
@@ -554,6 +678,8 @@ class SatuSehatCore
         $urls['medicationRequest'] = Url::historyMedicationRequestUrl($ihsNumber);
         $urls['medicationDispense'] = Url::historyMedicationDispenseUrl($ihsNumber);
         $urls['serviceRequest'] = Url::historyServiceRequestUrl($ihsNumber);
+        $urls['specimen'] = Url::historySpecimenUrl($ihsNumber);
+        $urls['diagnosticReport'] = Url::historyDiagnosticReportUrl($ihsNumber);
         /////////////////////////////////////
         $gets = HttpRequest::poolGet($urls);
         ///////////////////////////////////
@@ -588,6 +714,14 @@ class SatuSehatCore
         $getServiceRequest = $gets['serviceRequest'];
         if ($getServiceRequest['status']) {
             $dataHistory['serviceRequest'] = jsonResponse\ServiceRequest::history($getServiceRequest['response']);
+        }
+        $getSpecimen = $gets['specimen'];
+        if ($getSpecimen['status']) {
+            $dataHistory['specimen'] = jsonResponse\Specimen::history($getSpecimen['response']);
+        }
+        $getDiagnosticReport = $gets['diagnosticReport'];
+        if ($getDiagnosticReport['status']) {
+            $dataHistory['diagnosticReport'] = jsonResponse\DiagnosticReport::history($getDiagnosticReport['response']);
         }
         /////////////////////
         return $dataHistory;

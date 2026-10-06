@@ -32,6 +32,36 @@ class Observation
         return Error::checkOperationOutcome($resType,$data);
     }
 
+    /**
+     * Konversi Observation hasil penunjang (lab/radiologi) yang memakai valueString.
+     */
+    public static function convertResult($response)
+    {
+        $data = json_decode($response,true);
+        $resType = $data['resourceType'] ?? '';
+        if ($resType == 'Observation') {
+            return [
+                'status' => true,
+                'data' => [
+                    'ihs_number' => $data['id'],
+                    'no_permintaan' => $data['identifier'][0]['value'] ?? '',
+                    'category' => $data['category'][0]['coding'][0]['code'] ?? '',
+                    'code' => $data['code']['coding'][0]['code'] ?? '',
+                    'name' => $data['code']['coding'][0]['display'] ?? '',
+                    'value' => $data['valueString'] ?? '',
+                    'ihs_number_patient' => StrHelper::getIhsNumber($data['subject']['reference'] ?? '/'),
+                    'name_patient' => $data['subject']['display'] ?? '',
+                    'ihs_number_practitioner' => StrHelper::getIhsNumber($data['performer'][0]['reference'] ?? '/'),
+                    'name_practitioner' => $data['performer'][0]['display'] ?? '',
+                    'ihs_number_encounter' => StrHelper::getIhsNumber($data['encounter']['reference'] ?? '/'),
+                    'ihs_number_service_request' => StrHelper::getIhsNumber($data['basedOn'][0]['reference'] ?? '/'),
+                    'ihs_number_specimen' => StrHelper::getIhsNumber($data['specimen']['reference'] ?? '/')
+                ]
+            ];
+        }
+        return Error::checkOperationOutcome($resType,$data);
+    }
+
     public static function history($response)
     {
         $history = [];
@@ -44,11 +74,11 @@ class Observation
                 if ($resType == 'Observation') {
                     $dt['consent'] = 'OPTIN';
                     $dt['ihs_number'] = $res['id'];
-                    $dt['code_ttv'] = $res['code']['coding'][0]['code'];
-                    $dt['name_ttv'] = $res['code']['coding'][0]['display'];
-                    $dt['value'] = $res['valueQuantity']['value'];
-                    $dt['unit'] = $res['valueQuantity']['unit'];
-                    $dt['code'] = $res['valueQuantity']['code'];
+                    $dt['code_ttv'] = $res['code']['coding'][0]['code'] ?? '';
+                    $dt['name_ttv'] = $res['code']['coding'][0]['display'] ?? '';
+                    $dt['value'] = $res['valueQuantity']['value'] ?? ($res['valueString'] ?? '');
+                    $dt['unit'] = $res['valueQuantity']['unit'] ?? '';
+                    $dt['code'] = $res['valueQuantity']['code'] ?? '';
                     $dt['ihs_number_patient'] = StrHelper::getIhsNumber($res['subject']['reference']);
                     $dt['name_patient'] = $res['subject']['display'] ?? '';
                     $dt['ihs_number_practitioner'] = StrHelper::getIhsNumber($res['performer'][0]['reference']);

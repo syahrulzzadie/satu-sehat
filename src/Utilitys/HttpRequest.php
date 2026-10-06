@@ -6,135 +6,75 @@ use syahrulzzadie\SatuSehat\JsonResponse as jsonResponse;
 
 class HttpRequest
 {
-    public static function get($url)
+    /**
+     * Kirim request ke Satu Sehat. Jika token ditolak (401), token di-cache
+     * dibuang lalu request diulang sekali dengan token baru.
+     */
+    private static function send($method, $url, $body, $contentType, $retry = true)
     {
         $getToken = jsonResponse\Auth::getToken();
-        if ($getToken['status']) {
-            try {
-                $ch = curl_init($url);
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-                curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+        if (!$getToken['status']) {
+            return jsonResponse\Error::getToken($getToken);
+        }
+        try {
+            $ch = curl_init($url);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+            if ($method == 'GET') {
                 curl_setopt($ch, CURLOPT_HTTPGET, true);
-                curl_setopt($ch, CURLOPT_HTTPHEADER, [
-                    'Content-Type: application/x-www-form-urlencoded',
-                    'Authorization: Bearer ' . $getToken['token']
-                ]);
-                $response = curl_exec($ch);
-                if (curl_errno($ch)) {
-                    return [
-                        'status' => false,
-                        'message' => curl_error($ch)
-                    ];
-                }
+            } else if ($method == 'POST') {
+                curl_setopt($ch, CURLOPT_POST, true);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, $body);
+            } else {
+                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $method);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, $body);
+            }
+            curl_setopt($ch, CURLOPT_HTTPHEADER, [
+                'Content-Type: '.$contentType,
+                'Authorization: Bearer ' . $getToken['token']
+            ]);
+            $response = curl_exec($ch);
+            if (curl_errno($ch)) {
+                $message = curl_error($ch);
                 curl_close($ch);
                 return [
-                    'status' => true,
-                    'response' => $response
+                    'status' => false,
+                    'message' => $message
                 ];
-            } catch (\Exception $e) {
-                return ['status' => false, 'message' => $e->getMessage()];
             }
+            $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            curl_close($ch);
+            if ($httpCode == 401 && $retry) {
+                jsonResponse\Auth::forgetToken();
+                return self::send($method, $url, $body, $contentType, false);
+            }
+            return [
+                'status' => true,
+                'response' => $response
+            ];
+        } catch (\Exception $e) {
+            return ['status' => false, 'message' => $e->getMessage()];
         }
-        return jsonResponse\Error::getToken($getToken);
+    }
+
+    public static function get($url)
+    {
+        return self::send('GET', $url, null, 'application/x-www-form-urlencoded');
     }
 
     public static function post($url,$formData)
     {
-        $getToken = jsonResponse\Auth::getToken();
-        if ($getToken['status']) {
-            try {
-                $ch = curl_init($url);
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-                curl_setopt($ch, CURLOPT_TIMEOUT, 30);
-                curl_setopt($ch, CURLOPT_POST, true);
-                curl_setopt($ch, CURLOPT_HTTPHEADER, [
-                    'Content-Type: application/json',
-                    'Authorization: Bearer ' . $getToken['token']
-                ]);
-                curl_setopt($ch, CURLOPT_POSTFIELDS,json_encode($formData));
-                $response = curl_exec($ch);
-                if (curl_errno($ch)) {
-                    return [
-                        'status' => false,
-                        'message' => curl_error($ch)
-                    ];
-                }
-                curl_close($ch);
-                return [
-                    'status' => true,
-                    'response' => $response
-                ];
-            } catch (\Exception $e) {
-                return ['status' => false, 'message' => $e->getMessage()];
-            }
-        }
-        return jsonResponse\Error::getToken($getToken);
+        return self::send('POST', $url, json_encode($formData), 'application/json');
     }
 
     public static function postTextPlain($url,$textPlain)
     {
-        $getToken = jsonResponse\Auth::getToken();
-        if ($getToken['status']) {
-            try {
-                $ch = curl_init($url);
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-                curl_setopt($ch, CURLOPT_TIMEOUT, 30);
-                curl_setopt($ch, CURLOPT_POST, true);
-                curl_setopt($ch, CURLOPT_HTTPHEADER, [
-                    'Content-Type: text/plain',
-                    'Authorization: Bearer ' . $getToken['token']
-                ]);
-                curl_setopt($ch, CURLOPT_POSTFIELDS,$textPlain);
-                $response = curl_exec($ch);
-                if (curl_errno($ch)) {
-                    return [
-                        'status' => false,
-                        'message' => curl_error($ch)
-                    ];
-                }
-                curl_close($ch);
-                return [
-                    'status' => true,
-                    'response' => $response
-                ];
-            } catch (\Exception $e) {
-                return ['status' => false, 'message' => $e->getMessage()];
-            }
-        }
-        return jsonResponse\Error::getToken($getToken);
+        return self::send('POST', $url, $textPlain, 'text/plain');
     }
 
     public static function put($url,$formData)
     {
-        $getToken = jsonResponse\Auth::getToken();
-        if ($getToken['status']) {
-            try {
-                $ch = curl_init($url);
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-                curl_setopt($ch, CURLOPT_TIMEOUT, 30);
-                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
-                curl_setopt($ch, CURLOPT_HTTPHEADER, [
-                    'Content-Type: application/json',
-                    'Authorization: Bearer ' . $getToken['token']
-                ]);
-                curl_setopt($ch, CURLOPT_POSTFIELDS,json_encode($formData));
-                $response = curl_exec($ch);
-                if (curl_errno($ch)) {
-                    return [
-                        'status' => false,
-                        'message' => curl_error($ch)
-                    ];
-                }
-                curl_close($ch);
-                return [
-                    'status' => true,
-                    'response' => $response
-                ];
-            } catch (\Exception $e) {
-                return ['status' => false, 'message' => $e->getMessage()];
-            }
-        }
-        return jsonResponse\Error::getToken($getToken);
+        return self::send('PUT', $url, json_encode($formData), 'application/json');
     }
 
     public static function poolGet($urls = [])

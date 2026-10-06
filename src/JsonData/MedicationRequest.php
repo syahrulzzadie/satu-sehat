@@ -7,7 +7,7 @@ use syahrulzzadie\SatuSehat\Utilitys\Enviroment;
 
 class MedicationRequest
 {
-    public static function formCreateData($encounter, $medication, $noRawat, $aturanPakai)
+    public static function formCreateData($encounter, $medication, $noRawat, $aturanPakai, $category = 'outpatient')
     {
         $organizationId = Enviroment::organizationId();
         $expiredYear = intval(date("Y")+1);
@@ -27,8 +27,8 @@ class MedicationRequest
                     "coding"=> [
                         [
                             "system"=> "http://terminology.hl7.org/CodeSystem/medicationrequest-category",
-                            "code"=> "outpatient",
-                            "display"=> "Outpatient"
+                            "code"=> $category == 'inpatient' ? 'inpatient' : 'outpatient',
+                            "display"=> $category == 'inpatient' ? 'Inpatient' : 'Outpatient'
                         ]
                     ]
                 ]
@@ -108,7 +108,7 @@ class MedicationRequest
         ];
     }
 
-    public static function formUpdateData($ihsNumber, $encounter, $medication, $noRawat, $aturanPakai)
+    public static function formUpdateData($ihsNumber, $encounter, $medication, $noRawat, $aturanPakai, $category = 'outpatient')
     {
         $organizationId = Enviroment::organizationId();
         $expiredYear = intval(date("Y")+1);
@@ -129,8 +129,8 @@ class MedicationRequest
                     "coding"=> [
                         [
                             "system"=> "http://terminology.hl7.org/CodeSystem/medicationrequest-category",
-                            "code"=> "outpatient",
-                            "display"=> "Outpatient"
+                            "code"=> $category == 'inpatient' ? 'inpatient' : 'outpatient',
+                            "display"=> $category == 'inpatient' ? 'Inpatient' : 'Outpatient'
                         ]
                     ]
                 ]

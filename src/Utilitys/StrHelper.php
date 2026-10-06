@@ -32,6 +32,59 @@ class StrHelper
         return str_replace($days,$hari,$date);
     }
 
+    /**
+     * Kelas kunjungan Encounter: AMB (rawat jalan), EMER (IGD), IMP (rawat inap).
+     */
+    public static function encounterClass($classCode = 'AMB')
+    {
+        $classes = [
+            'AMB' => 'ambulatory',
+            'EMER' => 'emergency',
+            'IMP' => 'inpatient encounter'
+        ];
+        $classCode = strtoupper($classCode ?? 'AMB');
+        if (!isset($classes[$classCode])) {
+            $classCode = 'AMB';
+        }
+        return [
+            "system"=> "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+            "code"=> $classCode,
+            "display"=> $classes[$classCode]
+        ];
+    }
+
+    /**
+     * Tebak jenis spesimen (SNOMED CT) dari nama LOINC pemeriksaan lab.
+     * Default: Blood specimen.
+     */
+    public static function getSpecimenType($loincName)
+    {
+        $name = strtolower($loincName ?? '');
+        $types = [
+            'urine' => ['122575003', 'Urine specimen'],
+            'stool' => ['119339001', 'Stool specimen'],
+            'feces' => ['119339001', 'Stool specimen'],
+            'sputum' => ['119334006', 'Sputum specimen'],
+            'cerebral spinal fluid' => ['258450006', 'Cerebrospinal fluid sample'],
+            'synovial fluid' => ['119332005', 'Synovial fluid specimen'],
+            'pleural fluid' => ['418564007', 'Pleural fluid specimen'],
+            'peritoneal fluid' => ['168139001', 'Peritoneal fluid sample'],
+            'semen' => ['119347001', 'Seminal fluid specimen'],
+            'serum' => ['119364003', 'Serum specimen'],
+            'plasma' => ['119361006', 'Plasma specimen']
+        ];
+        foreach ($types as $keyword => $type) {
+            if (str_contains($name, $keyword)) {
+                // "Serum or Plasma" pada LOINC berarti darah vena
+                if (str_contains($name, 'serum or plasma')) {
+                    break;
+                }
+                return ['code' => $type[0], 'name' => $type[1]];
+            }
+        }
+        return ['code' => '119297000', 'name' => 'Blood specimen'];
+    }
+
     public static function getName($name)
     {
         if (strlen($name) >= 4) {
