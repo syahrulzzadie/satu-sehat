@@ -2,6 +2,7 @@
 
 namespace syahrulzzadie\SatuSehat\JsonData;
 
+use syahrulzzadie\SatuSehat\Utilitys\DateTimeFormat;
 use syahrulzzadie\SatuSehat\Utilitys\StrHelper;
 
 class Condition
@@ -46,7 +47,9 @@ class Condition
             "encounter"=> [
                 "reference"=> "Encounter/".$encounter->ihs_number,
                 "display"=> "Kunjungan pasien pada ".StrHelper::dateTimeId($encounter->period_start)
-            ]
+            ],
+            "onsetDateTime"=> DateTimeFormat::parse($encounter->period_start),
+            "recordedDate"=> DateTimeFormat::parse($encounter->period_start)
         ];
     }
 
@@ -91,7 +94,9 @@ class Condition
             "encounter"=> [
                 "reference"=> "Encounter/".$encounter->ihs_number,
                 "display"=> "Kunjungan pasien pada ".StrHelper::dateTimeId($encounter->period_start)
-            ]
+            ],
+            "onsetDateTime"=> DateTimeFormat::parse($encounter->period_start),
+            "recordedDate"=> DateTimeFormat::parse($encounter->period_start)
         ];
     }
 }

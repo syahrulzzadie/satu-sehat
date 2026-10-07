@@ -2,6 +2,7 @@
 
 namespace syahrulzzadie\SatuSehat\JsonData;
 
+use syahrulzzadie\SatuSehat\Utilitys\DateTimeFormat;
 use syahrulzzadie\SatuSehat\Utilitys\Enviroment;
 
 class MedicationDispense
@@ -46,7 +47,9 @@ class MedicationDispense
             "location"=> [
                 "reference"=> "Location/".$encounter->location->ihs_number,
                 "display"=> $encounter->location->name
-            ]
+            ],
+            "whenPrepared"=> DateTimeFormat::now(),
+            "whenHandedOver"=> DateTimeFormat::now()
         ];
     }
 
@@ -91,7 +94,9 @@ class MedicationDispense
             "location"=> [
                 "reference"=> "Location/".$encounter->location->ihs_number,
                 "display"=> $encounter->location->name
-            ]
+            ],
+            "whenPrepared"=> DateTimeFormat::now(),
+            "whenHandedOver"=> DateTimeFormat::now()
         ];
     }
 }

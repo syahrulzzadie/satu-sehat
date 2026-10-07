@@ -279,4 +279,50 @@ class Url
     {
         return self::ssrmeUrl('shl');
     }
+
+    /**
+     * URL FHIR generik: Url::fhirUrl('AllergyIntolerance'), Url::fhirUrl('Encounter/'.$id),
+     * Url::fhirUrl('Observation', ['subject' => $ihs, 'encounter' => $id]).
+     */
+    public static function fhirUrl($path = '', $params = [])
+    {
+        $url = rtrim(self::baseUrl(ltrim($path,'/')),'/');
+        if (!empty($params)) {
+            $url .= '?'.self::buildQuery($params);
+        }
+        return $url;
+    }
+
+    /**
+     * Query string FHIR: nilai "system|code" tidak di-encode pipa-nya,
+     * nilai array menjadi parameter berulang (mis. date=ge..&date=le..).
+     */
+    private static function buildQuery($params)
+    {
+        $parts = [];
+        foreach ($params as $key => $value) {
+            foreach ((array) $value as $item) {
+                $parts[] = $key.'='.str_replace('%7C','|',rawurlencode((string) $item));
+            }
+        }
+        return implode('&',$parts);
+    }
+
+    /**
+     * Master Data (wilayah, sarana) & KFA harga JKN, host api-satusehat tanpa prefix fhir-r4.
+     * $path contoh: 'masterdata/v1/provinces'
+     */
+    public static function apiUrl($path, $params = [])
+    {
+        $url = Constant::$apiUrl.'/'.ltrim($path,'/');
+        if (!empty($params)) {
+            $url .= '?'.self::buildQuery($params);
+        }
+        return $url;
+    }
+
+    public static function kfaPriceJknUrl($kfaCode, $page = 1, $limit = 10)
+    {
+        return self::apiUrl('farmalkes-price-jkn', ['page' => $page, 'limit' => $limit, 'kfa_code' => $kfaCode]);
+    }
 }

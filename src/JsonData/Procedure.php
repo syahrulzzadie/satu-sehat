@@ -14,12 +14,12 @@ class Procedure
             "category"=> [
                 "coding"=> [
                     [
-                        "system"=> "http://snomed.info/sct",
-                        "code"=> "103693007",
+                        "system"=> "http://terminology.kemkes.go.id",
+                        "code"=> "TK000028",
                         "display"=> "Diagnostic procedure"
                     ]
                 ],
-                "text"=> "Diagnostic procedure"
+                "text"=> "Prosedur diagnostik"
             ],
             "code"=> [
                 "coding"=> [
@@ -62,12 +62,12 @@ class Procedure
             "category"=> [
                 "coding"=> [
                     [
-                        "system"=> "http://snomed.info/sct",
-                        "code"=> "103693007",
+                        "system"=> "http://terminology.kemkes.go.id",
+                        "code"=> "TK000028",
                         "display"=> "Diagnostic procedure"
                     ]
                 ],
-                "text"=> "Diagnostic procedure"
+                "text"=> "Prosedur diagnostik"
             ],
             "code"=> [
                 "coding"=> [

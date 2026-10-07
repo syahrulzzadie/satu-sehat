@@ -11,6 +11,9 @@ class Medication
         $organizationId = Enviroment::organizationId();
         return [
             "resourceType"=> "Medication",
+            "meta"=> [
+                "profile"=> ["https://fhir.kemkes.go.id/r4/StructureDefinition/Medication"]
+            ],
             "identifier"=> [
                 [
                     "system"=> "http://sys-ids.kemkes.go.id/medication/".$organizationId,
@@ -50,6 +53,9 @@ class Medication
         $organizationId = Enviroment::organizationId();
         return [
             "resourceType"=> "Medication",
+            "meta"=> [
+                "profile"=> ["https://fhir.kemkes.go.id/r4/StructureDefinition/Medication"]
+            ],
             "id"=> $ihsNumber,
             "identifier"=> [
                 [

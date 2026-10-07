@@ -10,4 +10,7 @@ class Constant
     public static $kfaUrl = "https://api-satusehat.kemkes.go.id/kfa-v2";
     public static $kycUrl = "https://api-satusehat.kemkes.go.id/kyc/v1";
     public static $ssrmeUrl = "https://api-satusehat.kemkes.go.id/ssrme/v1/hf";
+    public static $apiUrl = "https://api-satusehat.kemkes.go.id";
+    // Host KPTL tidak dicantumkan di Postman publik ({{base_url_kptl}}), isi sesuai info Kemenkes
+    public static $kptlUrl = "";
 }
