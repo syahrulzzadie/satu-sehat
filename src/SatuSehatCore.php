@@ -634,6 +634,18 @@ class SatuSehatCore
         return jsonResponse\Error::http($http);
     }
 
+    public static function updateObservationLab($ihsNumber,$noPermintaan,$encounter,$practitioner,$code,$name,$serviceRequestIhs,$specimenIhs,$value,$effectiveDateTime,$issuedDateTime = null)
+    {
+        $url = Url::updateObservationUrl($ihsNumber);
+        $formData = jsonData\Observation::formUpdateDataLab($ihsNumber,$noPermintaan,$encounter,$practitioner,$code,$name,$serviceRequestIhs,$specimenIhs,$value,$effectiveDateTime,$issuedDateTime);
+        $http = HttpRequest::put($url,$formData);
+        if ($http['status']) {
+            $response = $http['response'];
+            return jsonResponse\Observation::convertResult($response);
+        }
+        return jsonResponse\Error::http($http);
+    }
+
     public static function createObservationRadiologi($noPermintaan,$encounter,$practitioner,$code,$name,$serviceRequestIhs,$value,$effectiveDateTime,$issuedDateTime = null)
     {
         $url = Url::createObservationUrl();

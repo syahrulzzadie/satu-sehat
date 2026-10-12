@@ -28,7 +28,7 @@ Library Satu Sehat for PHP Laravel v8+
 |----|----------|--------|
 | 1 | Kunjungan (Encounter) | `createEncounter(..., $classCode)` AMB / EMER / IMP |
 | 2 | Diagnosis (Condition) | `createCondition` |
-| 3 | Observation | `createObservation` (TTV), `createObservationLab`, `createObservationRadiologi` |
+| 3 | Observation | `createObservation` (TTV), `createObservationLab` / `updateObservationLab` (nilai teks atau terstruktur: valueQuantity UCUM, referenceRange, interpretation), `createObservationRadiologi` |
 | 4 | Tindakan (Procedure) | `createProcedure` |
 | 5 | Peresepan (MedicationRequest) | `createMedicationRequest(..., $category)` |
 | 6 | Obat diambil (MedicationDispense) | `createMedicationDispense` |

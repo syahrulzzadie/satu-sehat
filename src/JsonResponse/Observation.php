@@ -48,7 +48,8 @@ class Observation
                     'category' => $data['category'][0]['coding'][0]['code'] ?? '',
                     'code' => $data['code']['coding'][0]['code'] ?? '',
                     'name' => $data['code']['coding'][0]['display'] ?? '',
-                    'value' => $data['valueString'] ?? '',
+                    'value' => $data['valueString'] ?? (isset($data['valueQuantity']['value'])
+                        ? trim($data['valueQuantity']['value'].' '.($data['valueQuantity']['unit'] ?? '')) : ''),
                     'ihs_number_patient' => StrHelper::getIhsNumber($data['subject']['reference'] ?? '/'),
                     'name_patient' => $data['subject']['display'] ?? '',
                     'ihs_number_practitioner' => StrHelper::getIhsNumber($data['performer'][0]['reference'] ?? '/'),
