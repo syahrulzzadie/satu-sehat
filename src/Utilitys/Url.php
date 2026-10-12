@@ -271,13 +271,21 @@ class Url
     }
 
     /**
-     * Satu-satunya endpoint SSRME resmi per Postman collection "PORTALRME (DES 2025) PROD":
-     * POST /ssrme/v1/hf/shl - butuh encounter_id, langsung mengembalikan shlinkUrl
-     * (tidak ada endpoint CHLink terpisah seperti asumsi awal dari slide presentasi).
+     * Postman "SATUSEHAT RME" > Membuka RME Nasional: POST /ssrme/v2/ntl/shl -> shlinkUrl,
+     * atau 403 CONSENT_REQUIRED bila pasien belum memberi persetujuan.
      */
     public static function createSsrmeLinkUrl()
     {
         return self::ssrmeUrl('shl');
+    }
+
+    /**
+     * Postman "SATUSEHAT RME" > Membuat consent health link: POST /ssrme/v2/ntl/chl -> verificationUrl
+     * (halaman persetujuan pasien), dipakai setelah shl menjawab CONSENT_REQUIRED.
+     */
+    public static function createSsrmeConsentLinkUrl()
+    {
+        return self::ssrmeUrl('chl');
     }
 
     /**

@@ -4,7 +4,11 @@ namespace syahrulzzadie\SatuSehat\JsonData;
 
 class Ssrme
 {
-    public static function formData($patient, $practitioner, $organization, $encounterId)
+    /**
+     * Body SSRME v2 (shl & chl). $encounterId dipertahankan agar pemanggil lama tetap jalan,
+     * tetapi tidak dikirim karena tidak ada di body Postman "SATUSEHAT RME".
+     */
+    public static function formData($patient, $practitioner, $organization, $encounterId = null)
     {
         return [
             "patient_id" => $patient->ihs_number,
@@ -12,8 +16,7 @@ class Ssrme
             "practitioner_id" => $practitioner->ihs_number,
             "practitioner_name" => $practitioner->name,
             "organization_id" => $organization->ihs_number,
-            "organization_name" => $organization->name,
-            "encounter_id" => $encounterId
+            "organization_name" => $organization->name
         ];
     }
 

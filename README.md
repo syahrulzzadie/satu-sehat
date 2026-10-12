@@ -144,7 +144,7 @@ SS::saveEncounter([
 | Master Data KPTL | `searchKptl($endpoint, $body)`; isi `Constant::$kptlUrl` dulu (host tidak tercantum di Postman publik) |
 | 01 Mencari Pasien & Nakes | `getPatientById`, `searchPatient`, `getPractitionerById`, `searchPractitioner` |
 
-Tidak dicakup library: request `{{webhook_url}}` (contoh payload yang *diterima* server fasyankes), `{{privateHost}}` (DICOM Router lokal), dan SSRME v2 `ntl` yang hanya tersedia di staging (library tetap memakai `ssrme/v1/hf/shl` produksi).
+Tidak dicakup library: request `{{webhook_url}}` (contoh payload yang *diterima* server fasyankes), `{{privateHost}}` (DICOM Router lokal), SSRME memakai v2 `ssrme/v2/ntl` (collection "SATUSEHAT RME"): `createSsrmeLink` (shl) dan `createSsrmeConsentLink` (chl, bila shl menjawab `CONSENT_REQUIRED`); `ssrme/v1/hf/shl` lama sudah tidak aktif.
 
 ## Perubahan perilaku (mengikuti Postman)
 * `createEncounter` kini `statusHistory` = `[arrived]` saja (sebelumnya langsung berisi `finished`), `period.end` tidak dikirim, `location.period` ikut dikirim.

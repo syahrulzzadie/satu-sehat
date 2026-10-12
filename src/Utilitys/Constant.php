@@ -9,7 +9,8 @@ class Constant
     public static $consentUrl = "https://api-satusehat.kemkes.go.id/consent/v1";
     public static $kfaUrl = "https://api-satusehat.kemkes.go.id/kfa-v2";
     public static $kycUrl = "https://api-satusehat.kemkes.go.id/kyc/v1";
-    public static $ssrmeUrl = "https://api-satusehat.kemkes.go.id/ssrme/v1/hf";
+    // SSRME v2 (collection "SATUSEHAT RME"): ssrme/v1/hf sudah tidak aktif (selalu 404 Not Found)
+    public static $ssrmeUrl = "https://api-satusehat.kemkes.go.id/ssrme/v2/ntl";
     public static $apiUrl = "https://api-satusehat.kemkes.go.id";
     // Host KPTL tidak dicantumkan di Postman publik ({{base_url_kptl}}), isi sesuai info Kemenkes
     public static $kptlUrl = "";

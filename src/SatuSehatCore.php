@@ -788,16 +788,33 @@ class SatuSehatCore
     }
 
     /**
-     * Satu-satunya panggilan SSRME resmi (POST /ssrme/v1/hf/shl) per Postman collection
-     * "PORTALRME (DES 2025) PROD" - langsung menghasilkan shlinkUrl, tidak ada
-     * endpoint/consent step terpisah seperti asumsi awal dari slide presentasi Kemenkes.
+     * SSRME v2 (Postman "SATUSEHAT RME" > Membuka RME Nasional, POST /ssrme/v2/ntl/shl).
+     * Berhasil: data.shlinkUrl & data.expiredAt. Pasien belum memberi persetujuan:
+     * status false dengan code CONSENT_REQUIRED, lanjutkan ke createSsrmeConsentLink().
      */
-    public static function createSsrmeLink($patient,$practitioner,$organization,$encounterId,$emergencyReason = null)
+    public static function createSsrmeLink($patient,$practitioner,$organization,$encounterId = null,$emergencyReason = null)
     {
         $url = Url::createSsrmeLinkUrl();
         $formData = $emergencyReason
             ? jsonData\Ssrme::formDataEmergency($patient,$practitioner,$organization,$encounterId,$emergencyReason)
             : jsonData\Ssrme::formData($patient,$practitioner,$organization,$encounterId);
+        $http = HttpRequest::post($url,$formData);
+        if ($http['status']) {
+            $response = $http['response'];
+            return jsonResponse\Ssrme::convert($response);
+        }
+        return jsonResponse\Error::http($http);
+    }
+
+    /**
+     * SSRME v2 (Postman "SATUSEHAT RME" > Membuat consent health link, POST /ssrme/v2/ntl/chl).
+     * Berhasil: data.verificationUrl (halaman persetujuan pasien), data.shlinkId, data.expiredAt.
+     * Setelah pasien menyetujui, panggil createSsrmeLink() lagi.
+     */
+    public static function createSsrmeConsentLink($patient,$practitioner,$organization)
+    {
+        $url = Url::createSsrmeConsentLinkUrl();
+        $formData = jsonData\Ssrme::formData($patient,$practitioner,$organization);
         $http = HttpRequest::post($url,$formData);
         if ($http['status']) {
             $response = $http['response'];
